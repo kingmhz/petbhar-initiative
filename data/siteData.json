@@ -1,0 +1,79 @@
+{
+  "org": {
+    "name": "PetBhar",
+    "fullName": "PetBhar Initiative",
+    "tagline": "No one should sleep hungry.",
+    "mission": "PetBhar Initiative is a grassroots effort to ensure no one in our community goes to bed hungry. We work towards food security by providing meals and groceries to those who need it most.",
+    "description": "We provide meals and essential groceries to families and individuals in need, because everyone deserves a full stomach and a better tomorrow.",
+    "philosophy": "Starting small. Helping where we can. Growing with our community.",
+    "values": [
+      "Food",
+      "Dignity",
+      "Hope"
+    ]
+  },
+  "contact": {
+    "email": "petbharinitiative@gmail.com",
+    "phone": "+91 95489 82164",
+    "whatsapp": "+91 95489 82164",
+    "instagram": "petbharinitiative",
+    "youtube": ""
+  },
+  "upi": {
+    "id": "",
+    "qrImage": "/images/petbhar-upi-qr.png",
+    "payeeName": "PETBHAR INITIATIVE"
+  },
+  "bankAccount": {
+    "enabled": false,
+    "accountHolderName": "",
+    "accountNumber": "",
+    "ifscCode": "",
+    "bankName": "",
+    "branch": ""
+  },
+  "impact": {
+    "peopleFed": 100,
+    "familiesSupported": 20,
+    "mealsDistributed": 100,
+    "communitiesReached": 2
+  },
+  "transparency": {
+    "contributionsReceived": 5000,
+    "foodPurchased": 5000,
+    "mealsDistributed": 100,
+    "groceryKitsDistributed": 0,
+    "familiesSupported": 20
+  },
+  "projects": [
+    {
+      "id": "meal-drive-001",
+      "title": "Meal Drive — 50 Families",
+      "description": "Fresh meals provided to families in need.",
+      "image": "https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=800&q=80",
+      "date": "",
+      "location": "",
+      "beneficiaries": 50,
+      "status": "planned",
+      "expenses": 0,
+      "category": "humanity"
+    },
+    {
+      "id": "paws-feeding-001",
+      "title": "PetBhar Paws — 20+ Animals",
+      "description": "Feeding, water and basic care for stray animals in our community.",
+      "image": "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=800&q=80",
+      "date": "",
+      "location": "",
+      "beneficiaries": 20,
+      "status": "planned",
+      "expenses": 0,
+      "category": "paws"
+    }
+  ],
+  "reports": [],
+  "media": {
+    "images": [],
+    "videos": []
+  }
+}

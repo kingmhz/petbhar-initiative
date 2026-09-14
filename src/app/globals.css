@@ -1,0 +1,189 @@
+@import "tailwindcss";
+
+@theme inline {
+  --color-charcoal: #0A0A09;
+  --color-ivory: #F4F1E9;
+  --color-warm-ivory: #FAF8F4;
+  --color-cream: #F7F4EE;
+  --color-beige: #E8E3D8;
+  --color-terracotta: #C85A32;
+  --color-silver: #9CA3AF;
+  --color-warm-grey: #6B6B6B;
+  --color-light-grey: #D1D5DB;
+
+  --font-serif: var(--font-serif), 'Playfair Display', Georgia, 'Times New Roman', serif;
+  --font-sans: var(--font-sans), 'Inter', system-ui, -apple-system, sans-serif;
+
+  --animate-fade-in: fade-in 0.6s ease-out forwards;
+  --animate-slide-up: slide-up 0.6s ease-out forwards;
+  --animate-fade-in-up: fade-in-up 0.8s ease-out forwards;
+  --animate-bounce-gentle: bounce-gentle 2.4s ease-in-out infinite;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @keyframes slide-up {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fade-in-up {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes bounce-gentle {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-4px); }
+  }
+}
+
+html {
+  scroll-behavior: smooth;
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+  -webkit-overflow-scrolling: touch;
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  background-color: var(--color-ivory);
+  color: var(--color-charcoal);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
+  overflow-x: hidden;
+  width: 100%;
+}
+
+::selection {
+  background-color: #0A0A09;
+  color: #F4F1E9;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--color-ivory);
+}
+
+::-webkit-scrollbar-thumb {
+  background: #0A0A0930;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #0A0A0960;
+}
+
+/* Scrollbar hide utility for horizontal lists/tabs */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Focus styles for accessibility */
+*:focus-visible {
+  outline: 2px solid #0A0A09;
+  outline-offset: 2px;
+}
+
+/* Prevent auto-zoom on focus in iOS Safari */
+@media screen and (max-width: 768px) {
+  input, select, textarea {
+    font-size: 16px !important;
+  }
+}
+
+/* Image rendering optimizations */
+img {
+  max-width: 100%;
+  height: auto;
+  transition: opacity 0.3s ease;
+}
+
+/* Instagram Brand Logo Styles: Official Circular Design, Razor-Sharp & Ultra-Bright */
+.ig-icon {
+  display: inline-block;
+  vertical-align: middle;
+  shape-rendering: geometricPrecision;
+  text-rendering: geometricPrecision;
+}
+
+/* Default / Adaptive Idle State */
+.ig-icon .ig-circle-bg {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ig-icon .ig-circle-border {
+  opacity: 0.35;
+  transition: opacity 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.ig-icon .ig-glyph-path {
+  fill: currentColor;
+  transition: fill 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Hover State OR Always-Colored: Crisp Bloom to Official Circular Instagram Badge */
+.ig-btn:hover .ig-icon .ig-circle-bg,
+.ig-icon:hover .ig-circle-bg,
+.ig-icon.ig-always-colored .ig-circle-bg {
+  opacity: 1;
+}
+
+.ig-btn:hover .ig-icon .ig-circle-border,
+.ig-icon:hover .ig-circle-border,
+.ig-icon.ig-always-colored .ig-circle-border {
+  opacity: 0;
+}
+
+.ig-btn:hover .ig-icon .ig-glyph-path,
+.ig-icon:hover .ig-glyph-path,
+.ig-icon.ig-always-colored .ig-glyph-path {
+  fill: #FFFFFF !important;
+}
+
+/* Touch responsiveness: removes 300ms mobile tap delay */
+button,
+a,
+input,
+select,
+textarea,
+[role="button"] {
+  touch-action: manipulation;
+}
+
+/* GPU Hardware Compositing Helpers */
+.hardware-accelerated {
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  perspective: 1000px;
+}
+
+/* Accessibility: respect reduced motion preferences smoothly */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+

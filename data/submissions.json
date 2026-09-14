@@ -1,0 +1,20 @@
+{
+  "contacts": [],
+  "volunteers": [],
+  "partners": [],
+  "dedications": [],
+  "beacons": [],
+  "wallPosts": [
+    {
+      "id": "wall-ahmad-yusuf",
+      "donorName": "Ahmad Yusuf",
+      "amount": 5000,
+      "impactDescription": "Sponsored 100 wholesome nutritious meals & ground feeding distribution",
+      "message": "May every meal bring warmth, dignity, and hope to those who need it most.",
+      "occasion": "Community Blessing",
+      "city": "Pune",
+      "createdAt": "2026-09-12T12:00:00.000Z",
+      "approved": true
+    }
+  ]
+}
