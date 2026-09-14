@@ -20,7 +20,7 @@ export default function DedicateDriveModal({ isOpen, onClose }: DedicateDriveMod
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [tier, setTier] = useState('100 Meals + Banner');
-  const [amount, setAmount] = useState(5000);
+  const [amount, setAmount] = useState(6000);
   const [customAmount, setCustomAmount] = useState('');
   const [message, setMessage] = useState('');
   const [submitting, setSubmitting] = useState(false);
@@ -29,9 +29,9 @@ export default function DedicateDriveModal({ isOpen, onClose }: DedicateDriveMod
   const [showQR, setShowQR] = useState(false);
 
   const tiers = [
-    { id: '50 Meals', label: locale === 'hi' ? '50 भोजन थाली' : '50 Meals', price: 2500, highlight: false },
-    { id: '100 Meals + Banner', label: locale === 'hi' ? '100 थाली + बैनर' : '100 Meals + Banner', price: 5000, highlight: true },
-    { id: '250 Meals + Video', label: locale === 'hi' ? '250 थाली + वीडियो' : '250 Meals + Video', price: 12500, highlight: false },
+    { id: '50 Meals', label: locale === 'hi' ? '50 भोजन थाली' : '50 Meals', price: 3000, highlight: false },
+    { id: '100 Meals + Banner', label: locale === 'hi' ? '100 थाली + बैनर' : '100 Meals + Banner', price: 6000, highlight: true },
+    { id: '250 Meals + Video', label: locale === 'hi' ? '250 थाली + वीडियो' : '250 Meals + Video', price: 15000, highlight: false },
     { id: 'Custom', label: locale === 'hi' ? 'अन्य राशि' : 'Custom Amount', price: 0, highlight: false },
   ];
 

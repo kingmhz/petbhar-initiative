@@ -24,7 +24,7 @@ export const translations = {
     hero_cta_dedicate: 'Dedicate a Drive 🎂',
     hero_meals_served: 'Meals Served',
     hero_active_cities: 'Active Drives',
-    hero_verified_cost: '₹50 = 1 Fresh Meal',
+    hero_verified_cost: '₹60 = 1 Fresh Meal',
     hero_pay_direct: 'Pay directly via UPI',
     hero_show_qr: 'Show UPI QR Code',
     hero_hide_qr: 'Hide QR Code',
@@ -33,7 +33,7 @@ export const translations = {
     hero_copied: 'Copied!',
 
     // Floating Bar
-    quick_bar_meal: '₹50 = 1 Meal',
+    quick_bar_meal: '₹60 = 1 Meal',
     quick_bar_cta: 'Support Us',
     quick_bar_whatsapp: 'WhatsApp',
 
@@ -52,9 +52,9 @@ export const translations = {
     dedicate_phone: 'WhatsApp Number (for ground photos)',
     dedicate_message: 'Banner Message (Printed on ground banner)',
     dedicate_message_placeholder: 'e.g. Distributed with love on Advik’s 5th Birthday!',
-    dedicate_tier_50: '50 Meals (₹2,500)',
-    dedicate_tier_100: '100 Meals + Banner (₹5,000)',
-    dedicate_tier_250: '250 Meals + Video (₹12,500)',
+    dedicate_tier_50: '50 Meals (₹3,000)',
+    dedicate_tier_100: '100 Meals + Banner (₹6,000)',
+    dedicate_tier_250: '250 Meals + Video (₹15,000)',
     dedicate_tier_custom: 'Custom Tier',
     dedicate_submit: 'Confirm & Sponsor Drive',
 
@@ -101,6 +101,18 @@ export const translations = {
     impact_meals_distributed: 'Meals Distributed',
     impact_communities_reached: 'Communities Reached',
     impact_cta: 'Be a Part of It',
+    impact_econ_title: 'Verified Ground Economics & Sourcing',
+    impact_econ_subtitle: 'With grocery and commodity prices having risen significantly, here is our audited cost breakdown per unit of relief. Sourced directly at wholesale APMC Mandi rates to ensure maximum meals per rupee.',
+    impact_unit_meal_title: 'Nutritious Cooked Meal',
+    impact_unit_meal_cost: '₹60 / meal',
+    impact_unit_meal_desc: '2 hot chapatis (fresh chakki atta), protein dal tadka, seasonal sabzi, steamed rice & compostable container.',
+    impact_unit_paws_title: 'PetBhar Paws Animal Bowl',
+    impact_unit_paws_cost: '₹35 / bowl',
+    impact_unit_paws_desc: 'Boiled turmeric rice mash, soya & egg protein, vet-approved kibble booster & clean roadside water refills.',
+    impact_unit_kit_title: 'Monthly Family Dry Ration Kit',
+    impact_unit_kit_cost: '₹1,800 / kit',
+    impact_unit_kit_desc: '10kg Chakki Atta, 5kg Rice, 2kg Dal, 1L Cooking Oil, Salt, Haldi, Spices & Sugar. Feeds a family of 4-5 for an entire month.',
+    impact_mandi_badge: '100% Direct APMC Mandi Wholesale Procurement • Zero Administrative Cuts • Public Audit Ledger',
 
     // Get Involved Section
     get_involved_label: 'GET INVOLVED',
@@ -217,7 +229,7 @@ export const translations = {
     hero_cta_dedicate: 'ड्राइव समर्पित करें 🎂',
     hero_meals_served: 'भोजन वितरित',
     hero_active_cities: 'सक्रिय ड्राइव',
-    hero_verified_cost: '₹50 = 1 ताज़ा भोजन',
+    hero_verified_cost: '₹60 = 1 ताज़ा भोजन',
     hero_pay_direct: 'सीधे UPI द्वारा भुगतान करें',
     hero_show_qr: 'UPI QR कोड देखें',
     hero_hide_qr: 'QR कोड छुपाएं',
@@ -226,7 +238,7 @@ export const translations = {
     hero_copied: 'कॉपी हो गया!',
 
     // Floating Bar
-    quick_bar_meal: '₹50 = 1 भोजन',
+    quick_bar_meal: '₹60 = 1 भोजन',
     quick_bar_cta: 'सहयोग दें',
     quick_bar_whatsapp: 'व्हाट्सएप',
 
@@ -245,9 +257,9 @@ export const translations = {
     dedicate_phone: 'व्हाट्सएप नंबर (जमीनी फोटो और वीडियो के लिए)',
     dedicate_message: 'बैनर संदेश (ग्राउंड बैनर पर लिखा जाएगा)',
     dedicate_message_placeholder: 'उदा. अद्विक के 5वें जन्मदिन पर सप्रेम वितरित!',
-    dedicate_tier_50: '50 भोजन थाली (₹2,500)',
-    dedicate_tier_100: '100 भोजन थाली + बैनर (₹5,000)',
-    dedicate_tier_250: '250 भोजन थाली + वीडियो (₹12,500)',
+    dedicate_tier_50: '50 भोजन थाली (₹3,000)',
+    dedicate_tier_100: '100 भोजन थाली + बैनर (₹6,000)',
+    dedicate_tier_250: '250 भोजन थाली + वीडियो (₹15,000)',
     dedicate_tier_custom: 'अन्य राशि',
     dedicate_submit: 'पुष्टि करें और ड्राइव प्रायोजित करें',
 
@@ -294,6 +306,18 @@ export const translations = {
     impact_meals_distributed: 'थालियां वितरित',
     impact_communities_reached: 'पहुंचे समुदाय',
     impact_cta: 'इस सेवा से जुड़ें',
+    impact_econ_title: 'ज़मीनी लागत व खाद्य सामग्री पारदर्शिता',
+    impact_econ_subtitle: 'खाद्य सामग्रियों की वर्तमान महंगाई दर को ध्यान में रखते हुए यह हमारा प्रमाणित लागत विवरण है। हर एक रुपया सीधे थोक मंडी खरीद में जाता है ताकि बिना किसी बिचौलिये के अधिकतम लोगों का पेट भरे।',
+    impact_unit_meal_title: 'ताज़ा पौष्टिक भोजन थाली',
+    impact_unit_meal_cost: '₹60 / थाली',
+    impact_unit_meal_desc: '2 ताज़ा रोटियां (चक्की आटा), तड़का दाल, मौसमी हरी सब्ज़ी, स्टीम्ड चावल और पर्यावरण-अनुकूल डिब्बा।',
+    impact_unit_paws_title: 'बेजुबान श्वान आहार पात्र',
+    impact_unit_paws_cost: '₹35 / पात्र',
+    impact_unit_paws_desc: 'उबले चावल-हल्दी मैश, सोया व अंडा प्रोटीन, पशु चिकित्सक अनुशंसित किबल और स्वच्छ पेयजल।',
+    impact_unit_kit_title: 'मासिक परिवार सूखा राशन किट',
+    impact_unit_kit_cost: '₹1,800 / किट',
+    impact_unit_kit_desc: '10 किग्रा आटा, 5 किग्रा चावल, 2 किग्रा दाल, 1 ली. तेल, नमक, हल्दी, मसाले व चीनी (4-5 सदस्यों के परिवार हेतु पूरा महीना)।',
+    impact_mandi_badge: '100% थोक मंडी से सीधी खरीद • शून्य बिचौलिया कमीशन • सार्वजनिक बहीखाता',
 
     // Get Involved Section
     get_involved_label: 'सहयोग करें',

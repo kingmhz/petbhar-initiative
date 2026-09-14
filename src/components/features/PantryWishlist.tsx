@@ -3,6 +3,7 @@
 import React, { useState, useMemo } from 'react';
 import { Plus, Minus, HeartHandshake, Check, Copy, ShoppingBag, ArrowUpRight } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
+import { siteConfig } from '@/lib/siteConfig';
 
 interface PantryItem {
   id: string;
@@ -18,7 +19,7 @@ const PANTRY_ITEMS: PantryItem[] = [
   {
     id: 'atta',
     nameKey: 'pantry_item_atta',
-    price: 350,
+    price: 420,
     unit: '10 kg bag',
     impactSnippet: 'Yields ~140 hot chapatis for hungry laborers & children',
     icon: '🌾',
@@ -27,7 +28,7 @@ const PANTRY_ITEMS: PantryItem[] = [
   {
     id: 'rice',
     nameKey: 'pantry_item_rice',
-    price: 420,
+    price: 490,
     unit: '10 kg bag',
     impactSnippet: 'Prepares ~80 wholesome khichdi & rice portions',
     icon: '🍚',
@@ -36,7 +37,7 @@ const PANTRY_ITEMS: PantryItem[] = [
   {
     id: 'dal',
     nameKey: 'pantry_item_dal',
-    price: 580,
+    price: 780,
     unit: '5 kg pack',
     impactSnippet: 'Essential protein for underprivileged shelter families',
     icon: '🫘',
@@ -45,7 +46,7 @@ const PANTRY_ITEMS: PantryItem[] = [
   {
     id: 'kibble',
     nameKey: 'pantry_item_kibble',
-    price: 1650,
+    price: 1850,
     unit: '20 kg sack',
     impactSnippet: 'Feeds 60+ street dogs with vet-approved balanced nutrition',
     icon: '🐕',
@@ -54,7 +55,7 @@ const PANTRY_ITEMS: PantryItem[] = [
   {
     id: 'bowl',
     nameKey: 'pantry_item_bowl',
-    price: 200,
+    price: 250,
     unit: '1 concrete bowl',
     impactSnippet: 'Placed roadside to quench thirst of birds & strays all summer',
     icon: '🥣',
@@ -63,7 +64,7 @@ const PANTRY_ITEMS: PantryItem[] = [
   {
     id: 'veggies',
     nameKey: 'pantry_item_veggies',
-    price: 850,
+    price: 950,
     unit: '1 farm crate',
     impactSnippet: 'Potatoes, pumpkins, greens & pure mustard cooking oil',
     icon: '🥬',
@@ -104,13 +105,14 @@ export default function PantryWishlist() {
       .join(', ');
   }, [quantities, t]);
 
-  const upiId = 'petbhar@upi';
+  const upiId = siteConfig.upi?.id || 'petbhar@upi';
+  const payeeName = siteConfig.upi?.payeeName || 'PetBhar Initiative';
 
   const upiDeepLink = useMemo(() => {
     if (totalAmount === 0) return '#';
     const note = selectedItemsSummary ? `PetBhar Pantry: ${selectedItemsSummary}` : 'PetBhar Pantry Support';
-    return `upi://pay?pa=${encodeURIComponent(upiId)}&pn=PetBhar%20Initiative&am=${totalAmount}&cu=INR&tn=${encodeURIComponent(note)}`;
-  }, [totalAmount, selectedItemsSummary]);
+    return `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(payeeName)}&am=${totalAmount}&cu=INR&tn=${encodeURIComponent(note)}`;
+  }, [totalAmount, selectedItemsSummary, upiId, payeeName]);
 
   const handleCopyUPI = async () => {
     try {

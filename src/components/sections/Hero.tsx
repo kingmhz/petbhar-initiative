@@ -28,7 +28,7 @@ export default function Hero() {
   const { t, locale } = useLanguage();
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [selectedAmount, setSelectedAmount] = useState<number>(50);
+  const [selectedAmount, setSelectedAmount] = useState<number>(60);
   const [showQrOnMobile, setShowQrOnMobile] = useState<boolean>(true);
   const [isDedicateOpen, setIsDedicateOpen] = useState(false);
   const [isImpactCardOpen, setIsImpactCardOpen] = useState(false);
@@ -274,10 +274,10 @@ export default function Hero() {
                 </label>
                 <div className="grid grid-cols-4 gap-1.5 text-center">
                   {[
-                    { amount: 50, label: '1 Meal' },
-                    { amount: 250, label: '5 Meals' },
-                    { amount: 500, label: '10 Meals' },
-                    { amount: 1000, label: 'Family Kit' },
+                    { amount: 60, label: '1 Meal' },
+                    { amount: 300, label: '5 Meals' },
+                    { amount: 600, label: '10 Meals' },
+                    { amount: 1800, label: 'Family Kit' },
                   ].map((preset) => {
                     const isSelected = selectedAmount === preset.amount;
                     return (
