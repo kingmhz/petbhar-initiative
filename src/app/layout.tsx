@@ -109,7 +109,7 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased text-charcoal bg-ivory">
         <LanguageProvider>
-          <LuxuryLoadingScreen />
+          <LuxuryLoadingScreen curtainStyle="lift" />
           <Navbar />
           {children}
           <Footer />

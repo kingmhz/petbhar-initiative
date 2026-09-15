@@ -17,7 +17,7 @@ const WORD_SUB = 'INITIATIVE';
 
 export default function LuxuryLoadingScreen({
   alwaysShow = false,
-  curtainStyle = 'split',
+  curtainStyle = 'lift',
   onComplete,
 }: LuxuryLoadingScreenProps) {
   const [isVisible, setIsVisible] = useState(true);
@@ -132,9 +132,10 @@ export default function LuxuryLoadingScreen({
       <motion.div
         animate={{
           opacity: isOpening ? 0 : 1,
-          scale: isOpening ? 0.96 : 1,
+          y: isOpening ? (curtainStyle === 'lift' ? '-18%' : '0%') : '0%',
+          scale: isOpening ? 0.97 : 1,
         }}
-        transition={{ duration: 0.35, ease: 'easeOut' }}
+        transition={{ duration: 0.45, ease: [0.76, 0, 0.24, 1] }}
         className="absolute inset-0 z-10 flex flex-col items-center justify-center text-center p-6 pointer-events-none"
       >
         {/* Subtle Watermark in Canvas */}
