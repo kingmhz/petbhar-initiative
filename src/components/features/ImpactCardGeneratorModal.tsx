@@ -118,7 +118,9 @@ export default function ImpactCardGeneratorModal({
 
     ctx.fillStyle = 'rgba(244, 241, 233, 0.6)';
     ctx.font = '500 22px Inter, sans-serif';
-    ctx.letterSpacing = '12px';
+    try {
+      (ctx as unknown as { letterSpacing?: string }).letterSpacing = '12px';
+    } catch {}
     ctx.fillText('I N I T I A T I V E', W / 2, 265);
 
     // Gold separator line

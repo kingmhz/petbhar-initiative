@@ -69,11 +69,9 @@ export default function Hero() {
     setTimeout(() => setCopied(false), 2000);
   };
 
-  const upiId = config.upi?.id || '';
+  const upiId = config.upi?.id || 'petbhar@upi';
   const payeeName = config.upi?.payeeName || 'PETBHAR INITIATIVE';
-  const upiIntentUrl = upiId
-    ? `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(payeeName)}&am=${selectedAmount}&cu=INR`
-    : '#';
+  const upiIntentUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(payeeName)}&am=${selectedAmount}&cu=INR`;
 
   return (
     <section className="relative flex min-h-[62vh] md:min-h-[70vh] items-center justify-center pt-22 pb-10 overflow-hidden">

@@ -34,7 +34,7 @@ export async function POST(request: Request) {
     const cleanPhone = String(phone || '').trim().slice(0, 50);
     const cleanEmail = String(email || '').trim().slice(0, 150);
     const cleanTier = String(tier || '100 Meals + Banner').trim().slice(0, 100);
-    const cleanAmount = Number(amount) || 5000;
+    const cleanAmount = Number(amount) || 6000;
     const cleanMessage = String(message || '').trim().slice(0, 1000);
 
     if (!cleanHonoree || !cleanPhone) {

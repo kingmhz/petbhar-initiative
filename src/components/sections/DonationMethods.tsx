@@ -12,7 +12,8 @@ interface DonationMethodsProps {
 
 export function DonationMethods({ className = '' }: DonationMethodsProps) {
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
-  const payeeName = encodeURIComponent(config.org.name);
+  const payeeName = config.org.name || 'PetBhar Initiative';
+  const activeUpiId = config.upi?.id || 'petbhar@upi';
 
   const copyToClipboard = (text: string, key: string) => {
     if (!text) return;
@@ -46,13 +47,13 @@ export function DonationMethods({ className = '' }: DonationMethodsProps) {
             <p className="text-xs font-medium text-charcoal">Scan with any UPI App</p>
             <p className="text-[11px] text-warm-grey mt-0.5">Google Pay &bull; PhonePe &bull; Paytm &bull; BHIM &bull; CRED</p>
 
-            {config.upi.id && (
+            {activeUpiId && (
               <div className="mt-4">
                 <p className="text-xs uppercase tracking-widest text-warm-grey">UPI ID</p>
                 <div className="mt-1 flex items-center justify-center gap-2">
-                  <span className="font-mono text-base font-semibold text-charcoal">{config.upi.id}</span>
+                  <span className="font-mono text-base font-semibold text-charcoal">{activeUpiId}</span>
                   <button
-                    onClick={() => copyToClipboard(config.upi.id, 'upi')}
+                    onClick={() => copyToClipboard(activeUpiId, 'upi')}
                     className="p-1.5 text-warm-grey hover:text-charcoal hover:bg-beige/40 rounded-md transition-colors"
                     title="Copy UPI ID"
                     aria-label="Copy UPI ID"
@@ -67,11 +68,11 @@ export function DonationMethods({ className = '' }: DonationMethodsProps) {
             )}
           </div>
 
-          {config.upi.id && (
+          {activeUpiId && (
             <div className="mt-6">
               <Button 
                 variant="primary" 
-                href={`upi://pay?pa=${encodeURIComponent(config.upi.id)}&pn=${encodeURIComponent(payeeName)}`}
+                href={`upi://pay?pa=${encodeURIComponent(activeUpiId)}&pn=${encodeURIComponent(payeeName)}`}
                 className="w-full justify-center py-3.5 shadow"
               >
                 Pay via GPay / PhonePe / Paytm
