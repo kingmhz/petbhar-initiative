@@ -5,6 +5,7 @@ import Navbar from '@/components/layout/Navbar';
 import Footer from '@/components/layout/Footer';
 import MobileQuickBar from '@/components/ui/MobileQuickBar';
 import SosBeaconButton from '@/components/features/SosBeaconButton';
+import LuxuryLoadingScreen from '@/components/ui/LuxuryLoadingScreen';
 import { LanguageProvider } from '@/context/LanguageContext';
 import { siteConfig } from '@/lib/siteConfig';
 
@@ -108,6 +109,7 @@ export default function RootLayout({
       </head>
       <body className="font-sans antialiased text-charcoal bg-ivory">
         <LanguageProvider>
+          <LuxuryLoadingScreen />
           <Navbar />
           {children}
           <Footer />
