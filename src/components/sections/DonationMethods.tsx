@@ -2,7 +2,9 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { Copy, Check } from 'lucide-react';
+import { Copy, Check, ArrowUpRight } from 'lucide-react';
+import { GooglePayIcon } from '@/components/ui/SocialIcons';
+import { getUpiPaymentUrls } from '@/lib/upi';
 import config from '@/lib/siteConfig';
 
 interface DonationMethodsProps {
@@ -12,6 +14,12 @@ interface DonationMethodsProps {
 export function DonationMethods({ className = '' }: DonationMethodsProps) {
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const showBankAccount = Boolean(config.bankAccount?.enabled);
+
+  const { gpayUrl, genericUpiUrl } = getUpiPaymentUrls({
+    upiId: config.upi?.id || 'petbhar@upi',
+    payeeName: config.upi?.payeeName || 'PetBhar Initiative',
+    note: 'PetBhar Initiative Support',
+  });
 
   const copyToClipboard = (text: string, key: string) => {
     if (!text) return;
@@ -45,6 +53,27 @@ export function DonationMethods({ className = '' }: DonationMethodsProps) {
             <p className="text-xs font-medium text-charcoal">Scan with any UPI App</p>
             <p className="text-[11px] text-warm-grey mt-0.5">Google Pay &bull; PhonePe &bull; Paytm &bull; BHIM &bull; CRED</p>
           </div>
+
+          {config.upi?.id && (
+            <div className="mt-6 space-y-2.5">
+              <a 
+                href={gpayUrl}
+                className="w-full justify-center py-3.5 px-6 rounded-full bg-charcoal text-ivory hover:bg-black font-semibold text-xs sm:text-sm flex items-center justify-center gap-2.5 shadow-sm active:scale-[0.98] transition-all group"
+              >
+                <GooglePayIcon size={18} />
+                <span>Pay directly via Google Pay</span>
+                <ArrowUpRight size={15} className="text-ivory/70 group-hover:text-ivory group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </a>
+              <div className="text-center">
+                <a 
+                  href={genericUpiUrl}
+                  className="text-xs text-warm-grey hover:text-charcoal underline underline-offset-4 font-medium"
+                >
+                  Pay with PhonePe / Paytm / other UPI apps &rarr;
+                </a>
+              </div>
+            </div>
+          )}
         </div>
 
         <p className="mt-6 text-center text-xs text-warm-grey/80">

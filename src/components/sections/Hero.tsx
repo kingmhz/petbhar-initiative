@@ -12,11 +12,14 @@ import {
   Sparkles, 
   ShieldCheck, 
   X, 
-  Check
+  Check,
+  ArrowUpRight
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import config from '@/lib/siteConfig';
 import { useLanguage } from '@/context/LanguageContext';
+import { GooglePayIcon } from '@/components/ui/SocialIcons';
+import { getUpiPaymentUrls } from '@/lib/upi';
 import DedicateDriveModal from '@/components/features/DedicateDriveModal';
 import ImpactCardGeneratorModal from '@/components/features/ImpactCardGeneratorModal';
 
@@ -54,6 +57,13 @@ export default function Hero() {
       aboutSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
+
+  const { gpayUrl, genericUpiUrl } = getUpiPaymentUrls({
+    upiId: config.upi?.id || 'petbhar@upi',
+    payeeName: config.upi?.payeeName || 'PETBHAR INITIATIVE',
+    amount: selectedAmount,
+    note: 'PetBhar Initiative Support',
+  });
 
   return (
     <section className="relative flex min-h-[62vh] md:min-h-[70vh] items-center justify-center pt-22 pb-10 overflow-hidden">
@@ -281,20 +291,46 @@ export default function Hero() {
                 </div>
               </div>
 
+              {/* Direct One-Tap Google Pay Action */}
+              <div className="pt-3.5 space-y-2">
+                <a
+                  href={gpayUrl}
+                  className="w-full py-3.5 px-4 rounded-2xl bg-charcoal hover:bg-black text-ivory text-xs sm:text-sm font-semibold text-center flex items-center justify-center gap-2.5 shadow-md active:scale-[0.98] transition-all min-h-[48px] group"
+                >
+                  <GooglePayIcon size={18} />
+                  <span>
+                    {locale === 'hi'
+                      ? `Google Pay से ₹${selectedAmount} का भुगतान करें`
+                      : `Pay ₹${selectedAmount} directly via Google Pay`}
+                  </span>
+                  <ArrowUpRight size={15} className="text-ivory/70 group-hover:text-ivory group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                </a>
+
+                <div className="flex items-center justify-center gap-1.5 text-[11px] text-warm-grey">
+                  <span>Using PhonePe or Paytm?</span>
+                  <a
+                    href={genericUpiUrl}
+                    className="text-charcoal font-medium hover:underline underline-offset-2"
+                  >
+                    Open other UPI apps &rarr;
+                  </a>
+                </div>
+              </div>
+
               {/* QR Barcode Section */}
-              <div className="pt-2">
+              <div className="border-t border-charcoal/10 pt-3 mt-1">
                 <div className="flex flex-col items-center">
-                  <div className="w-48 h-48 sm:w-52 sm:h-52 bg-white rounded-2xl p-3 shadow-inner border border-charcoal/10 flex items-center justify-center relative">
+                  <div className="w-44 h-44 sm:w-50 sm:h-50 bg-white rounded-2xl p-3 shadow-inner border border-charcoal/10 flex items-center justify-center relative">
                     <Image
                       src={config.upi?.qrImage || '/images/petbhar-upi-qr.png'}
                       alt="PetBhar UPI QR Code"
-                      width={208}
-                      height={208}
+                      width={200}
+                      height={200}
                       className="w-full h-full object-contain"
                     />
                   </div>
-                  <p className="text-xs text-warm-grey mt-2.5 font-medium">
-                    Scan with any UPI app &bull; GPay, PhonePe, Paytm
+                  <p className="text-[11px] text-warm-grey mt-2 font-medium">
+                    Or scan barcode with Google Pay / any UPI app
                   </p>
                 </div>
               </div>

@@ -6,6 +6,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { X, Heart, Check, ArrowUpRight, Camera, Gift } from 'lucide-react';
 import { siteConfig } from '@/lib/siteConfig';
 import { useLanguage } from '@/context/LanguageContext';
+import { GooglePayIcon } from '@/components/ui/SocialIcons';
+import { getUpiPaymentUrls } from '@/lib/upi';
 
 interface DedicateDriveModalProps {
   isOpen: boolean;
@@ -47,7 +49,12 @@ export default function DedicateDriveModal({ isOpen, onClose }: DedicateDriveMod
 
   const finalAmount = tier === 'Custom' ? parseInt(customAmount) || 1000 : amount;
   const upiId = siteConfig.upi?.id || 'petbhar@upi';
-  const upiUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(siteConfig.upi?.payeeName || 'PetBhar Initiative')}&am=${finalAmount}&cu=INR&tn=${encodeURIComponent(`Dedication by ${donorName || 'Supporter'} for ${honoreeName || 'Loved One'}`)}`;
+  const { gpayUrl, genericUpiUrl } = getUpiPaymentUrls({
+    upiId,
+    payeeName: siteConfig.upi?.payeeName || 'PetBhar Initiative',
+    amount: finalAmount,
+    note: `Dedication by ${donorName || 'Supporter'} for ${honoreeName || 'Loved One'}`,
+  });
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -319,23 +326,39 @@ export default function DedicateDriveModal({ isOpen, onClose }: DedicateDriveMod
                 </p>
               </div>
 
-              {/* Direct UPI Intent Button */}
+              {/* Direct One-Tap Google Pay Action */}
               <div className="space-y-3 max-w-sm mx-auto">
                 <a
-                  href={upiUrl}
-                  className="w-full bg-[#128C7E] hover:bg-[#075E54] text-white py-3.5 px-6 rounded-2xl font-semibold text-sm flex items-center justify-center gap-2 shadow-lg transition-all active:scale-95"
+                  href={gpayUrl}
+                  className="w-full bg-charcoal hover:bg-black text-white py-3.5 px-6 rounded-2xl font-semibold text-sm flex items-center justify-center gap-2.5 shadow-md transition-all active:scale-95 group"
                 >
-                  <span>{locale === 'hi' ? `₹${finalAmount.toLocaleString('en-IN')} का भुगतान करें (GPay / PhonePe)` : `Pay ₹${finalAmount.toLocaleString('en-IN')} via UPI App`}</span>
-                  <ArrowUpRight size={16} />
+                  <GooglePayIcon size={18} />
+                  <span>
+                    {locale === 'hi' 
+                      ? `Google Pay से ₹${finalAmount.toLocaleString('en-IN')} का भुगतान करें` 
+                      : `Pay ₹${finalAmount.toLocaleString('en-IN')} via Google Pay`}
+                  </span>
+                  <ArrowUpRight size={16} className="text-white/70 group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
                 </a>
 
-                <button
-                  type="button"
-                  onClick={() => setShowQR(!showQR)}
-                  className="text-xs text-warm-grey hover:text-charcoal underline underline-offset-4"
-                >
-                  {showQR ? (locale === 'hi' ? 'QR कोड छुपाएं' : 'Hide QR Code') : (locale === 'hi' ? 'अन्य डिवाइस से स्कैन करने के लिए QR कोड देखें' : 'Show QR Code for companion device')}
-                </button>
+                <div className="text-center">
+                  <a
+                    href={genericUpiUrl}
+                    className="text-xs text-warm-grey hover:text-charcoal underline underline-offset-4"
+                  >
+                    {locale === 'hi' ? 'अन्य UPI ऐप (PhonePe / Paytm) से भुगतान करें →' : 'Pay with PhonePe / Paytm / other UPI apps →'}
+                  </a>
+                </div>
+
+                <div className="pt-2 text-center">
+                  <button
+                    type="button"
+                    onClick={() => setShowQR(!showQR)}
+                    className="text-xs text-warm-grey hover:text-charcoal underline underline-offset-4"
+                  >
+                    {showQR ? (locale === 'hi' ? 'QR कोड छुपाएं' : 'Hide QR Code') : (locale === 'hi' ? 'अन्य डिवाइस से स्कैन करने के लिए QR कोड देखें' : 'Show QR Code for companion device')}
+                  </button>
+                </div>
 
                 {showQR && siteConfig.upi?.qrImage && (
                   <div className="bg-white p-4 rounded-2xl border border-charcoal/10 shadow-sm max-w-[200px] mx-auto">
