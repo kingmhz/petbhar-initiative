@@ -1,9 +1,11 @@
 'use client';
 
+import React, { useState } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ArrowUpRight } from 'lucide-react';
 import { InstagramIcon, YoutubeIcon, GmailIcon } from '@/components/ui/SocialIcons';
+import { EmailModal } from '@/components/ui/EmailModal';
 import { siteConfig } from '@/lib/siteConfig';
 import { useLanguage } from '@/context/LanguageContext';
 import { navTranslationKey } from '@/lib/translations';
@@ -11,6 +13,7 @@ import { navTranslationKey } from '@/lib/translations';
 export default function Footer() {
   const pathname = usePathname();
   const { t } = useLanguage();
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
 
   if (pathname?.startsWith('/admin')) {
     return null;
@@ -76,10 +79,26 @@ export default function Footer() {
             <h3 className="text-xs uppercase tracking-widest text-white/50 mb-5 font-semibold">{t('footer_get_in_touch')}</h3>
             <ul className="space-y-3">
               <li>
-                <a href={`mailto:${siteConfig.contact.email}`} className="inline-flex items-center gap-2.5 py-1 text-sm sm:text-[15px] text-ivory/80 hover:text-white transition-colors">
-                  <GmailIcon size={18} />
-                  <span>{siteConfig.contact.email}</span>
-                </a>
+                <div className="flex flex-wrap items-center gap-2">
+                  <button 
+                    type="button"
+                    onClick={() => setEmailModalOpen(true)}
+                    className="inline-flex items-center gap-2.5 py-1 text-sm sm:text-[15px] text-ivory/80 hover:text-white transition-colors cursor-pointer text-left"
+                    title="Click for email options (Gmail, default mail app, copy address)"
+                  >
+                    <GmailIcon size={18} />
+                    <span>{siteConfig.contact.email}</span>
+                  </button>
+                  <a
+                    href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(siteConfig.contact.email)}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="px-1.5 py-0.5 rounded bg-white/10 hover:bg-white/20 text-[11px] text-ivory/80 hover:text-white transition-all"
+                    title="Compose directly in Gmail"
+                  >
+                    Gmail ↗
+                  </a>
+                </div>
               </li>
               <li>
                 <a 
@@ -103,6 +122,12 @@ export default function Footer() {
           <p className="mt-4 md:mt-0 font-serif lowercase italic text-sm text-ivory">{t('footer_tagline')}</p>
         </div>
       </div>
+
+      <EmailModal
+        isOpen={emailModalOpen}
+        onClose={() => setEmailModalOpen(false)}
+        email={siteConfig.contact.email}
+      />
     </footer>
   );
 }

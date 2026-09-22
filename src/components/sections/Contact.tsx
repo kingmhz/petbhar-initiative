@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/Button';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
 import { Phone } from 'lucide-react';
 import { InstagramIcon, GmailIcon, WhatsAppIcon } from '@/components/ui/SocialIcons';
+import { EmailModal } from '@/components/ui/EmailModal';
 import config from '@/lib/siteConfig';
 
 export function Contact() {
@@ -16,6 +17,7 @@ export function Contact() {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -44,6 +46,8 @@ export function Contact() {
     }
   };
 
+  const gmailWebUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(config.contact.email)}`;
+
   return (
     <section className="bg-ivory py-10 md:py-12">
       <div className="mx-auto max-w-7xl px-6">
@@ -56,15 +60,39 @@ export function Contact() {
               </SectionHeading>
               
               <div className="mt-6 space-y-3.5">
-                <a 
-                  href={`mailto:${config.contact.email}`} 
-                  className="group flex items-center gap-3 text-warm-grey hover:text-charcoal transition-all duration-300"
-                >
-                  <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-white shadow-xs border border-charcoal/10 group-hover:border-[#EA4335]/35 group-hover:shadow-[0_2px_12px_rgba(234,67,53,0.18)] transition-all">
-                    <GmailIcon size={18} />
-                  </span>
-                  <span className="group-hover:text-charcoal transition-colors">{config.contact.email}</span>
-                </a>
+                <div className="flex flex-wrap items-center gap-2.5">
+                  <button 
+                    type="button"
+                    onClick={() => setEmailModalOpen(true)}
+                    className="group flex items-center gap-3 text-warm-grey hover:text-charcoal transition-all duration-300 text-left cursor-pointer"
+                    title="Click for email options (Gmail, default mail app, copy address)"
+                  >
+                    <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-white shadow-xs border border-charcoal/10 group-hover:border-[#EA4335]/35 group-hover:shadow-[0_2px_12px_rgba(234,67,53,0.18)] transition-all">
+                      <GmailIcon size={18} />
+                    </span>
+                    <span className="group-hover:text-charcoal transition-colors font-medium">{config.contact.email}</span>
+                  </button>
+
+                  <div className="flex items-center gap-1.5 text-[11px]">
+                    <a
+                      href={gmailWebUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="px-2 py-0.5 rounded-lg bg-white border border-charcoal/10 hover:border-[#EA4335] text-warm-grey hover:text-[#EA4335] transition-all flex items-center gap-1 shadow-2xs font-medium"
+                      title="Compose directly in Gmail"
+                    >
+                      <GmailIcon size={12} />
+                      <span>Gmail ↗</span>
+                    </a>
+                    <a
+                      href={`mailto:${config.contact.email}`}
+                      className="px-2 py-0.5 rounded-lg bg-white border border-charcoal/10 hover:border-charcoal/30 text-warm-grey hover:text-charcoal transition-all flex items-center gap-1 shadow-2xs font-medium"
+                      title="Open default system mail app"
+                    >
+                      <span>Mail ↗</span>
+                    </a>
+                  </div>
+                </div>
                 {config.contact.instagram && (
                   <a 
                     href={config.socials.instagram || `https://instagram.com/${config.contact.instagram}`} 
@@ -190,6 +218,12 @@ export function Contact() {
           </div>
         </div>
       </div>
+
+      <EmailModal 
+        isOpen={emailModalOpen} 
+        onClose={() => setEmailModalOpen(false)} 
+        email={config.contact.email} 
+      />
     </section>
   );
 }
