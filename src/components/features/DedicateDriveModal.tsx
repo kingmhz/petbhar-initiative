@@ -326,8 +326,8 @@ export default function DedicateDriveModal({ isOpen, onClose }: DedicateDriveMod
                 </p>
               </div>
 
-              {/* Direct One-Tap Google Pay Action */}
-              <div className="space-y-3 max-w-sm mx-auto">
+              {/* Direct One-Tap Google Pay Action (Mobile Only) */}
+              <div className="space-y-3 max-w-sm mx-auto md:hidden">
                 <a
                   href={gpayUrl}
                   className="w-full bg-charcoal hover:bg-black text-white py-3.5 px-6 rounded-2xl font-semibold text-sm flex items-center justify-center gap-2.5 shadow-md transition-all active:scale-95 group"
@@ -359,8 +359,11 @@ export default function DedicateDriveModal({ isOpen, onClose }: DedicateDriveMod
                     {showQR ? (locale === 'hi' ? 'QR कोड छुपाएं' : 'Hide QR Code') : (locale === 'hi' ? 'अन्य डिवाइस से स्कैन करने के लिए QR कोड देखें' : 'Show QR Code for companion device')}
                   </button>
                 </div>
+              </div>
 
-                {showQR && siteConfig.upi?.qrImage && (
+              {/* QR Code Section (Always visible on PC, toggleable on mobile) */}
+              {siteConfig.upi?.qrImage && (
+                <div className={`${showQR ? 'block' : 'hidden md:block'} text-center mt-2`}>
                   <div className="bg-white p-4 rounded-2xl border border-charcoal/10 shadow-sm max-w-[200px] mx-auto">
                     <Image
                       src={siteConfig.upi.qrImage}
@@ -370,8 +373,11 @@ export default function DedicateDriveModal({ isOpen, onClose }: DedicateDriveMod
                       className="w-full h-auto rounded-lg"
                     />
                   </div>
-                )}
-              </div>
+                  <p className="text-xs text-warm-grey mt-2">
+                    {locale === 'hi' ? 'अपने फोन से Google Pay या किसी भी UPI ऐप द्वारा स्कैन करें' : 'Scan using Google Pay or any UPI app on your phone'}
+                  </p>
+                </div>
+              )}
 
               <div className="bg-warm-ivory/30 p-4 rounded-2xl border border-charcoal/10 text-xs text-charcoal/80 text-left max-w-md mx-auto space-y-1">
                 <p><strong>{locale === 'hi' ? 'व्हाट्सएप पुष्टि:' : 'WhatsApp Updates:'}</strong> {phone}</p>

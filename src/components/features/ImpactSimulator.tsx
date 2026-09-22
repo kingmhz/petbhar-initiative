@@ -341,7 +341,7 @@ export default function ImpactSimulator({ onOpenDedication, onOpenQR }: ImpactSi
 
               {/* Direct UPI Intent Link if on supported mobile */}
               {siteConfig.upi?.id && (
-                <div className="mt-4">
+                <div className="mt-4 md:hidden">
                   <a
                     href={upiIntentUrl}
                     className="w-full py-3 px-4 rounded-xl bg-charcoal text-ivory text-xs font-medium flex items-center justify-center gap-2 hover:bg-black transition-colors"

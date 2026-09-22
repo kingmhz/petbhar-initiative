@@ -55,7 +55,7 @@ export function DonationMethods({ className = '' }: DonationMethodsProps) {
           </div>
 
           {config.upi?.id && (
-            <div className="mt-6 space-y-2.5">
+            <div className="mt-6 space-y-2.5 md:hidden">
               <a 
                 href={gpayUrl}
                 className="w-full justify-center py-3.5 px-6 rounded-full bg-charcoal text-ivory hover:bg-black font-semibold text-xs sm:text-sm flex items-center justify-center gap-2.5 shadow-sm active:scale-[0.98] transition-all group"

@@ -242,10 +242,10 @@ export default function PantryWishlist() {
             <span>{copied ? 'UPI Copied!' : upiId}</span>
           </button>
 
-          {/* 1-Tap UPI Sponsor */}
+          {/* 1-Tap UPI Sponsor (Mobile Only) */}
           <a
             href={upiDeepLink}
-            className={`flex items-center justify-center gap-2 px-6 py-3 rounded-xl text-xs sm:text-sm font-semibold transition-all shadow-md active:scale-98 ${
+            className={`flex md:hidden items-center justify-center gap-2 px-6 py-3 rounded-xl text-xs sm:text-sm font-semibold transition-all shadow-md active:scale-98 ${
               totalAmount > 0
                 ? 'bg-charcoal text-ivory hover:bg-black cursor-pointer'
                 : 'bg-charcoal/40 text-ivory/60 cursor-not-allowed pointer-events-none'

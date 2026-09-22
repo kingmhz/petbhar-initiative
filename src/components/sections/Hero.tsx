@@ -291,8 +291,8 @@ export default function Hero() {
                 </div>
               </div>
 
-              {/* Direct One-Tap Google Pay Action */}
-              <div className="pt-3.5 space-y-2">
+              {/* Direct One-Tap Google Pay Action (Mobile Only) */}
+              <div className="pt-3.5 space-y-2 md:hidden">
                 <a
                   href={gpayUrl}
                   className="w-full py-3.5 px-4 rounded-2xl bg-charcoal hover:bg-black text-ivory text-xs sm:text-sm font-semibold text-center flex items-center justify-center gap-2.5 shadow-md active:scale-[0.98] transition-all min-h-[48px] group"
