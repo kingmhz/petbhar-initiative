@@ -13,7 +13,6 @@ export const translations = {
     nav_support_us: 'Support Us',
     nav_dedicate: 'Dedicate a Drive',
     nav_impact_card: 'Impact Card',
-    nav_receipt: 'Get Receipt',
 
     // Hero
     hero_badge: 'Humanity & Animal Welfare',
@@ -67,16 +66,6 @@ export const translations = {
     card_type_paws: 'Street Dog Bowls',
     card_download: 'Download Story (PNG)',
     card_share: 'Share to WhatsApp',
-
-    // Receipt & Certificate
-    receipt_title: 'Official Contribution Certificate',
-    receipt_subtitle: 'Generate a verified acknowledgment certificate for your donation.',
-    receipt_donor_name: 'Donor Name',
-    receipt_amount: 'Amount Donated (₹)',
-    receipt_utr: 'UPI Ref / UTR Number',
-    receipt_date: 'Donation Date',
-    receipt_generate: 'Generate Certificate',
-    receipt_print: 'Print / Save as PDF',
 
     // About Section
     about_label: 'WHO WE ARE',
@@ -218,7 +207,6 @@ export const translations = {
     nav_support_us: 'सहयोग दें',
     nav_dedicate: 'ड्राइव समर्पित करें',
     nav_impact_card: 'इम्पैक्ट कार्ड',
-    nav_receipt: 'रसीद प्राप्त करें',
 
     // Hero
     hero_badge: 'मानवता और बेजुबान पशु सेवा',
@@ -272,16 +260,6 @@ export const translations = {
     card_type_paws: 'बेजुबान श्वान आहार',
     card_download: 'स्टोरी कार्ड डाउनलोड करें (PNG)',
     card_share: 'व्हाट्सएप पर शेयर करें',
-
-    // Receipt & Certificate
-    receipt_title: 'आधिकारिक सहयोग प्रमाण पत्र',
-    receipt_subtitle: 'अपने दान के लिए सत्यापित आभार प्रमाण पत्र प्राप्त करें।',
-    receipt_donor_name: 'सहयोगी का नाम',
-    receipt_amount: 'सहयोग राशि (₹)',
-    receipt_utr: 'UPI रेफरेंस / UTR नंबर',
-    receipt_date: 'दान की तिथि',
-    receipt_generate: 'प्रमाण पत्र बनाएं',
-    receipt_print: 'प्रिंट / PDF के रूप में सहेजें',
 
     // About Section
     about_label: 'हम कौन हैं',
