@@ -3,7 +3,8 @@
 import { useState, useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 import Link from 'next/link';
-import { Heart, MessageCircle, X, AlertCircle } from 'lucide-react';
+import { Heart, X, AlertCircle } from 'lucide-react';
+import { WhatsAppIcon } from '@/components/ui/SocialIcons';
 import { siteConfig } from '@/lib/siteConfig';
 import { openSosBeacon } from '@/components/features/SosBeaconButton';
 import { useLanguage } from '@/context/LanguageContext';
@@ -71,7 +72,7 @@ export function MobileQuickBar() {
               className="w-9 h-9 rounded-xl bg-[#25D366]/20 text-[#25D366] hover:bg-[#25D366]/30 flex items-center justify-center transition-colors active:scale-95"
               aria-label="Chat on WhatsApp"
             >
-              <MessageCircle size={17} />
+              <WhatsAppIcon size={19} />
             </a>
           )}
           <Link

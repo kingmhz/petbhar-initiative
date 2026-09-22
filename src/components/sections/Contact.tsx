@@ -4,8 +4,8 @@ import { SectionLabel } from '@/components/ui/SectionLabel';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
-import { MessageCircle, Phone } from 'lucide-react';
-import { InstagramIcon, GmailIcon } from '@/components/ui/SocialIcons';
+import { Phone } from 'lucide-react';
+import { InstagramIcon, GmailIcon, WhatsAppIcon } from '@/components/ui/SocialIcons';
 import config from '@/lib/siteConfig';
 
 export function Contact() {
@@ -85,12 +85,12 @@ export function Contact() {
                     href={`https://wa.me/${config.contact.whatsapp.replace(/\D/g, '')}`} 
                     target="_blank" 
                     rel="noopener noreferrer" 
-                    className="group flex items-center gap-3 text-warm-grey hover:text-[#25D366] transition-all duration-300"
+                    className="group flex items-center gap-3 text-warm-grey hover:text-charcoal transition-all duration-300"
                   >
-                    <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-charcoal/5 group-hover:bg-[#25D366]/15 border border-charcoal/5 group-hover:border-[#25D366]/40 transition-all">
-                      <MessageCircle className="h-4 w-4 group-hover:text-[#25D366] transition-colors" />
+                    <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-white shadow-xs border border-charcoal/10 group-hover:border-[#25D366]/40 group-hover:shadow-[0_2px_12px_rgba(37,211,102,0.22)] transition-all">
+                      <WhatsAppIcon size={19} />
                     </span>
-                    <span className="transition-colors group-hover:text-[#25D366]">{config.contact.whatsapp}</span>
+                    <span className="transition-colors group-hover:text-charcoal">{config.contact.whatsapp}</span>
                   </a>
                 )}
                 {config.contact.phone && (

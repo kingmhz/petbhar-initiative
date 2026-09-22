@@ -11,6 +11,7 @@ import DedicateDriveModal from '@/components/features/DedicateDriveModal';
 import ImpactCardGeneratorModal from '@/components/features/ImpactCardGeneratorModal';
 import ReceiptGeneratorModal from '@/components/features/ReceiptGeneratorModal';
 import { openSosBeacon } from '@/components/features/SosBeaconButton';
+import { WhatsAppIcon } from '@/components/ui/SocialIcons';
 
 export default function Navbar() {
   const pathname = usePathname();
@@ -308,7 +309,7 @@ export default function Navbar() {
                 className="w-full text-center bg-[#25D366]/15 hover:bg-[#25D366]/25 text-[#128C7E] border border-[#25D366]/30 py-3 rounded-2xl text-xs uppercase tracking-wider font-semibold active:scale-[0.98] transition-all min-h-[46px] flex items-center justify-center gap-1.5"
                 onClick={() => setMobileMenuOpen(false)}
               >
-                <MessageCircle size={14} />
+                <WhatsAppIcon size={16} />
                 <span>WhatsApp</span>
               </a>
             )}
