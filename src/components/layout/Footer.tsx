@@ -76,16 +76,21 @@ export default function Footer() {
             <h3 className="text-xs uppercase tracking-widest text-white/50 mb-5 font-semibold">{t('footer_get_in_touch')}</h3>
             <ul className="space-y-3">
               <li>
-                <a href={`mailto:${siteConfig.contact.email}`} className="inline-flex items-center gap-2 py-1 text-sm text-ivory/80 hover:text-white transition-colors">
-                  <GmailIcon size={16} />
+                <a href={`mailto:${siteConfig.contact.email}`} className="inline-flex items-center gap-2.5 py-1 text-sm sm:text-[15px] text-ivory/80 hover:text-white transition-colors">
+                  <GmailIcon size={18} />
                   <span>{siteConfig.contact.email}</span>
                 </a>
               </li>
               <li>
-                <a href={siteConfig.socials.instagram} target="_blank" rel="noopener noreferrer" className="ig-btn group inline-flex items-center gap-2 py-1 text-sm text-ivory/80 hover:text-white transition-colors">
-                  <InstagramIcon size={18} />
-                  <span className="transition-all group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#FF7A00] group-hover:via-[#FF0069] group-hover:to-[#D300C5] font-medium">{t('footer_follow_journey')}</span>
-                  <ArrowUpRight size={14} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#FF0069]" />
+                <a 
+                  href={siteConfig.socials.instagram} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="ig-btn group inline-flex items-center gap-2.5 py-1.5 text-base sm:text-[17px] text-ivory/90 hover:text-white transition-colors font-medium"
+                >
+                  <InstagramIcon size={22} />
+                  <span className="transition-all group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-[#FF7A00] group-hover:via-[#FF0069] group-hover:to-[#D300C5]">{t('footer_follow_journey')}</span>
+                  <ArrowUpRight size={17} className="transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#FF0069]" />
                 </a>
               </li>
             </ul>
