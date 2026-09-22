@@ -5,7 +5,6 @@ import { SectionLabel } from '@/components/ui/SectionLabel';
 import { siteConfig } from '@/lib/siteConfig';
 import Link from 'next/link';
 import WallOfKindness from '@/components/features/WallOfKindness';
-import RupeeBreakdownChart from '@/components/features/RupeeBreakdownChart';
 import FaqAccordion from '@/components/features/FaqAccordion';
 
 export default function TransparencyPage() {
@@ -96,22 +95,15 @@ export default function TransparencyPage() {
         </div>
       </section>
 
-      {/* Visual Where Every Rupee Goes Breakdown */}
-      <section className="py-16 sm:py-20 px-6 bg-warm-ivory/20 border-t border-charcoal/5">
-        <div className="max-w-5xl mx-auto">
-          <RupeeBreakdownChart />
-        </div>
-      </section>
-
-      {/* Public Wall of Kindness Feed */}
-      <WallOfKindness />
-
       {/* Frequently Asked Questions Accordion */}
       <section className="py-16 sm:py-20 px-6 bg-warm-ivory/20 border-t border-charcoal/5">
         <div className="max-w-4xl mx-auto">
           <FaqAccordion />
         </div>
       </section>
+
+      {/* Public Wall of Kindness Feed */}
+      <WallOfKindness />
 
       {/* Trust Guarantee Statement */}
       <section className="bg-charcoal text-ivory py-24 px-6 text-center">

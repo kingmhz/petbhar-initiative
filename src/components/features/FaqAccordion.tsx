@@ -50,9 +50,9 @@ const FAQS: FaqItem[] = [
     id: 'faq-5',
     category: 'donations',
     questionEn: 'Is 100% of my donation utilized for food on the ground?',
-    answerEn: 'Yes. PetBhar operates on a pure grassroots volunteer model. 0% of public contributions go toward founder salaries or corporate overhead. 88% is allocated directly to fresh grains and ingredients, 7% to eco-packaging and delivery fuel, and 5% to vessel hygiene. Every single rupee is tracked transparently.',
+    answerEn: 'Yes. PetBhar operates on a pure grassroots volunteer model. 100% of executive time and management is contributed voluntarily, with zero founder salaries or administrative cuts. Contributions go directly toward fresh grains, quality animal feed, compostable meal packaging, and ground delivery logistics.',
     questionHi: 'क्या मेरे दान का 100% हिस्सा सीधे भोजन और सेवा में उपयोग होता है?',
-    answerHi: 'हाँ। पेटभर पूर्णतः ज़मीनी स्वयंसेवी मॉडल पर कार्य करता है। किसी भी प्रकार का प्रशासनिक वेतन या मुनाफा नहीं लिया जाता। 88% सीधे ताज़ा अनाज व सामग्री में, 7% पर्यावरण-अनुकूल डिब्बों व ईंधन में और 5% स्वच्छता में उपयोग होता है। हर एक पैसे का सार्वजनिक हिसाब रखा जाता है।',
+    answerHi: 'हाँ। पेटभर पूर्णतः ज़मीनी स्वयंसेवी मॉडल पर कार्य करता है। किसी भी प्रकार का प्रशासनिक वेतन या मुनाफा नहीं लिया जाता। समस्त जन-सहयोग सीधे ताज़ा अनाज, पशु आहार, पर्यावरण-अनुकूल डिब्बों और वितरण व्यवस्था में उपयोग होता है। हर एक पैसे का सार्वजनिक हिसाब रखा जाता है।',
   },
   {
     id: 'faq-6',
