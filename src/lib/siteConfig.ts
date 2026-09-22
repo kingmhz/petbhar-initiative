@@ -87,7 +87,6 @@ const navigationItems = [
   { name: 'Our Work', label: 'Our Work', href: '/work' },
   { name: 'About', label: 'About', href: '/about' },
   { name: 'PetBhar Paws', label: 'PetBhar Paws', href: '/paws' },
-  { name: 'Get Involved', label: 'Get Involved', href: '/get-involved' },
   { name: 'Transparency', label: 'Transparency', href: '/transparency' },
   { name: 'Contact', label: 'Contact', href: '/contact' },
 ];
