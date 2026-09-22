@@ -188,7 +188,7 @@ export default function WallOfKindness() {
               ✨
             </div>
             <h3 className="font-serif text-2xl sm:text-3xl text-charcoal font-medium">
-              Get involved and add your name here
+              Support us and add your name here
             </h3>
             <p className="text-xs sm:text-sm text-warm-grey max-w-md leading-relaxed">
               Be the first to dedicate a feeding drive, volunteer on the ground, or share a warm note of encouragement for our community kitchen and animals.
@@ -198,7 +198,7 @@ export default function WallOfKindness() {
                 href="/get-involved"
                 className="px-6 py-3 rounded-xl bg-charcoal text-ivory text-xs sm:text-sm font-semibold hover:bg-black transition-all shadow-sm flex items-center gap-1.5"
               >
-                <span>Get Involved &rarr;</span>
+                <span>{t('nav_support_us')} &rarr;</span>
               </a>
               <button
                 type="button"
