@@ -2,13 +2,34 @@
 
 import React, { useState, useRef, useEffect, useCallback } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Download, Share2, Sparkles } from 'lucide-react';
+import { X, Download, Share2, Sparkles, Palette } from 'lucide-react';
 import { useLanguage } from '@/context/LanguageContext';
 
 interface ImpactCardGeneratorModalProps {
   isOpen: boolean;
   onClose: () => void;
   defaultMeals?: number;
+}
+
+// Utility to render text with precise, cross-browser letter-spacing on HTML5 Canvas
+function drawLetterSpaced(
+  ctx: CanvasRenderingContext2D,
+  text: string,
+  x: number,
+  y: number,
+  spacing: number,
+  align: 'center' | 'left' = 'center'
+) {
+  let totalWidth = 0;
+  for (let i = 0; i < text.length; i++) {
+    totalWidth += ctx.measureText(text[i]).width;
+    if (i < text.length - 1) totalWidth += spacing;
+  }
+  let currentX = align === 'center' ? x - totalWidth / 2 : x;
+  for (let i = 0; i < text.length; i++) {
+    ctx.fillText(text[i], currentX, y);
+    currentX += ctx.measureText(text[i]).width + spacing;
+  }
 }
 
 export default function ImpactCardGeneratorModal({
@@ -18,10 +39,18 @@ export default function ImpactCardGeneratorModal({
 }: ImpactCardGeneratorModalProps) {
   const { t, locale } = useLanguage();
   const [supporterName, setSupporterName] = useState('');
-  const [mealsCount, setMealsCount] = useState(defaultMeals);
+  const [mealsCount, setMealsCount] = useState<number>(Math.max(1, Math.round(defaultMeals)));
   const [impactType, setImpactType] = useState<'humanity' | 'paws'>('humanity');
+  const [cardTheme, setCardTheme] = useState<'alabaster' | 'obsidian'>('alabaster');
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const [downloadUrl, setDownloadUrl] = useState<string>('');
+
+  // Keep mealsCount in sync with defaultMeals if prop updates
+  useEffect(() => {
+    if (defaultMeals) {
+      setMealsCount(Math.max(1, Math.round(defaultMeals)));
+    }
+  }, [defaultMeals]);
 
   // Lock body scroll when modal is open
   useEffect(() => {
@@ -56,176 +85,335 @@ export default function ImpactCardGeneratorModal({
     canvas.width = W;
     canvas.height = H;
 
-    // 1. Background Luxury Gradient
-    const bgGrad = ctx.createLinearGradient(0, 0, W, H);
-    bgGrad.addColorStop(0, '#0D0D0B');
-    bgGrad.addColorStop(0.5, '#171714');
-    bgGrad.addColorStop(1, '#080807');
+    const isAlabaster = cardTheme === 'alabaster';
+
+    // Theme Palette Configurations
+    const theme = isAlabaster
+      ? {
+          bgTop: '#FAF8F4',
+          bgBottom: '#F2EDE4',
+          watermark: 'rgba(140, 98, 57, 0.035)',
+          outerBorder: 'rgba(140, 98, 57, 0.28)',
+          innerBorder: 'rgba(140, 98, 57, 0.16)',
+          cornerBrackets: '#8C6239',
+          bronzeAccent: '#8C6239',
+          bronzeLight: 'rgba(140, 98, 57, 0.12)',
+          textPrimary: '#171717',
+          textSecondary: '#6B6864',
+          cardBg: 'rgba(255, 255, 255, 0.88)',
+          cardBorder: 'rgba(140, 98, 57, 0.32)',
+          shadowColor: 'rgba(140, 98, 57, 0.08)',
+        }
+      : {
+          bgTop: '#0F0E0C',
+          bgBottom: '#181614',
+          watermark: 'rgba(255, 255, 255, 0.025)',
+          outerBorder: 'rgba(197, 155, 109, 0.32)',
+          innerBorder: 'rgba(197, 155, 109, 0.16)',
+          cornerBrackets: '#C59B6D',
+          bronzeAccent: '#C59B6D',
+          bronzeLight: 'rgba(197, 155, 109, 0.15)',
+          textPrimary: '#FAF8F4',
+          textSecondary: '#A39E98',
+          cardBg: 'rgba(255, 255, 255, 0.04)',
+          cardBorder: 'rgba(197, 155, 109, 0.38)',
+          shadowColor: 'rgba(0, 0, 0, 0.4)',
+        };
+
+    // 1. Luxury Gradient Background
+    const bgGrad = ctx.createLinearGradient(0, 0, 0, H);
+    bgGrad.addColorStop(0, theme.bgTop);
+    bgGrad.addColorStop(1, theme.bgBottom);
     ctx.fillStyle = bgGrad;
     ctx.fillRect(0, 0, W, H);
 
-    // 2. Radial warm glow in center
-    const glow = ctx.createRadialGradient(W / 2, H * 0.45, 50, W / 2, H * 0.45, 600);
-    glow.addColorStop(0, 'rgba(217, 119, 6, 0.15)');
-    glow.addColorStop(0.5, 'rgba(217, 119, 6, 0.04)');
-    glow.addColorStop(1, 'transparent');
-    ctx.fillStyle = glow;
+    // 2. Subtle Radial Warmth in Center
+    const radialGlow = ctx.createRadialGradient(W / 2, H * 0.44, 40, W / 2, H * 0.44, 650);
+    radialGlow.addColorStop(0, theme.bronzeLight);
+    radialGlow.addColorStop(1, 'transparent');
+    ctx.fillStyle = radialGlow;
     ctx.fillRect(0, 0, W, H);
 
-    // 3. Elegant Outer & Inner Border Frame
-    ctx.strokeStyle = 'rgba(244, 241, 233, 0.15)';
-    ctx.lineWidth = 3;
-    ctx.strokeRect(50, 50, W - 100, H - 100);
-
-    ctx.strokeStyle = 'rgba(217, 119, 6, 0.3)';
-    ctx.lineWidth = 1;
-    ctx.strokeRect(65, 65, W - 130, H - 130);
-
-    // Corner Accents
-    const cornerSize = 25;
-    ctx.strokeStyle = '#D97706';
-    ctx.lineWidth = 3;
-    // Top-left
-    ctx.beginPath();
-    ctx.moveTo(40, 40 + cornerSize);
-    ctx.lineTo(40, 40);
-    ctx.lineTo(40 + cornerSize, 40);
-    ctx.stroke();
-    // Top-right
-    ctx.beginPath();
-    ctx.moveTo(W - 40 - cornerSize, 40);
-    ctx.lineTo(W - 40, 40);
-    ctx.lineTo(W - 40, 40 + cornerSize);
-    ctx.stroke();
-    // Bottom-left
-    ctx.beginPath();
-    ctx.moveTo(40, H - 40 - cornerSize);
-    ctx.lineTo(40, H - 40);
-    ctx.lineTo(40 + cornerSize, H - 40);
-    ctx.stroke();
-    // Bottom-right
-    ctx.beginPath();
-    ctx.moveTo(W - 40 - cornerSize, H - 40);
-    ctx.lineTo(W - 40, H - 40);
-    ctx.lineTo(W - 40, H - 40 - cornerSize);
-    ctx.stroke();
-
-    // 4. Header Branding
+    // 3. Faint Brand Watermark
+    ctx.save();
     ctx.textAlign = 'center';
-    ctx.fillStyle = '#F4F1E9';
-    ctx.font = 'bold 54px "Playfair Display", serif, Georgia';
-    ctx.fillText('PETBHAR', W / 2, 220);
+    ctx.fillStyle = theme.watermark;
+    ctx.font = '700 130px "Playfair Display", "Cinzel", "Georgia", serif';
+    ctx.fillText('PETBHAR', W / 2, H * 0.48);
+    ctx.restore();
 
-    ctx.fillStyle = 'rgba(244, 241, 233, 0.6)';
-    ctx.font = '500 22px Inter, sans-serif';
-    try {
-      (ctx as unknown as { letterSpacing?: string }).letterSpacing = '12px';
-    } catch {}
-    ctx.fillText('I N I T I A T I V E', W / 2, 265);
+    // 4. Double Hairline Architectural Framing
+    // Outer Frame
+    ctx.strokeStyle = theme.outerBorder;
+    ctx.lineWidth = 1.5;
+    ctx.strokeRect(52, 52, W - 104, H - 104);
 
-    // Gold separator line
-    ctx.strokeStyle = 'rgba(217, 119, 6, 0.4)';
-    ctx.lineWidth = 2;
+    // Inner Frame
+    ctx.strokeStyle = theme.innerBorder;
+    ctx.lineWidth = 1;
+    ctx.strokeRect(68, 68, W - 136, H - 136);
+
+    // Geometric Corner Brackets
+    const bracketLen = 28;
+    ctx.strokeStyle = theme.cornerBrackets;
+    ctx.lineWidth = 2.5;
+
+    // Top-Left
     ctx.beginPath();
-    ctx.moveTo(W / 2 - 80, 310);
-    ctx.lineTo(W / 2 + 80, 310);
+    ctx.moveTo(42, 42 + bracketLen);
+    ctx.lineTo(42, 42);
+    ctx.lineTo(42 + bracketLen, 42);
     ctx.stroke();
 
-    // 5. Impact Category Badge
-    const badgeText = impactType === 'humanity' 
-      ? (locale === 'hi' ? 'मानवता भोजन सेवा' : 'HUMANITY MEALS DRIVE')
-      : (locale === 'hi' ? 'पेटभर पॉज़ बेजुबान पशु सेवा' : 'PETBHAR PAWS ANIMAL CARE');
-    ctx.fillStyle = '#D97706';
-    ctx.font = '600 20px Inter, sans-serif';
-    ctx.fillText(badgeText, W / 2, 420);
-
-    // 6. Lead Statement
-    ctx.fillStyle = 'rgba(244, 241, 233, 0.85)';
-    ctx.font = '300 42px "Playfair Display", serif';
-    ctx.fillText(locale === 'hi' ? 'आज मैंने सहयोग दिया' : 'Today I supported', W / 2, 530);
-
-    // 7. Focal Number & Metric Box
-    const countText = String(mealsCount || 1);
-    const unitText = impactType === 'humanity' 
-      ? (locale === 'hi' ? 'ताज़ा भोजन थालियां' : 'FRESH MEALS') 
-      : (locale === 'hi' ? 'श्वान आहार कटोरे' : 'STRAY DOG MEALS');
-
-    // Box background
-    ctx.fillStyle = 'rgba(244, 241, 233, 0.04)';
-    ctx.strokeStyle = 'rgba(217, 119, 6, 0.35)';
-    ctx.lineWidth = 2;
+    // Top-Right
     ctx.beginPath();
-    ctx.roundRect(160, 600, W - 320, 420, [30]);
+    ctx.moveTo(W - 42 - bracketLen, 42);
+    ctx.lineTo(W - 42, 42);
+    ctx.lineTo(W - 42, 42 + bracketLen);
+    ctx.stroke();
+
+    // Bottom-Left
+    ctx.beginPath();
+    ctx.moveTo(42, H - 42 - bracketLen);
+    ctx.lineTo(42, H - 42);
+    ctx.lineTo(42 + bracketLen, H - 42);
+    ctx.stroke();
+
+    // Bottom-Right
+    ctx.beginPath();
+    ctx.moveTo(W - 42 - bracketLen, H - 42);
+    ctx.lineTo(W - 42, H - 42);
+    ctx.lineTo(W - 42, H - 42 - bracketLen);
+    ctx.stroke();
+
+    // 5. Floating Bronze Diamond Node (from Loading Screen)
+    ctx.save();
+    ctx.translate(W / 2, 160);
+    ctx.rotate(Math.PI / 4);
+    ctx.fillStyle = theme.bronzeAccent;
+    ctx.fillRect(-8, -8, 16, 16);
+    ctx.restore();
+
+    // 6. Header: Primary Brand "PETBHAR"
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.fillStyle = theme.textPrimary;
+    ctx.font = '600 52px "Playfair Display", "Cinzel", "Georgia", serif';
+    drawLetterSpaced(ctx, 'PETBHAR', W / 2, 230, 8);
+
+    // Sub-Word: "INITIATIVE"
+    ctx.fillStyle = theme.bronzeAccent;
+    ctx.font = '600 19px Inter, -apple-system, BlinkMacSystemFont, sans-serif';
+    drawLetterSpaced(ctx, 'INITIATIVE', W / 2, 275, 14);
+
+    // Symmetrical Hairline Accent Divider with Center Diamond
+    const lineW = 180;
+    ctx.strokeStyle = theme.outerBorder;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(W / 2 - lineW, 315);
+    ctx.lineTo(W / 2 - 14, 315);
+    ctx.moveTo(W / 2 + 14, 315);
+    ctx.lineTo(W / 2 + lineW, 315);
+    ctx.stroke();
+
+    // Center micro diamond
+    ctx.save();
+    ctx.translate(W / 2, 315);
+    ctx.rotate(Math.PI / 4);
+    ctx.fillStyle = theme.bronzeAccent;
+    ctx.fillRect(-3.5, -3.5, 7, 7);
+    ctx.restore();
+
+    // Core Brand Ethos (Food • Dignity • Animal Care)
+    ctx.fillStyle = theme.textSecondary;
+    ctx.font = '500 15px Inter, -apple-system, sans-serif';
+    drawLetterSpaced(ctx, 'FOOD • DIGNITY • ANIMAL CARE', W / 2, 355, 6);
+    ctx.restore();
+
+    // 7. Impact Category Badge
+    const badgeText = impactType === 'humanity'
+      ? (locale === 'hi' ? 'मानवता भोजन सेवा' : 'HUMANITY MEALS DRIVE')
+      : (locale === 'hi' ? 'पेटभर पॉज़ बेजुबान सेवा' : 'PETBHAR PAWS ANIMAL CARE');
+
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.font = '600 17px Inter, -apple-system, sans-serif';
+    const badgeWidth = ctx.measureText(badgeText).width + 70;
+    
+    // Badge pill container
+    ctx.fillStyle = isAlabaster ? 'rgba(140, 98, 57, 0.08)' : 'rgba(197, 155, 109, 0.12)';
+    ctx.strokeStyle = isAlabaster ? 'rgba(140, 98, 57, 0.3)' : 'rgba(197, 155, 109, 0.35)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.roundRect(W / 2 - badgeWidth / 2, 420, badgeWidth, 38, [19]);
     ctx.fill();
     ctx.stroke();
 
-    // Big Number
-    ctx.fillStyle = '#F4F1E9';
-    ctx.font = '700 160px "Playfair Display", serif';
-    ctx.fillText(countText, W / 2, 790);
+    ctx.fillStyle = theme.bronzeAccent;
+    drawLetterSpaced(ctx, badgeText, W / 2, 445, 3);
+    ctx.restore();
 
-    // Unit description
-    ctx.fillStyle = '#D97706';
-    ctx.font = '600 32px Inter, sans-serif';
-    ctx.fillText(unitText, W / 2, 880);
+    // 8. Lead Statement
+    ctx.save();
+    ctx.textAlign = 'center';
+    ctx.fillStyle = theme.textPrimary;
+    ctx.font = '400 38px "Playfair Display", "Cinzel", "Georgia", serif';
+    ctx.fillText(locale === 'hi' ? 'आज मैंने सहयोग दिया' : 'Today I supported', W / 2, 535);
+    ctx.restore();
 
-    ctx.fillStyle = 'rgba(244, 241, 233, 0.5)';
-    ctx.font = 'italic 26px "Playfair Display", serif';
-    ctx.fillText(locale === 'hi' ? 'ज़रूरतमंदों के पेट भरने हेतु' : 'No one should sleep hungry', W / 2, 940);
+    // 9. Central Elevated Focal Card
+    const cardX = 140;
+    const cardY = 590;
+    const cardW = W - 280; // 800px wide
+    const cardH = 430;
 
-    // 8. Supporter Name
-    const displayName = supporterName.trim() || (locale === 'hi' ? 'एक सजग सहयोगी' : 'A Kind Heart');
-    ctx.fillStyle = 'rgba(244, 241, 233, 0.6)';
-    ctx.font = '500 24px Inter, sans-serif';
-    ctx.fillText(locale === 'hi' ? 'सेवा सहयोगी' : 'SUPPORTED BY', W / 2, 1150);
+    // Card shadow
+    ctx.save();
+    ctx.shadowColor = theme.shadowColor;
+    ctx.shadowBlur = 40;
+    ctx.shadowOffsetY = 16;
+    ctx.fillStyle = theme.cardBg;
+    ctx.beginPath();
+    ctx.roundRect(cardX, cardY, cardW, cardH, [28]);
+    ctx.fill();
+    ctx.restore();
 
-    ctx.fillStyle = '#F4F1E9';
-    ctx.font = '600 58px "Playfair Display", serif';
-    ctx.fillText(displayName, W / 2, 1230);
+    // Card border
+    ctx.strokeStyle = theme.cardBorder;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.roundRect(cardX, cardY, cardW, cardH, [28]);
+    ctx.stroke();
 
-    // 9. Verified Seal & Date
+    // Inside Central Card
+    ctx.save();
+    ctx.textAlign = 'center';
+
+    // A. Big Elegant Integer Number
+    const safeCount = Math.max(1, Math.round(mealsCount || 1));
+    ctx.fillStyle = theme.textPrimary;
+    ctx.font = '600 155px "Playfair Display", "Cinzel", "Georgia", serif';
+    ctx.fillText(safeCount.toLocaleString('en-IN'), W / 2, cardY + 185);
+
+    // B. Unit Description
+    const unitText = impactType === 'humanity'
+      ? (safeCount === 1 ? 'FRESH MEAL' : 'FRESH MEALS')
+      : (safeCount === 1 ? 'STRAY ANIMAL MEAL' : 'STRAY ANIMAL MEALS');
+
+    ctx.fillStyle = theme.bronzeAccent;
+    ctx.font = '600 24px Inter, -apple-system, sans-serif';
+    drawLetterSpaced(ctx, unitText, W / 2, cardY + 250, 7);
+
+    // C. Micro divider inside card
+    ctx.strokeStyle = isAlabaster ? 'rgba(140, 98, 57, 0.25)' : 'rgba(197, 155, 109, 0.25)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(W / 2 - 60, cardY + 295);
+    ctx.lineTo(W / 2 + 60, cardY + 295);
+    ctx.stroke();
+
+    // D. Grounded Grassroots Motto
+    ctx.fillStyle = theme.textSecondary;
+    ctx.font = 'italic 23px "Playfair Display", "Cinzel", "Georgia", serif';
+    ctx.fillText(
+      impactType === 'humanity'
+        ? (locale === 'hi' ? 'कोई भी भूखा न सोए' : 'No one should sleep hungry')
+        : (locale === 'hi' ? 'बेजुबान पशुओं के लिए स्वच्छ आहार' : 'Daily nourishment for street animals'),
+      W / 2,
+      cardY + 355
+    );
+    ctx.restore();
+
+    // 10. Supporter Section
+    ctx.save();
+    ctx.textAlign = 'center';
+
+    // "SUPPORTED BY" Label
+    ctx.fillStyle = theme.textSecondary;
+    ctx.font = '500 17px Inter, -apple-system, sans-serif';
+    drawLetterSpaced(ctx, locale === 'hi' ? 'सहयोगी' : 'SUPPORTED WITH KINDNESS BY', W / 2, 1145, 6);
+
+    // Supporter Name
+    const displayName = supporterName.trim() || (locale === 'hi' ? 'एक सजग सहयोगी' : 'A Kind Supporter');
+    ctx.fillStyle = theme.textPrimary;
+    ctx.font = '600 52px "Playfair Display", "Cinzel", "Georgia", serif';
+    ctx.fillText(displayName, W / 2, 1225);
+
+    // Date & Grassroots Tag
     const today = new Date().toLocaleDateString(locale === 'hi' ? 'hi-IN' : 'en-IN', {
       day: 'numeric',
       month: 'long',
-      year: 'numeric'
+      year: 'numeric',
     });
-    ctx.fillStyle = 'rgba(244, 241, 233, 0.5)';
-    ctx.font = '400 24px Inter, sans-serif';
-    ctx.fillText(`Verified Impact • ${today}`, W / 2, 1310);
+    ctx.fillStyle = theme.bronzeAccent;
+    ctx.font = '500 19px Inter, -apple-system, sans-serif';
+    ctx.fillText(`Community Feeding Drive • ${today}`, W / 2, 1285);
+    ctx.restore();
 
-    // 10. Call to action footer
-    ctx.strokeStyle = 'rgba(244, 241, 233, 0.1)';
+    // 11. Footer Section
+    // Divider line
+    ctx.strokeStyle = theme.innerBorder;
     ctx.lineWidth = 1;
     ctx.beginPath();
-    ctx.moveTo(200, 1420);
-    ctx.lineTo(W - 200, 1420);
+    ctx.moveTo(220, 1380);
+    ctx.lineTo(W - 220, 1380);
     ctx.stroke();
 
-    ctx.fillStyle = '#F4F1E9';
-    ctx.font = '400 30px "Playfair Display", serif';
-    ctx.fillText(locale === 'hi' ? 'आप भी इस सेवा का हिस्सा बनें' : 'Join the movement to end hunger', W / 2, 1500);
+    ctx.save();
+    ctx.textAlign = 'center';
 
-    ctx.fillStyle = '#D97706';
-    ctx.font = '600 28px Inter, sans-serif';
-    ctx.fillText('@petbharinitiative', W / 2, 1560);
+    // Movement invitation
+    ctx.fillStyle = theme.textPrimary;
+    ctx.font = '400 28px "Playfair Display", "Cinzel", "Georgia", serif';
+    ctx.fillText(
+      locale === 'hi' ? 'आप भी इस ज़मीनी सेवा का हिस्सा बनें' : 'Join the grassroots movement to end hunger',
+      W / 2,
+      1455
+    );
 
-    ctx.fillStyle = 'rgba(244, 241, 233, 0.4)';
-    ctx.font = '400 22px Inter, sans-serif';
-    ctx.fillText('www.petbhar.org', W / 2, 1610);
+    // Social handle & domain
+    ctx.fillStyle = theme.bronzeAccent;
+    ctx.font = '600 25px Inter, -apple-system, sans-serif';
+    drawLetterSpaced(ctx, '@petbharinitiative', W / 2, 1515, 3);
 
-    // Footer Motto
-    ctx.fillStyle = 'rgba(244, 241, 233, 0.7)';
-    ctx.font = 'italic 28px "Playfair Display", serif';
-    ctx.fillText('Food. Dignity. Hope.', W / 2, 1780);
+    ctx.fillStyle = theme.textSecondary;
+    ctx.font = '400 19px Inter, -apple-system, sans-serif';
+    ctx.fillText('petbharinitiative.vercel.app', W / 2, 1560);
 
-    // Update download URL
+    // Bottom Decorative Hairline Accent & Floating Diamond
+    ctx.save();
+    ctx.translate(W / 2, 1680);
+    ctx.rotate(Math.PI / 4);
+    ctx.fillStyle = theme.bronzeAccent;
+    ctx.fillRect(-4.5, -4.5, 9, 9);
+    ctx.restore();
+
+    ctx.strokeStyle = theme.innerBorder;
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.moveTo(W / 2 - 120, 1680);
+    ctx.lineTo(W / 2 - 16, 1680);
+    ctx.moveTo(W / 2 + 16, 1680);
+    ctx.lineTo(W / 2 + 120, 1680);
+    ctx.stroke();
+
+    // Motto
+    ctx.fillStyle = theme.textPrimary;
+    ctx.font = 'italic 25px "Playfair Display", "Cinzel", "Georgia", serif';
+    ctx.fillText('Food. Dignity. Hope.', W / 2, 1745);
+
+    ctx.restore();
+
+    // Generate Download Data URL
     try {
       setDownloadUrl(canvas.toDataURL('image/png'));
     } catch {
       // ignore
     }
-  }, [supporterName, mealsCount, impactType, locale]);
+  }, [supporterName, mealsCount, impactType, cardTheme, locale]);
 
+  // Re-render canvas whenever dependencies change or fonts finish loading
   useEffect(() => {
     if (isOpen) {
       if (typeof document !== 'undefined' && document.fonts) {
@@ -241,8 +429,9 @@ export default function ImpactCardGeneratorModal({
   if (!isOpen) return null;
 
   const handleShareWhatsApp = () => {
+    const safeCount = Math.max(1, Math.round(mealsCount || 1));
     const text = encodeURIComponent(
-      `I just supported ${mealsCount} ${impactType === 'humanity' ? 'fresh meals' : 'stray animal meals'} with PetBhar Initiative! Check out their work and join the movement: https://petbhar.org`
+      `I just supported ${safeCount} ${impactType === 'humanity' ? 'fresh meals' : 'stray animal meals'} with PetBhar Initiative! See their ground work: https://petbharinitiative.vercel.app`
     );
     window.open(`https://wa.me/?text=${text}`, '_blank');
   };
@@ -264,7 +453,7 @@ export default function ImpactCardGeneratorModal({
           initial={{ opacity: 0, scale: 0.95, y: 15 }}
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 15 }}
-          className="relative bg-ivory rounded-3xl shadow-2xl border border-charcoal/10 max-w-2xl w-full p-6 sm:p-8 z-10 my-auto max-h-[92vh] overflow-y-auto overscroll-contain"
+          className="relative bg-[#FAF8F4] rounded-3xl shadow-2xl border border-[#8C6239]/20 max-w-2xl w-full p-6 sm:p-8 z-10 my-auto max-h-[92vh] overflow-y-auto overscroll-contain"
         >
           {/* Close button */}
           <button
@@ -275,12 +464,12 @@ export default function ImpactCardGeneratorModal({
             <X size={18} />
           </button>
 
-          {/* Title */}
+          {/* Header Title */}
           <div className="text-center mb-6 pr-8">
-            <span className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-widest text-amber-700 bg-amber-50 border border-amber-200/60 px-3 py-1 rounded-full font-semibold mb-2">
-              <Sparkles size={12} /> {locale === 'hi' ? 'सोशल शेयर कार्ड' : 'Instagram Story & WhatsApp Card'}
+            <span className="inline-flex items-center gap-1.5 text-[11px] uppercase tracking-widest text-[#8C6239] bg-[#8C6239]/10 border border-[#8C6239]/25 px-3 py-1 rounded-full font-semibold mb-2">
+              <Sparkles size={12} /> {locale === 'hi' ? 'सोशल शेयर कार्ड' : 'Social Impact Story Card'}
             </span>
-            <h2 className="font-serif text-2xl sm:text-3xl text-charcoal font-medium">
+            <h2 className="font-serif text-2xl sm:text-3xl text-charcoal font-normal">
               {t('card_title')}
             </h2>
             <p className="text-xs sm:text-sm text-charcoal/70 mt-1 max-w-md mx-auto">
@@ -292,20 +481,55 @@ export default function ImpactCardGeneratorModal({
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 items-start">
             {/* Left Column: Form Controls */}
             <div className="space-y-4 text-left">
+              {/* Theme Selector */}
+              <div>
+                <label className="block text-[11px] uppercase tracking-wider font-semibold text-charcoal mb-1.5 flex items-center gap-1.5">
+                  <Palette size={12} className="text-[#8C6239]" /> Luxury Card Style
+                </label>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setCardTheme('alabaster')}
+                    className={`py-2 px-3 rounded-xl text-xs font-medium border transition-all flex items-center justify-center gap-2 ${
+                      cardTheme === 'alabaster'
+                        ? 'bg-white text-charcoal border-[#8C6239] shadow-sm font-semibold'
+                        : 'bg-white/50 text-warm-grey border-charcoal/10 hover:border-charcoal/25'
+                    }`}
+                  >
+                    <span className="w-3 h-3 rounded-full bg-[#FAF8F4] border border-[#8C6239]/40" />
+                    <span>Alabaster Silk</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setCardTheme('obsidian')}
+                    className={`py-2 px-3 rounded-xl text-xs font-medium border transition-all flex items-center justify-center gap-2 ${
+                      cardTheme === 'obsidian'
+                        ? 'bg-[#181614] text-[#FAF8F4] border-[#C59B6D] shadow-sm font-semibold'
+                        : 'bg-white/50 text-warm-grey border-charcoal/10 hover:border-charcoal/25'
+                    }`}
+                  >
+                    <span className="w-3 h-3 rounded-full bg-[#11100E] border border-[#C59B6D]/40" />
+                    <span>Obsidian Bronze</span>
+                  </button>
+                </div>
+              </div>
+
+              {/* Supporter Name */}
               <div>
                 <label className="block text-[11px] uppercase tracking-wider font-semibold text-charcoal mb-1.5">
                   {t('card_name_label')}
                 </label>
                 <input
                   type="text"
-                  maxLength={40}
+                  maxLength={36}
                   value={supporterName}
                   onChange={(e) => setSupporterName(e.target.value)}
                   placeholder="e.g. Aarav Sharma"
-                  className="w-full bg-white border border-charcoal/15 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-charcoal focus:border-charcoal outline-none min-h-[44px]"
+                  className="w-full bg-white border border-charcoal/15 rounded-xl px-3.5 py-2.5 text-base sm:text-sm text-charcoal focus:border-[#8C6239] outline-none min-h-[44px]"
                 />
               </div>
 
+              {/* Cause Type */}
               <div>
                 <label className="block text-[11px] uppercase tracking-wider font-semibold text-charcoal mb-1.5">
                   {locale === 'hi' ? 'सेवा का प्रकार' : 'Impact Focus'}
@@ -314,9 +538,9 @@ export default function ImpactCardGeneratorModal({
                   <button
                     type="button"
                     onClick={() => setImpactType('humanity')}
-                    className={`py-2 px-3 rounded-xl text-xs font-semibold border transition-all ${
+                    className={`py-2 px-3 rounded-xl text-xs font-medium border transition-all ${
                       impactType === 'humanity'
-                        ? 'bg-charcoal text-ivory border-charcoal shadow-xs'
+                        ? 'bg-charcoal text-ivory border-charcoal shadow-xs font-semibold'
                         : 'bg-white text-charcoal border-charcoal/15 hover:border-charcoal/30'
                     }`}
                   >
@@ -325,9 +549,9 @@ export default function ImpactCardGeneratorModal({
                   <button
                     type="button"
                     onClick={() => setImpactType('paws')}
-                    className={`py-2 px-3 rounded-xl text-xs font-semibold border transition-all ${
+                    className={`py-2 px-3 rounded-xl text-xs font-medium border transition-all ${
                       impactType === 'paws'
-                        ? 'bg-charcoal text-ivory border-charcoal shadow-xs'
+                        ? 'bg-charcoal text-ivory border-charcoal shadow-xs font-semibold'
                         : 'bg-white text-charcoal border-charcoal/15 hover:border-charcoal/30'
                     }`}
                   >
@@ -336,6 +560,7 @@ export default function ImpactCardGeneratorModal({
                 </div>
               </div>
 
+              {/* Meal Count Presets */}
               <div>
                 <label className="block text-[11px] uppercase tracking-wider font-semibold text-charcoal mb-1.5">
                   {t('card_meals_label')}
@@ -348,7 +573,7 @@ export default function ImpactCardGeneratorModal({
                       onClick={() => setMealsCount(cnt)}
                       className={`py-2 rounded-xl text-xs font-semibold border transition-all ${
                         mealsCount === cnt
-                          ? 'bg-charcoal text-ivory border-charcoal'
+                          ? 'bg-[#8C6239] text-white border-[#8C6239]'
                           : 'bg-white text-charcoal border-charcoal/15 hover:border-charcoal/30'
                       }`}
                     >
@@ -361,10 +586,11 @@ export default function ImpactCardGeneratorModal({
                     type="number"
                     min="1"
                     max="1000"
+                    step="1"
                     value={mealsCount}
-                    onChange={(e) => setMealsCount(parseInt(e.target.value) || 1)}
+                    onChange={(e) => setMealsCount(Math.max(1, Math.floor(parseInt(e.target.value, 10) || 1)))}
                     placeholder="Custom count"
-                    className="w-full bg-white border border-charcoal/15 rounded-xl px-3.5 py-2 text-base sm:text-sm text-charcoal focus:border-charcoal outline-none"
+                    className="w-full bg-white border border-charcoal/15 rounded-xl px-3.5 py-2 text-base sm:text-sm text-charcoal focus:border-[#8C6239] outline-none"
                   />
                 </div>
               </div>
@@ -392,9 +618,9 @@ export default function ImpactCardGeneratorModal({
                 </button>
 
                 <p className="text-[11px] text-warm-grey text-center pt-1">
-                  {locale === 'hi' 
+                  {locale === 'hi'
                     ? '📱 1080×1920 वर्टिकल फॉर्मेट – इंस्टाग्राम स्टोरीज़ और व्हाट्सएप स्टेटस के लिए बिल्कुल उपयुक्त।'
-                    : '📱 Optimized 1080×1920 vertical format for Instagram Stories and WhatsApp Status.'}
+                    : '📱 Optimized 1080×1920 vertical format for Instagram Stories & WhatsApp Status.'}
                 </p>
               </div>
             </div>
@@ -404,7 +630,7 @@ export default function ImpactCardGeneratorModal({
               <span className="text-[11px] font-semibold text-warm-grey uppercase tracking-wider mb-2">
                 {locale === 'hi' ? 'लाइव प्रीव्यू' : 'Live Story Preview'}
               </span>
-              <div className="relative w-[210px] sm:w-[230px] aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl border-2 border-charcoal/20 bg-black">
+              <div className="relative w-[210px] sm:w-[230px] aspect-[9/16] rounded-2xl overflow-hidden shadow-2xl border-2 border-[#8C6239]/30 bg-black">
                 <canvas
                   ref={canvasRef}
                   className="w-full h-full object-cover"

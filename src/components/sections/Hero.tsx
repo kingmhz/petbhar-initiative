@@ -365,7 +365,7 @@ export default function Hero() {
 
       {/* Feature Modals */}
       <DedicateDriveModal isOpen={isDedicateOpen} onClose={() => setIsDedicateOpen(false)} />
-      <ImpactCardGeneratorModal isOpen={isImpactCardOpen} onClose={() => setIsImpactCardOpen(false)} defaultMeals={selectedAmount / 50 || 5} />
+      <ImpactCardGeneratorModal isOpen={isImpactCardOpen} onClose={() => setIsImpactCardOpen(false)} defaultMeals={Math.max(1, Math.round(selectedAmount / 60))} />
       <ReceiptGeneratorModal isOpen={isReceiptOpen} onClose={() => setIsReceiptOpen(false)} defaultAmount={selectedAmount} />
     </section>
   );
