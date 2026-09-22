@@ -182,6 +182,33 @@ export default function WallOfKindness() {
               <div key={i} className="h-36 bg-white/60 animate-pulse rounded-2xl border border-charcoal/5" />
             ))}
           </div>
+        ) : posts.length === 0 ? (
+          <div className="p-8 sm:p-12 bg-white rounded-3xl border-2 border-dashed border-[#8C6239]/25 text-center max-w-xl mx-auto flex flex-col items-center justify-center space-y-4 shadow-sm">
+            <div className="w-14 h-14 rounded-2xl bg-[#8C6239]/10 text-[#8C6239] flex items-center justify-center text-2xl shadow-xs">
+              ✨
+            </div>
+            <h3 className="font-serif text-2xl sm:text-3xl text-charcoal font-medium">
+              Get involved and add your name here
+            </h3>
+            <p className="text-xs sm:text-sm text-warm-grey max-w-md leading-relaxed">
+              Be the first to dedicate a feeding drive, volunteer on the ground, or share a warm note of encouragement for our community kitchen and animals.
+            </p>
+            <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+              <a
+                href="/get-involved"
+                className="px-6 py-3 rounded-xl bg-charcoal text-ivory text-xs sm:text-sm font-semibold hover:bg-black transition-all shadow-sm flex items-center gap-1.5"
+              >
+                <span>Get Involved &rarr;</span>
+              </a>
+              <button
+                type="button"
+                onClick={() => setShowNoteForm(true)}
+                className="px-6 py-3 rounded-xl bg-[#FAF8F4] text-charcoal border border-[#8C6239]/30 text-xs sm:text-sm font-semibold hover:bg-[#8C6239]/10 transition-all flex items-center gap-1.5"
+              >
+                <span>Share a Note of Kindness</span>
+              </button>
+            </div>
+          </div>
         ) : (
           <>
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
