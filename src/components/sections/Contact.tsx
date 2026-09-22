@@ -4,8 +4,8 @@ import { SectionLabel } from '@/components/ui/SectionLabel';
 import { SectionHeading } from '@/components/ui/SectionHeading';
 import { Button } from '@/components/ui/Button';
 import { ScrollReveal } from '@/components/ui/ScrollReveal';
-import { Mail, MessageCircle, Phone } from 'lucide-react';
-import { InstagramIcon } from '@/components/ui/SocialIcons';
+import { MessageCircle, Phone } from 'lucide-react';
+import { InstagramIcon, GmailIcon } from '@/components/ui/SocialIcons';
 import config from '@/lib/siteConfig';
 
 export function Contact() {
@@ -56,11 +56,14 @@ export function Contact() {
               </SectionHeading>
               
               <div className="mt-6 space-y-3.5">
-                <a href={`mailto:${config.contact.email}`} className="group flex items-center gap-3 text-warm-grey hover:text-charcoal transition-all duration-300">
-                  <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-charcoal/5 group-hover:bg-charcoal/10 border border-charcoal/5 transition-all">
-                    <Mail className="h-4 w-4" />
+                <a 
+                  href={`mailto:${config.contact.email}`} 
+                  className="group flex items-center gap-3 text-warm-grey hover:text-charcoal transition-all duration-300"
+                >
+                  <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-white shadow-xs border border-charcoal/10 group-hover:border-[#EA4335]/35 group-hover:shadow-[0_2px_12px_rgba(234,67,53,0.18)] transition-all">
+                    <GmailIcon size={18} />
                   </span>
-                  <span>{config.contact.email}</span>
+                  <span className="group-hover:text-charcoal transition-colors">{config.contact.email}</span>
                 </a>
                 {config.contact.instagram && (
                   <a 

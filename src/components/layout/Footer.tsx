@@ -2,8 +2,8 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Mail, ArrowUpRight } from 'lucide-react';
-import { InstagramIcon, YoutubeIcon } from '@/components/ui/SocialIcons';
+import { ArrowUpRight } from 'lucide-react';
+import { InstagramIcon, YoutubeIcon, GmailIcon } from '@/components/ui/SocialIcons';
 import { siteConfig } from '@/lib/siteConfig';
 import { useLanguage } from '@/context/LanguageContext';
 import { navTranslationKey } from '@/lib/translations';
@@ -77,7 +77,7 @@ export default function Footer() {
             <ul className="space-y-3">
               <li>
                 <a href={`mailto:${siteConfig.contact.email}`} className="inline-flex items-center gap-2 py-1 text-sm text-ivory/80 hover:text-white transition-colors">
-                  <Mail size={15} />
+                  <GmailIcon size={16} />
                   <span>{siteConfig.contact.email}</span>
                 </a>
               </li>
