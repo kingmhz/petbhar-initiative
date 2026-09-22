@@ -32,7 +32,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://petbhar-initiative.vercel.app'),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://petbharinitiative.vercel.app'),
   title: {
     default: 'PetBhar Initiative — No one should sleep hungry.',
     template: '%s | PetBhar Initiative',
