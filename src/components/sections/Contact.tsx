@@ -98,10 +98,10 @@ export function Contact() {
                     href={`tel:${config.contact.phone.replace(/[^+\d]/g, '')}`} 
                     className="group flex items-center gap-3 text-warm-grey hover:text-charcoal transition-all duration-300"
                   >
-                    <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-charcoal/5 group-hover:bg-charcoal/10 border border-charcoal/5 transition-all">
-                      <Phone className="h-4 w-4 text-charcoal/70" />
+                    <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-blue-50 text-[#007AFF] border border-blue-200/80 shadow-xs group-hover:bg-[#007AFF] group-hover:text-white group-hover:border-[#007AFF] group-hover:shadow-[0_2px_12px_rgba(0,122,255,0.35)] transition-all">
+                      <Phone className="h-4 w-4" />
                     </span>
-                    <span>{config.contact.phone}</span>
+                    <span className="transition-colors group-hover:text-charcoal">{config.contact.phone}</span>
                   </a>
                 )}
               </div>
