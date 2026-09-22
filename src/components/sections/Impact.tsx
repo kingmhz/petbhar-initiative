@@ -39,7 +39,7 @@ export default function Impact() {
           <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
             <ImpactCounter value={config.impact.mealsDistributed} label={t('impact_meals_distributed')} />
             <ImpactCounter value={config.impact.familiesSupported} label={t('impact_families_supported')} />
-            <ImpactCounter value={config.transparency.foodPurchased} prefix="₹" label={locale === 'hi' ? 'राशन व सामग्री ख़रीदी' : 'Food & Groceries Purchased'} />
+            <ImpactCounter value={config.impact.peopleFed} label={t('impact_people_fed')} />
             <ImpactCounter value={config.impact.communitiesReached} label={locale === 'hi' ? 'वितरण अभियान संपन्न' : 'Community Drives'} />
           </div>
         </ScrollReveal>
