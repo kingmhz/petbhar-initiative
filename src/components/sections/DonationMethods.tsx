@@ -14,6 +14,7 @@ export function DonationMethods({ className = '' }: DonationMethodsProps) {
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
   const payeeName = config.org.name || 'PetBhar Initiative';
   const activeUpiId = config.upi?.id || 'petbhar@upi';
+  const showBankAccount = Boolean(config.bankAccount?.enabled);
 
   const copyToClipboard = (text: string, key: string) => {
     if (!text) return;
@@ -23,7 +24,7 @@ export function DonationMethods({ className = '' }: DonationMethodsProps) {
   };
 
   return (
-    <div className={`grid gap-8 md:grid-cols-2 ${className}`}>
+    <div className={`mx-auto ${showBankAccount ? 'max-w-5xl grid gap-8 md:grid-cols-2' : 'max-w-lg space-y-8'} ${className}`}>
       {/* Option 1: UPI Transfer */}
       <div className="rounded-3xl border border-charcoal/5 bg-white p-8 sm:p-10 shadow-sm flex flex-col justify-between">
         <div>
@@ -66,25 +67,15 @@ export function DonationMethods({ className = '' }: DonationMethodsProps) {
         </p>
       </div>
 
-      {/* Option 2: Direct Bank Account Transfer */}
-      <div className="rounded-3xl border border-charcoal/5 bg-white p-8 sm:p-10 shadow-sm flex flex-col justify-between">
-        <div>
-          <div className="flex items-center justify-between">
-            <h3 className="font-serif text-2xl text-charcoal">Bank Transfer</h3>
-            <span className="text-[10px] uppercase tracking-widest text-warm-grey bg-ivory px-3 py-1 rounded-full border border-charcoal/5">NEFT / RTGS / IMPS</span>
-          </div>
-
-          {!config.bankAccount.enabled ? (
-            <div className="my-10 p-8 rounded-2xl bg-ivory border border-charcoal/5 text-center">
-              <div className="w-14 h-14 rounded-full bg-beige/80 flex items-center justify-center mx-auto mb-4 text-charcoal font-serif text-xl font-bold shadow-sm">
-                🏛️
-              </div>
-              <h4 className="font-serif text-lg text-charcoal">Bank Details Coming Soon</h4>
-              <p className="mt-2 text-sm text-warm-grey leading-relaxed max-w-xs mx-auto">
-                Dedicated non-profit institutional bank account details will be posted here once live.
-              </p>
+      {/* Option 2: Direct Bank Account Transfer (Only shown when enabled in site config) */}
+      {showBankAccount && (
+        <div className="rounded-3xl border border-charcoal/5 bg-white p-8 sm:p-10 shadow-sm flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between">
+              <h3 className="font-serif text-2xl text-charcoal">Bank Transfer</h3>
+              <span className="text-[10px] uppercase tracking-widest text-warm-grey bg-ivory px-3 py-1 rounded-full border border-charcoal/5">NEFT / RTGS / IMPS</span>
             </div>
-          ) : (
+
             <ul className="mt-8 space-y-4 text-left divide-y divide-charcoal/5">
               <li className="pt-3 first:pt-0">
                 <div className="text-xs uppercase tracking-wider text-warm-grey">Account Name</div>
@@ -135,18 +126,21 @@ export function DonationMethods({ className = '' }: DonationMethodsProps) {
                 </div>
               </li>
             </ul>
-          )}
-        </div>
+          </div>
 
-        <p className="mt-6 text-center text-xs text-warm-grey/80">
-          Transfer receipts and acknowledgement are shared upon request.
-        </p>
-      </div>
+          <p className="mt-6 text-center text-xs text-warm-grey/80">
+            Transfer receipts and acknowledgement are shared upon request.
+          </p>
+        </div>
+      )}
 
       {/* Trust Guarantee Note */}
-      <div className="col-span-full p-6 rounded-2xl bg-ivory border border-charcoal/5 text-center">
-        <p className="text-xs sm:text-sm text-warm-grey leading-relaxed max-w-2xl mx-auto">
-          <strong className="text-charcoal font-medium">Our Transparency Commitment:</strong> Every rupee contributed is allocated directly toward food rations, meals, and animal care. Expense records and drive updates are published under our <a href="/transparency" className="text-charcoal underline underline-offset-4 hover:opacity-75 font-medium">Transparency section</a>.
+      <div className={`${showBankAccount ? 'col-span-full' : ''} p-6 rounded-2xl bg-white border border-charcoal/5 text-center shadow-xs`}>
+        <p className="text-xs sm:text-sm text-warm-grey leading-relaxed max-w-xl mx-auto">
+          <strong className="text-charcoal font-medium">Our Transparency Commitment:</strong> Every rupee contributed is allocated directly toward food rations, meals, and animal care. Expense records and drive updates are published under our{' '}
+          <a href="/transparency" className="text-charcoal underline underline-offset-4 hover:opacity-75 font-medium">
+            Transparency section
+          </a>.
         </p>
       </div>
     </div>
