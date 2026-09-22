@@ -86,19 +86,19 @@ export default function Navbar() {
         {/* Brand Logo */}
         <Link 
           href="/" 
-          className="flex flex-col items-start z-50 group min-h-[44px] justify-center select-none"
+          className="flex flex-col items-start z-50 group min-h-[44px] justify-center select-none py-0.5"
           aria-label="PetBhar Initiative Home"
         >
           <span 
-            className={`font-serif font-medium text-base sm:text-lg md:text-[19px] leading-tight tracking-[0.15em] transition-colors duration-200 ${
-              mobileMenuOpen ? 'text-charcoal' : isLightText ? 'text-ivory' : 'text-charcoal'
+            className={`font-serif font-semibold text-lg sm:text-xl md:text-[23px] leading-tight tracking-[0.14em] transition-colors duration-200 ${
+              mobileMenuOpen ? 'text-charcoal' : isLightText ? 'text-ivory drop-shadow-sm' : 'text-charcoal'
             }`}
           >
             PETBHAR
           </span>
           <span 
-            className={`font-sans text-[7.5px] uppercase tracking-[0.32em] font-medium leading-none transition-colors duration-200 mt-0.5 ${
-              mobileMenuOpen ? 'text-charcoal/60' : isLightText ? 'text-ivory/70' : 'text-warm-grey'
+            className={`font-sans text-[9px] sm:text-[10px] md:text-[10.5px] uppercase tracking-[0.32em] font-semibold leading-none transition-colors duration-200 mt-1 ${
+              mobileMenuOpen ? 'text-charcoal/70' : isLightText ? 'text-ivory/90' : 'text-charcoal/65'
             }`}
           >
             INITIATIVE

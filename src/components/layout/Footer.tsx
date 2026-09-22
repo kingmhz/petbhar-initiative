@@ -23,8 +23,8 @@ export default function Footer() {
           {/* Col 1 */}
           <div className="flex flex-col items-start sm:col-span-2 md:col-span-1">
             <div className="mb-6">
-              <span className="font-serif font-medium text-xl sm:text-2xl tracking-[0.15em] block text-ivory">PETBHAR</span>
-              <span className="text-[8px] uppercase tracking-[0.32em] font-sans font-medium text-ivory/60 block mt-1">INITIATIVE</span>
+              <span className="font-serif font-semibold text-2xl sm:text-3xl tracking-[0.14em] block text-ivory">PETBHAR</span>
+              <span className="text-[9.5px] sm:text-[10.5px] uppercase tracking-[0.32em] font-sans font-semibold text-ivory/80 block mt-1">INITIATIVE</span>
             </div>
             <p className="text-ivory/80 mb-8 max-w-sm text-sm">{t('footer_tagline_lead')}</p>
             <div className="flex gap-3">
