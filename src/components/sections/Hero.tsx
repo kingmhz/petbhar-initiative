@@ -187,7 +187,7 @@ export default function Hero() {
           <span className="w-1 h-1 rounded-full bg-white/40 hidden sm:inline-block" />
           <span className="text-ivory/85 flex items-center gap-1">
             <ShieldCheck size={13} className="text-emerald-300 shrink-0" />
-            <span>{locale === 'hi' ? '100% प्रत्यक्ष ज़मीनी राहत' : '100% Direct Grassroots Relief'}</span>
+            <span>{locale === 'hi' ? 'प्रत्यक्ष ज़मीनी राहत' : 'Direct Grassroots Relief'}</span>
           </span>
           <span className="w-1 h-1 rounded-full bg-white/40 hidden sm:inline-block" />
           <span className="text-ivory/70">{locale === 'hi' ? 'बिना बिचौलियों के' : 'Zero Middlemen'}</span>
@@ -262,7 +262,7 @@ export default function Hero() {
                   <ShieldCheck size={13} className="text-emerald-600" /> Direct Grassroots Relief
                 </div>
                 <h3 className="font-serif text-xl sm:text-2xl font-semibold text-charcoal">Quick UPI Contribution</h3>
-                <p className="text-xs text-warm-grey mt-0.5">100% directly powers wholesome meals & animal care</p>
+                <p className="text-xs text-warm-grey mt-0.5">Directly powers wholesome meals & animal care</p>
               </div>
 
               {/* Amount Selection Presets (1-Tap on mobile) */}

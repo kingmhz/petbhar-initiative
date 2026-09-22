@@ -24,7 +24,7 @@ export default function HowItWorks() {
       number: '03',
       icon: Truck,
       title: 'WE DISTRIBUTE',
-      description: 'Our team and volunteers reach out directly to verified individuals and communities in need.'
+      description: 'Our team and volunteers reach out directly to families, daily wagers, and street animals in need.'
     },
     {
       number: '04',

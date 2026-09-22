@@ -52,7 +52,7 @@ export default function Transparency() {
 
               <div className="mt-5 text-right">
                 <Button variant="ghost" href="/transparency" className="text-xs">
-                  View Full Public Audit Ledger &rarr;
+                  View Our Expenses & Records &rarr;
                 </Button>
               </div>
             </ScrollReveal>

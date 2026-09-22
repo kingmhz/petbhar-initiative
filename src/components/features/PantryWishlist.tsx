@@ -48,7 +48,7 @@ const PANTRY_ITEMS: PantryItem[] = [
     nameKey: 'pantry_item_kibble',
     price: 1850,
     unit: '20 kg sack',
-    impactSnippet: 'Feeds 60+ street dogs with vet-approved balanced nutrition',
+    impactSnippet: 'Feeds street dogs with wholesome, nutritious dog food & fresh meals',
     icon: '🐕',
     bgLight: 'bg-orange-50/70 border-orange-200/70',
   },

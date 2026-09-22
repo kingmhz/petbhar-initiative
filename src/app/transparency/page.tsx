@@ -22,7 +22,7 @@ export default function TransparencyPage() {
     {
       label: 'Contributions Received',
       value: `₹${transparency?.contributionsReceived?.toLocaleString('en-IN') || 0}`,
-      description: 'Total verified public and community contributions received.'
+      description: 'Total community contributions received toward feeding drives.'
     },
     {
       label: 'Food & Supplies Purchased',
@@ -42,7 +42,7 @@ export default function TransparencyPage() {
     {
       label: 'Families Supported',
       value: `${transparency?.familiesSupported?.toLocaleString('en-IN') || 0}`,
-      description: 'Households verified and supported through ongoing food security.'
+      description: 'Households supported with essential food rations.'
     }
   ];
 
@@ -52,7 +52,7 @@ export default function TransparencyPage() {
       <section className="bg-charcoal text-ivory py-24 sm:py-32 md:py-40 px-6">
         <div className="max-w-7xl mx-auto">
           <motion.div {...fadeIn}>
-            <SectionLabel dark>TRANSPARENCY & AUDIT</SectionLabel>
+            <SectionLabel dark>OPEN FINANCIAL RECORDS</SectionLabel>
             <h1 className="font-serif text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-light mt-6 sm:mt-8 leading-tight">
               Where Your Support Goes
             </h1>

@@ -267,7 +267,7 @@ export default function ImpactSimulator({ onOpenDedication, onOpenQR }: ImpactSi
 
       <p className="text-[11px] text-warm-grey/70 text-center mt-3 flex items-center justify-center gap-1">
         <Check size={12} className="text-emerald-600" />
-        100% of your contribution directly purchases fresh food & rescue provisions. Zero administrative overhead.
+        100% volunteer-run — your contribution goes straight to purchasing groceries and food supplies.
       </p>
 
       {/* Interactive QR Code Modal Displayed on Screen */}

@@ -155,7 +155,7 @@ export default function GetInvolvedPage() {
               More Meaningful Ways to Support
             </h3>
             <p className="text-xs sm:text-sm text-warm-grey mt-2 max-w-xl mx-auto">
-              Celebrate personal milestones with ground food drives, share verified impact stories, or download official certificates.
+              Celebrate personal milestones with ground food drives, share your impact stories, or download contribution certificates.
             </p>
           </motion.div>
 
@@ -222,7 +222,7 @@ export default function GetInvolvedPage() {
                 onClick={() => setShowReceiptModal(true)}
                 className="mt-6 inline-flex items-center justify-center px-4 py-3 rounded-xl bg-charcoal text-ivory text-xs sm:text-sm font-medium hover:bg-charcoal/90 transition-colors shadow-sm"
               >
-                Get Verified Receipt &rarr;
+                Get Contribution Receipt &rarr;
               </button>
             </motion.div>
           </div>

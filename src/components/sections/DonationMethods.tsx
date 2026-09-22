@@ -166,7 +166,7 @@ export function DonationMethods({ className = '' }: DonationMethodsProps) {
       {/* Trust Guarantee Note */}
       <div className="col-span-full p-6 rounded-2xl bg-ivory border border-charcoal/5 text-center">
         <p className="text-xs sm:text-sm text-warm-grey leading-relaxed max-w-2xl mx-auto">
-          <strong className="text-charcoal font-medium">100% Transparency Promise:</strong> Every rupee contributed is allocated strictly toward food rations, meals, and animal care. Public audit records and receipts are published under our <a href="/transparency" className="text-charcoal underline underline-offset-4 hover:opacity-75 font-medium">Transparency section</a>.
+          <strong className="text-charcoal font-medium">Our Transparency Commitment:</strong> Every rupee contributed is allocated directly toward food rations, meals, and animal care. Expense records and drive updates are published under our <a href="/transparency" className="text-charcoal underline underline-offset-4 hover:opacity-75 font-medium">Transparency section</a>.
         </p>
       </div>
     </div>
