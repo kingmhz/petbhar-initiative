@@ -12,9 +12,7 @@ import {
   Sparkles, 
   ShieldCheck, 
   X, 
-  Check, 
-  ExternalLink,
-  ArrowRight
+  Check
 } from 'lucide-react';
 import { Button } from '@/components/ui/Button';
 import config from '@/lib/siteConfig';
@@ -26,7 +24,6 @@ export default function Hero() {
   const { t, locale } = useLanguage();
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
   const [selectedAmount, setSelectedAmount] = useState<number>(60);
-  const [showQrOnMobile, setShowQrOnMobile] = useState<boolean>(true);
   const [isDedicateOpen, setIsDedicateOpen] = useState(false);
   const [isImpactCardOpen, setIsImpactCardOpen] = useState(false);
 
@@ -57,10 +54,6 @@ export default function Hero() {
       aboutSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
-
-  const upiId = config.upi?.id || 'petbhar@upi';
-  const payeeName = config.upi?.payeeName || 'PETBHAR INITIATIVE';
-  const upiIntentUrl = `upi://pay?pa=${encodeURIComponent(upiId)}&pn=${encodeURIComponent(payeeName)}&am=${selectedAmount}&cu=INR`;
 
   return (
     <section className="relative flex min-h-[62vh] md:min-h-[70vh] items-center justify-center pt-22 pb-10 overflow-hidden">
@@ -288,23 +281,10 @@ export default function Hero() {
                 </div>
               </div>
 
-              {/* Mobile Direct Pay Trigger Button */}
-              {upiId && (
-                <div className="mb-3.5">
-                  <a
-                    href={upiIntentUrl}
-                    className="w-full py-3.5 px-4 rounded-2xl bg-charcoal text-ivory text-xs sm:text-sm font-semibold text-center flex items-center justify-center gap-2 shadow-md hover:bg-black active:scale-[0.98] transition-all min-h-[48px]"
-                  >
-                    <span>Pay ₹{selectedAmount} via UPI (GPay / PhonePe / Paytm)</span>
-                    <ExternalLink size={14} className="shrink-0" />
-                  </a>
-                </div>
-              )}
-
-              {/* QR Code Section (Visible directly on both mobile & desktop) */}
-              <div className="border-t border-charcoal/10 pt-3">
+              {/* QR Barcode Section */}
+              <div className="pt-2">
                 <div className="flex flex-col items-center">
-                  <div className="w-44 h-44 sm:w-52 sm:h-52 bg-white rounded-2xl p-3 shadow-inner border border-charcoal/10 flex items-center justify-center relative">
+                  <div className="w-48 h-48 sm:w-52 sm:h-52 bg-white rounded-2xl p-3 shadow-inner border border-charcoal/10 flex items-center justify-center relative">
                     <Image
                       src={config.upi?.qrImage || '/images/petbhar-upi-qr.png'}
                       alt="PetBhar UPI QR Code"
@@ -313,7 +293,7 @@ export default function Hero() {
                       className="w-full h-full object-contain"
                     />
                   </div>
-                  <p className="text-[11px] text-warm-grey mt-2 font-medium">
+                  <p className="text-xs text-warm-grey mt-2.5 font-medium">
                     Scan with any UPI app &bull; GPay, PhonePe, Paytm
                   </p>
                 </div>
