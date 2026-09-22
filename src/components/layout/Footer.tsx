@@ -83,17 +83,17 @@ export default function Footer() {
                   <button 
                     type="button"
                     onClick={() => setEmailModalOpen(true)}
-                    className="inline-flex items-center gap-2.5 py-1 text-sm sm:text-[15px] text-ivory/80 hover:text-white transition-colors cursor-pointer text-left"
+                    className="inline-flex items-center gap-2.5 py-1 text-sm sm:text-[15px] text-ivory/80 hover:text-white transition-colors cursor-pointer text-left min-w-0"
                     title="Click for email options (Gmail, default mail app, copy address)"
                   >
                     <GmailIcon size={18} />
-                    <span>{siteConfig.contact.email}</span>
+                    <span className="truncate sm:overflow-visible">{siteConfig.contact.email}</span>
                   </button>
                   <a
                     href={`https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(siteConfig.contact.email)}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="px-1.5 py-0.5 rounded bg-white/10 hover:bg-white/20 text-[11px] text-ivory/80 hover:text-white transition-all"
+                    className="px-2 py-0.5 rounded-md bg-white/10 hover:bg-white/20 text-[11px] text-ivory/90 hover:text-white active:scale-95 transition-all inline-flex items-center gap-1 font-medium"
                     title="Compose directly in Gmail"
                   >
                     Gmail ↗

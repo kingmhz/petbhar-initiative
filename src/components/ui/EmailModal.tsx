@@ -46,7 +46,7 @@ export function EmailModal({ isOpen, onClose, email }: EmailModalProps) {
   return (
     <AnimatePresence>
       {isOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 overflow-y-auto">
           {/* Backdrop */}
           <motion.div
             initial={{ opacity: 0 }}
@@ -62,19 +62,19 @@ export function EmailModal({ isOpen, onClose, email }: EmailModalProps) {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.95, y: 12 }}
             transition={{ duration: 0.2, ease: 'easeOut' }}
-            className="relative w-full max-w-md bg-white rounded-3xl p-6 sm:p-7 shadow-2xl border border-charcoal/10 z-10 text-charcoal"
+            className="relative w-full max-w-md max-h-[90vh] overflow-y-auto bg-white rounded-3xl p-5 sm:p-7 shadow-2xl border border-charcoal/10 z-10 text-charcoal my-auto"
           >
             {/* Header */}
-            <div className="flex items-start justify-between pb-4 border-b border-charcoal/10">
-              <div className="flex items-center gap-3">
-                <span className="flex items-center justify-center w-10 h-10 rounded-2xl bg-white shadow-xs border border-charcoal/10">
+            <div className="flex items-start justify-between pb-3.5 sm:pb-4 border-b border-charcoal/10">
+              <div className="flex items-center gap-3 min-w-0 pr-2">
+                <span className="flex items-center justify-center w-10 h-10 rounded-2xl bg-white shadow-xs border border-charcoal/10 shrink-0">
                   <GmailIcon size={20} />
                 </span>
-                <div>
-                  <h3 className="font-serif text-lg font-semibold text-charcoal">
+                <div className="min-w-0">
+                  <h3 className="font-serif text-lg font-semibold text-charcoal leading-tight">
                     Send an Email
                   </h3>
-                  <p className="text-xs text-warm-grey font-mono mt-0.5">
+                  <p className="text-xs text-warm-grey font-mono mt-0.5 truncate sm:overflow-visible">
                     {email}
                   </p>
                 </div>
