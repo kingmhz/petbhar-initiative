@@ -3,7 +3,7 @@ import React from 'react';
 export function InstagramIcon({ 
   size = 20, 
   className = '', 
-  variant = 'adaptive' 
+  variant = 'colored' 
 }: { 
   size?: number; 
   className?: string; 
