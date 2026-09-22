@@ -6,7 +6,6 @@ import { SectionLabel } from '@/components/ui/SectionLabel';
 import { DonationMethods } from '@/components/sections/DonationMethods';
 import DedicateDriveModal from '@/components/features/DedicateDriveModal';
 import ImpactCardGeneratorModal from '@/components/features/ImpactCardGeneratorModal';
-import ReceiptGeneratorModal from '@/components/features/ReceiptGeneratorModal';
 import FaqAccordion from '@/components/features/FaqAccordion';
 import { useLanguage } from '@/context/LanguageContext';
 
@@ -14,7 +13,6 @@ export default function GetInvolvedPage() {
   const { t } = useLanguage();
   const [showDedicateModal, setShowDedicateModal] = useState(false);
   const [showImpactCardModal, setShowImpactCardModal] = useState(false);
-  const [showReceiptModal, setShowReceiptModal] = useState(false);
 
   const fadeIn = {
     initial: { opacity: 0, y: 20 },
@@ -155,11 +153,11 @@ export default function GetInvolvedPage() {
               More Meaningful Ways to Support
             </h3>
             <p className="text-xs sm:text-sm text-warm-grey mt-2 max-w-xl mx-auto">
-              Celebrate personal milestones with ground food drives, share your impact stories, or download contribution certificates.
+              Celebrate personal milestones with ground food drives or share your verified impact stories with friends.
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 max-w-4xl mx-auto gap-6 sm:gap-8">
             {/* Card 1: Dedicate */}
             <motion.div {...fadeIn} className="rounded-2xl border border-charcoal/10 bg-white p-6 sm:p-7 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
               <div>
@@ -201,28 +199,6 @@ export default function GetInvolvedPage() {
                 className="mt-6 inline-flex items-center justify-center px-4 py-3 rounded-xl bg-charcoal text-ivory text-xs sm:text-sm font-medium hover:bg-charcoal/90 transition-colors shadow-sm"
               >
                 Create Story Graphic &rarr;
-              </button>
-            </motion.div>
-
-            {/* Card 3: Receipt & Certificate */}
-            <motion.div {...fadeIn} className="rounded-2xl border border-charcoal/10 bg-white p-6 sm:p-7 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
-              <div>
-                <div className="w-12 h-12 rounded-xl bg-emerald-500/10 flex items-center justify-center text-2xl mb-4">
-                  📄
-                </div>
-                <h4 className="font-serif text-xl text-charcoal font-semibold">
-                  Contribution Certificate
-                </h4>
-                <p className="text-xs sm:text-sm text-warm-grey mt-2 leading-relaxed">
-                  Generate an official PetBhar acknowledgment receipt with unique verification ID, UTR tracking, and authorized seal ready to print or save.
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setShowReceiptModal(true)}
-                className="mt-6 inline-flex items-center justify-center px-4 py-3 rounded-xl bg-charcoal text-ivory text-xs sm:text-sm font-medium hover:bg-charcoal/90 transition-colors shadow-sm"
-              >
-                Get Contribution Receipt &rarr;
               </button>
             </motion.div>
           </div>
@@ -487,10 +463,6 @@ export default function GetInvolvedPage() {
       <ImpactCardGeneratorModal
         isOpen={showImpactCardModal}
         onClose={() => setShowImpactCardModal(false)}
-      />
-      <ReceiptGeneratorModal
-        isOpen={showReceiptModal}
-        onClose={() => setShowReceiptModal(false)}
       />
     </main>
   );

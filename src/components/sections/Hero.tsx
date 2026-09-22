@@ -21,7 +21,6 @@ import config from '@/lib/siteConfig';
 import { useLanguage } from '@/context/LanguageContext';
 import DedicateDriveModal from '@/components/features/DedicateDriveModal';
 import ImpactCardGeneratorModal from '@/components/features/ImpactCardGeneratorModal';
-import ReceiptGeneratorModal from '@/components/features/ReceiptGeneratorModal';
 
 export default function Hero() {
   const { t, locale } = useLanguage();
@@ -30,7 +29,6 @@ export default function Hero() {
   const [showQrOnMobile, setShowQrOnMobile] = useState<boolean>(true);
   const [isDedicateOpen, setIsDedicateOpen] = useState(false);
   const [isImpactCardOpen, setIsImpactCardOpen] = useState(false);
-  const [isReceiptOpen, setIsReceiptOpen] = useState(false);
 
   // Lock body scrolling when QR modal is active
   useEffect(() => {
@@ -323,39 +321,29 @@ export default function Hero() {
 
               {/* Footer Links & Extra Tools */}
               <div className="text-center pt-3 mt-2 border-t border-charcoal/5 space-y-2">
-                <div className="flex items-center justify-center gap-3 text-xs">
+                <div className="pt-2 flex flex-wrap items-center justify-center gap-2 text-xs text-warm-grey">
+                  <span>Completed payment?</span>
                   <button
                     type="button"
                     onClick={() => {
                       setIsQrModalOpen(false);
-                      setIsImpactCardOpen(true);
+                      setIsDedicateOpen(true);
                     }}
                     className="text-amber-800 hover:text-amber-950 font-medium underline underline-offset-2 flex items-center gap-1"
                   >
-                    <span>📸 {locale === 'hi' ? 'इम्पैक्ट कार्ड बनाएं' : 'Create Impact Card'}</span>
+                    <span>🎂 {locale === 'hi' ? 'भोजन ड्राइव समर्पित करें' : 'Dedicate drive'}</span>
                   </button>
                   <span className="text-charcoal/20">•</span>
                   <button
                     type="button"
                     onClick={() => {
                       setIsQrModalOpen(false);
-                      setIsReceiptOpen(true);
+                      setIsImpactCardOpen(true);
                     }}
-                    className="text-emerald-800 hover:text-emerald-950 font-medium underline underline-offset-2 flex items-center gap-1"
+                    className="text-purple-800 hover:text-purple-950 font-medium underline underline-offset-2 flex items-center gap-1"
                   >
-                    <span>📄 {locale === 'hi' ? 'रसीद प्राप्त करें' : 'Get Receipt'}</span>
+                    <span>📸 {locale === 'hi' ? 'इम्पैक्ट कार्ड बनाएं' : 'Create Impact Card'}</span>
                   </button>
-                </div>
-
-                <div>
-                  <Link
-                    href="/get-involved"
-                    onClick={() => setIsQrModalOpen(false)}
-                    className="text-xs text-warm-grey hover:text-charcoal inline-flex items-center gap-1 font-medium transition-colors min-h-[32px]"
-                  >
-                    <span>Need Bank Account (NEFT/IMPS) details?</span>
-                    <ArrowRight size={12} />
-                  </Link>
                 </div>
               </div>
             </motion.div>
@@ -366,7 +354,6 @@ export default function Hero() {
       {/* Feature Modals */}
       <DedicateDriveModal isOpen={isDedicateOpen} onClose={() => setIsDedicateOpen(false)} />
       <ImpactCardGeneratorModal isOpen={isImpactCardOpen} onClose={() => setIsImpactCardOpen(false)} defaultMeals={Math.max(1, Math.round(selectedAmount / 60))} />
-      <ReceiptGeneratorModal isOpen={isReceiptOpen} onClose={() => setIsReceiptOpen(false)} defaultAmount={selectedAmount} />
     </section>
   );
 }

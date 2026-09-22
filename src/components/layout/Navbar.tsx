@@ -3,13 +3,12 @@
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { Menu, X, MessageCircle, Languages, Gift, Sparkles, FileText, AlertCircle } from 'lucide-react';
+import { Menu, X, MessageCircle, Languages, Gift, Sparkles, AlertCircle } from 'lucide-react';
 import { siteConfig } from '@/lib/siteConfig';
 import { useLanguage } from '@/context/LanguageContext';
 import { navTranslationKey } from '@/lib/translations';
 import DedicateDriveModal from '@/components/features/DedicateDriveModal';
 import ImpactCardGeneratorModal from '@/components/features/ImpactCardGeneratorModal';
-import ReceiptGeneratorModal from '@/components/features/ReceiptGeneratorModal';
 import { openSosBeacon } from '@/components/features/SosBeaconButton';
 import { WhatsAppIcon } from '@/components/ui/SocialIcons';
 
@@ -20,7 +19,6 @@ export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [dedicateOpen, setDedicateOpen] = useState(false);
   const [impactCardOpen, setImpactCardOpen] = useState(false);
-  const [receiptOpen, setReceiptOpen] = useState(false);
 
   // Handle scroll state with requestAnimationFrame throttling to eliminate scroll jank
   useEffect(() => {
@@ -278,13 +276,6 @@ export default function Navbar() {
               <span>{t('nav_impact_card')}</span>
             </button>
             <button
-              onClick={() => { setMobileMenuOpen(false); setReceiptOpen(true); }}
-              className="inline-flex items-center gap-1.5 bg-emerald-50 text-emerald-900 border border-emerald-200/80 px-3 py-1.5 rounded-full text-xs font-medium active:scale-95"
-            >
-              <FileText size={13} className="text-emerald-600" />
-              <span>{t('nav_receipt')}</span>
-            </button>
-            <button
               onClick={() => { setMobileMenuOpen(false); openSosBeacon(); }}
               className="inline-flex items-center gap-1.5 bg-red-50 text-red-900 border border-red-200/80 px-3 py-1.5 rounded-full text-xs font-bold active:scale-95"
             >
@@ -323,7 +314,6 @@ export default function Navbar() {
       {/* Feature Modals */}
       <DedicateDriveModal isOpen={dedicateOpen} onClose={() => setDedicateOpen(false)} />
       <ImpactCardGeneratorModal isOpen={impactCardOpen} onClose={() => setImpactCardOpen(false)} />
-      <ReceiptGeneratorModal isOpen={receiptOpen} onClose={() => setReceiptOpen(false)} />
     </header>
   );
 }

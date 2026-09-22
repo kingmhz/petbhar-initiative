@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import { Copy, Check } from 'lucide-react';
-import { Button } from '@/components/ui/Button';
 import config from '@/lib/siteConfig';
 
 interface DonationMethodsProps {
@@ -12,8 +11,6 @@ interface DonationMethodsProps {
 
 export function DonationMethods({ className = '' }: DonationMethodsProps) {
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
-  const payeeName = config.org.name || 'PetBhar Initiative';
-  const activeUpiId = config.upi?.id || 'petbhar@upi';
   const showBankAccount = Boolean(config.bankAccount?.enabled);
 
   const copyToClipboard = (text: string, key: string) => {
@@ -48,18 +45,6 @@ export function DonationMethods({ className = '' }: DonationMethodsProps) {
             <p className="text-xs font-medium text-charcoal">Scan with any UPI App</p>
             <p className="text-[11px] text-warm-grey mt-0.5">Google Pay &bull; PhonePe &bull; Paytm &bull; BHIM &bull; CRED</p>
           </div>
-
-          {activeUpiId && (
-            <div className="mt-6">
-              <Button 
-                variant="primary" 
-                href={`upi://pay?pa=${encodeURIComponent(activeUpiId)}&pn=${encodeURIComponent(payeeName)}`}
-                className="w-full justify-center py-3.5 shadow"
-              >
-                Pay via GPay / PhonePe / Paytm
-              </Button>
-            </div>
-          )}
         </div>
 
         <p className="mt-6 text-center text-xs text-warm-grey/80">
