@@ -2167,7 +2167,7 @@ export default function AdminPage() {
               <div className="space-y-4 pt-6 border-t border-charcoal/10">
                 <div className="flex items-center justify-between">
                   <h3 className="text-sm font-semibold text-charcoal uppercase tracking-wider flex items-center gap-1.5">
-                    <Film size={16} /> YouTube Videos ({siteData.media?.videos?.length || 0})
+                    <Film size={16} /> Ground & Stray Feeding Videos ({siteData.media?.videos?.length || 0})
                   </h3>
                   <button
                     onClick={addMediaVideoItem}
@@ -2191,12 +2191,12 @@ export default function AdminPage() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pr-10">
                           <div className="md:col-span-2">
-                            <label className="text-[11px] font-medium text-warm-grey mb-1 block">YouTube Video URL</label>
+                            <label className="text-[11px] font-medium text-warm-grey mb-1 block">Video URL (YouTube URL or /videos/filename.mp4)</label>
                             <input
                               type="text"
                               value={video.url || ''}
                               onChange={(e) => updateMediaVideoItem(index, 'url', e.target.value)}
-                              placeholder="https://www.youtube.com/watch?v=... or https://youtu.be/... or https://youtube.com/shorts/..."
+                              placeholder="e.g. /videos/feeding-drive-1.mp4 or https://youtube.com/watch?v=..."
                               className="w-full bg-white border border-charcoal/15 rounded-xl px-3.5 py-1.5 text-xs font-mono outline-none focus:border-charcoal"
                             />
                           </div>
@@ -2206,6 +2206,7 @@ export default function AdminPage() {
                               type="text"
                               value={video.caption || ''}
                               onChange={(e) => updateMediaVideoItem(index, 'caption', e.target.value)}
+                              placeholder="e.g. Morning Stray Dog Feeding Drive"
                               className="w-full bg-white border border-charcoal/15 rounded-xl px-3.5 py-1.5 text-xs outline-none focus:border-charcoal"
                             />
                           </div>
@@ -2215,13 +2216,14 @@ export default function AdminPage() {
                               type="text"
                               value={video.date || ''}
                               onChange={(e) => updateMediaVideoItem(index, 'date', e.target.value)}
+                              placeholder="e.g. September 2026"
                               className="w-full bg-white border border-charcoal/15 rounded-xl px-3.5 py-1.5 text-xs outline-none focus:border-charcoal"
                             />
                           </div>
                         </div>
 
-                        {/* Live YouTube Preview Player */}
-                        {embedUrl && (
+                        {/* Live Preview Player */}
+                        {embedUrl ? (
                           <div className="mt-3 rounded-xl overflow-hidden border border-charcoal/10 aspect-video max-w-sm bg-black">
                             <iframe
                               src={embedUrl}
@@ -2231,7 +2233,11 @@ export default function AdminPage() {
                               allowFullScreen
                             />
                           </div>
-                        )}
+                        ) : video.url ? (
+                          <div className="mt-3 rounded-xl overflow-hidden border border-charcoal/10 aspect-video max-w-sm bg-black">
+                            <video src={video.url} controls className="w-full h-full object-contain" />
+                          </div>
+                        ) : null}
                       </div>
                     );
                   })}

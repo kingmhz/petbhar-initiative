@@ -182,7 +182,9 @@ export default function WorkPage() {
 
               {media.videos?.length > 0 && (
                 <div>
-                  <h3 className="text-sm uppercase tracking-widest text-warm-grey mb-6">Action & Video Updates</h3>
+                  <h3 className="text-sm uppercase tracking-widest text-warm-grey mb-6 flex items-center gap-2 font-medium">
+                    <span>🐾</span> Ground Feeding Drives & Video Updates
+                  </h3>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                     {media.videos.map((vid: MediaItem, i: number) => {
                       const embedUrl = getYouTubeEmbedUrl(vid.url);
@@ -197,7 +199,7 @@ export default function WorkPage() {
                           transition={{ delay: i * 0.1 }}
                           className="rounded-2xl overflow-hidden bg-white border border-charcoal/5 shadow-sm p-4"
                         >
-                          <div className="aspect-video w-full rounded-xl overflow-hidden bg-black">
+                          <div className="aspect-video w-full rounded-xl overflow-hidden bg-black flex items-center justify-center">
                             {isYouTube ? (
                               <iframe
                                 src={embedUrl || undefined}
@@ -208,7 +210,13 @@ export default function WorkPage() {
                                 allowFullScreen
                               />
                             ) : (
-                              <video src={vid.url} controls className="w-full h-full object-cover" />
+                              <video 
+                                src={vid.url} 
+                                controls 
+                                playsInline 
+                                preload="metadata" 
+                                className="w-full h-full object-contain bg-black" 
+                              />
                             )}
                           </div>
                           {vid.caption && (
