@@ -37,20 +37,20 @@ export default function Impact() {
         {/* Live Counters */}
         <ScrollReveal delay={0.2}>
           <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
-            <ImpactCounter value={config.impact.peopleFed} label={t('impact_people_fed')} suffix="+" />
-            <ImpactCounter value={config.impact.familiesSupported} label={t('impact_families_supported')} suffix="+" />
-            <ImpactCounter value={config.impact.mealsDistributed} label={t('impact_meals_distributed')} suffix="+" />
-            <ImpactCounter value={config.impact.communitiesReached} label={t('impact_communities_reached')} suffix="+" />
+            <ImpactCounter value={config.impact.mealsDistributed} label={t('impact_meals_distributed')} />
+            <ImpactCounter value={config.impact.familiesSupported} label={t('impact_families_supported')} />
+            <ImpactCounter value={config.transparency.foodPurchased} prefix="₹" label={locale === 'hi' ? 'राशन व सामग्री ख़रीदी' : 'Food & Groceries Purchased'} />
+            <ImpactCounter value={config.impact.communitiesReached} label={locale === 'hi' ? 'वितरण अभियान संपन्न' : 'Community Drives'} />
           </div>
         </ScrollReveal>
 
-        {/* Verified Ground Economics & Inflation Calibration */}
+        {/* Ground Economics & Sourcing */}
         <ScrollReveal delay={0.3}>
           <div className="mt-12 rounded-3xl bg-white/[0.04] border border-white/10 p-6 sm:p-8 md:p-10 backdrop-blur-md text-left">
             <div className="text-center max-w-3xl mx-auto mb-8 sm:mb-10">
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-amber-400/15 text-amber-300 text-xs font-semibold tracking-wider uppercase mb-3">
                 <ShieldCheck size={14} className="text-amber-300" />
-                {locale === 'hi' ? 'सटीक ज़मीनी लागत विवरण' : 'Audited Cost Transparency'}
+                {locale === 'hi' ? 'अनुमानित लागत विवरण' : 'Estimated Cost Breakdown'}
               </span>
               <h3 className="font-serif text-2xl sm:text-3xl font-semibold text-ivory">
                 {t('impact_econ_title')}
@@ -172,7 +172,7 @@ export default function Impact() {
                 <span>{t('impact_mandi_badge')}</span>
               </span>
               <span className="text-[11px] text-amber-300 font-medium">
-                {locale === 'hi' ? '100% सार्वजनिक बहीखाता उपलब्ध' : 'Verified APMC Mandi Procurement'}
+                {locale === 'hi' ? 'पारदर्शी खर्च और खरीद' : 'Wholesale Mandi Procurement'}
               </span>
             </div>
           </div>

@@ -101,18 +101,18 @@ export const translations = {
     impact_meals_distributed: 'Meals Distributed',
     impact_communities_reached: 'Communities Reached',
     impact_cta: 'Be a Part of It',
-    impact_econ_title: 'Verified Ground Economics & Sourcing',
-    impact_econ_subtitle: 'With grocery and commodity prices having risen significantly, here is our audited cost breakdown per unit of relief. Sourced directly at wholesale APMC Mandi rates to ensure maximum meals per rupee.',
+    impact_econ_title: 'Our Meal Costs & Sourcing',
+    impact_econ_subtitle: 'With grocery and commodity prices having risen significantly, here is our estimated cost breakdown per unit of relief. Sourced at wholesale APMC Mandi rates to ensure maximum meals per rupee.',
     impact_unit_meal_title: 'Nutritious Cooked Meal',
     impact_unit_meal_cost: '₹60 / meal',
     impact_unit_meal_desc: '2 hot chapatis (fresh chakki atta), protein dal tadka, seasonal sabzi, steamed rice & compostable container.',
     impact_unit_paws_title: 'PetBhar Paws Animal Bowl',
     impact_unit_paws_cost: '₹35 / bowl',
-    impact_unit_paws_desc: 'Boiled turmeric rice mash, soya & egg protein, vet-approved kibble booster & clean roadside water refills.',
+    impact_unit_paws_desc: 'Boiled turmeric rice mash, soya & egg protein, nutritious dog food & clean roadside water refills.',
     impact_unit_kit_title: 'Monthly Family Dry Ration Kit',
     impact_unit_kit_cost: '₹1,800 / kit',
     impact_unit_kit_desc: '10kg Chakki Atta, 5kg Rice, 2kg Dal, 1L Cooking Oil, Salt, Haldi, Spices & Sugar. Feeds a family of 4-5 for an entire month.',
-    impact_mandi_badge: '100% Direct APMC Mandi Wholesale Procurement • Zero Administrative Cuts • Public Audit Ledger',
+    impact_mandi_badge: 'Direct Wholesale Mandi Purchasing • 100% Volunteer-Run • Open Expense Records',
 
     // Get Involved Section
     get_involved_label: 'GET INVOLVED',
@@ -174,7 +174,7 @@ export const translations = {
 
     // Where Every Rupee Goes Breakdown
     rupee_title: 'Where Every Rupee Goes',
-    rupee_subtitle: 'Complete financial openness with zero administrative deductions and zero founder salaries.',
+    rupee_subtitle: 'Complete financial openness as a 100% volunteer-led grassroots initiative.',
     rupee_food_grains: 'Fresh Grains & Raw Food',
     rupee_food_grains_desc: 'High-grade Atta, Rice, Pulses, Fresh Vegetables, Turmeric, Milk, and Nutritious Animal Kibble.',
     rupee_packaging: 'Eco-Packaging & Field Logistics',
@@ -306,18 +306,18 @@ export const translations = {
     impact_meals_distributed: 'थालियां वितरित',
     impact_communities_reached: 'पहुंचे समुदाय',
     impact_cta: 'इस सेवा से जुड़ें',
-    impact_econ_title: 'ज़मीनी लागत व खाद्य सामग्री पारदर्शिता',
-    impact_econ_subtitle: 'खाद्य सामग्रियों की वर्तमान महंगाई दर को ध्यान में रखते हुए यह हमारा प्रमाणित लागत विवरण है। हर एक रुपया सीधे थोक मंडी खरीद में जाता है ताकि बिना किसी बिचौलिये के अधिकतम लोगों का पेट भरे।',
+    impact_econ_title: 'हमारी भोजन लागत और ख़रीदारी',
+    impact_econ_subtitle: 'खाद्य सामग्रियों की वर्तमान कीमतों को ध्यान में रखते हुए यह हमारा अनुमानित लागत विवरण है। राशन सीधे थोक मंडी से खरीदा जाता है ताकि हर रुपये से अधिकतम लोगों तक भोजन पहुंचे।',
     impact_unit_meal_title: 'ताज़ा पौष्टिक भोजन थाली',
     impact_unit_meal_cost: '₹60 / थाली',
     impact_unit_meal_desc: '2 ताज़ा रोटियां (चक्की आटा), तड़का दाल, मौसमी हरी सब्ज़ी, स्टीम्ड चावल और पर्यावरण-अनुकूल डिब्बा।',
     impact_unit_paws_title: 'बेजुबान श्वान आहार पात्र',
     impact_unit_paws_cost: '₹35 / पात्र',
-    impact_unit_paws_desc: 'उबले चावल-हल्दी मैश, सोया व अंडा प्रोटीन, पशु चिकित्सक अनुशंसित किबल और स्वच्छ पेयजल।',
+    impact_unit_paws_desc: 'उबले चावल-हल्दी मैश, सोया व अंडा प्रोटीन, पौष्टिक श्वान आहार एवं स्वच्छ पेयजल।',
     impact_unit_kit_title: 'मासिक परिवार सूखा राशन किट',
     impact_unit_kit_cost: '₹1,800 / किट',
     impact_unit_kit_desc: '10 किग्रा आटा, 5 किग्रा चावल, 2 किग्रा दाल, 1 ली. तेल, नमक, हल्दी, मसाले व चीनी (4-5 सदस्यों के परिवार हेतु पूरा महीना)।',
-    impact_mandi_badge: '100% थोक मंडी से सीधी खरीद • शून्य बिचौलिया कमीशन • सार्वजनिक बहीखाता',
+    impact_mandi_badge: 'थोक मंडी से सीधी ख़रीदारी • 100% स्वयंसेवक संचालित • पारदर्शी खर्च विवरण',
 
     // Get Involved Section
     get_involved_label: 'सहयोग करें',
@@ -379,7 +379,7 @@ export const translations = {
 
     // Where Every Rupee Goes Breakdown
     rupee_title: 'हर एक रुपये का सटीक उपयोग',
-    rupee_subtitle: '100% वित्तीय पारदर्शिता — शून्य प्रशासनिक कटौती और शून्य संस्थापक वेतन।',
+    rupee_subtitle: '100% वित्तीय पारदर्शिता — पूर्णतः स्वयंसेवकों द्वारा संचालित ज़मीनी पहल।',
     rupee_food_grains: 'ताज़ा अनाज और पौष्टिक खाद्य सामग्री',
     rupee_food_grains_desc: 'उच्च गुणवत्ता का आटा, चावल, दालें, ताज़ी सब्ज़ियाँ, हल्दी, दूध और बेजुबानों का पौष्टिक आहार।',
     rupee_packaging: 'पर्यावरण-अनुकूल पैकिंग और परिवहन',

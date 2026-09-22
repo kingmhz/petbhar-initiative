@@ -29,8 +29,8 @@ export default function About() {
             </p>
             <p className="mt-3 text-xs sm:text-sm text-warm-grey leading-relaxed">
               {locale === 'hi' 
-                ? 'हमने कुछ स्वयंसेवकों के साथ शुरुआत की, जो भूखे सोते बेजुबानों और पड़ोसियों को अनदेखा नहीं कर सके। आज हम अतिरिक्त और आवश्यकता के बीच का सेतु बन चुके हैं।'
-                : "We started as a handful of volunteers who couldn't look away when neighbours and community animals went to sleep on empty stomachs. Today, through transparent bookkeeping and community partnerships, we bridge the gap between excess and acute need."}
+                ? 'हमने कुछ स्वयंसेवकों के साथ शुरुआत की, जो भूखे सोते बेजुबानों और पड़ोसियों को अनदेखा नहीं कर सके। आज हम आपसी सहयोग और जनभागीदारी से ज़रूरतमंदों तक भोजन पहुँचाने का प्रयास कर रहे हैं।'
+                : "We started as a handful of volunteers who couldn't look away when neighbours and community animals went to sleep on empty stomachs. Today, by pooling our own resources and community support, we work to bridge the gap between excess and acute need."}
             </p>
             <div className="mt-6">
               <Button variant="outline" href="/about">
