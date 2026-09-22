@@ -379,7 +379,7 @@ export default function ImpactCardGeneratorModal({
 
     ctx.fillStyle = theme.textSecondary;
     ctx.font = '400 19px Inter, -apple-system, sans-serif';
-    ctx.fillText('petbharinitiative.vercel.app', W / 2, 1560);
+    ctx.fillText('petbhar.vercel.app/transparency', W / 2, 1560);
 
     // Bottom Decorative Hairline Accent & Floating Diamond
     ctx.save();
@@ -431,7 +431,7 @@ export default function ImpactCardGeneratorModal({
   const handleShareWhatsApp = () => {
     const safeCount = Math.max(1, Math.round(mealsCount || 1));
     const text = encodeURIComponent(
-      `I just supported ${safeCount} ${impactType === 'humanity' ? 'fresh meals' : 'stray animal meals'} with PetBhar Initiative! See their ground work: https://petbharinitiative.vercel.app`
+      `I just supported ${safeCount} ${impactType === 'humanity' ? 'fresh meals' : 'stray animal meals'} with PetBhar Initiative! See their verified transparency ledger: https://petbhar.vercel.app/transparency`
     );
     window.open(`https://wa.me/?text=${text}`, '_blank');
   };
