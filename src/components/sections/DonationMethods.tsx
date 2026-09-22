@@ -46,26 +46,6 @@ export function DonationMethods({ className = '' }: DonationMethodsProps) {
           <div className="mt-5 text-center">
             <p className="text-xs font-medium text-charcoal">Scan with any UPI App</p>
             <p className="text-[11px] text-warm-grey mt-0.5">Google Pay &bull; PhonePe &bull; Paytm &bull; BHIM &bull; CRED</p>
-
-            {activeUpiId && (
-              <div className="mt-4">
-                <p className="text-xs uppercase tracking-widest text-warm-grey">UPI ID</p>
-                <div className="mt-1 flex items-center justify-center gap-2">
-                  <span className="font-mono text-base font-semibold text-charcoal">{activeUpiId}</span>
-                  <button
-                    onClick={() => copyToClipboard(activeUpiId, 'upi')}
-                    className="p-1.5 text-warm-grey hover:text-charcoal hover:bg-beige/40 rounded-md transition-colors"
-                    title="Copy UPI ID"
-                    aria-label="Copy UPI ID"
-                  >
-                    {copiedKey === 'upi' ? <Check size={16} className="text-green-600" /> : <Copy size={16} />}
-                  </button>
-                </div>
-                {copiedKey === 'upi' && (
-                  <p className="text-[11px] text-green-600 mt-1 font-medium">Copied to clipboard!</p>
-                )}
-              </div>
-            )}
           </div>
 
           {activeUpiId && (

@@ -12,7 +12,6 @@ import {
   Sparkles, 
   ShieldCheck, 
   X, 
-  Copy, 
   Check, 
   ExternalLink,
   ArrowRight
@@ -27,7 +26,6 @@ import ReceiptGeneratorModal from '@/components/features/ReceiptGeneratorModal';
 export default function Hero() {
   const { t, locale } = useLanguage();
   const [isQrModalOpen, setIsQrModalOpen] = useState(false);
-  const [copied, setCopied] = useState(false);
   const [selectedAmount, setSelectedAmount] = useState<number>(60);
   const [showQrOnMobile, setShowQrOnMobile] = useState<boolean>(true);
   const [isDedicateOpen, setIsDedicateOpen] = useState(false);
@@ -60,13 +58,6 @@ export default function Hero() {
     if (aboutSection) {
       aboutSection.scrollIntoView({ behavior: 'smooth' });
     }
-  };
-
-  const handleCopyUpi = () => {
-    const upiId = config.upi?.id || 'petbhar@upi';
-    navigator.clipboard.writeText(upiId);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2000);
   };
 
   const upiId = config.upi?.id || 'petbhar@upi';
@@ -309,35 +300,6 @@ export default function Hero() {
                     <span>Pay ₹{selectedAmount} via UPI (GPay / PhonePe / Paytm)</span>
                     <ExternalLink size={14} className="shrink-0" />
                   </a>
-                </div>
-              )}
-
-              {/* UPI ID Copy Box */}
-              {upiId && (
-                <div className="mb-3.5">
-                  <div className="flex items-center justify-between gap-2 p-2.5 px-3 bg-white rounded-xl border border-charcoal/15 text-xs">
-                    <div className="truncate">
-                      <span className="text-warm-grey text-[10px] uppercase block tracking-wider">UPI ID / VPA</span>
-                      <span className="font-mono font-semibold text-charcoal text-xs">{upiId}</span>
-                    </div>
-                    <button
-                      type="button"
-                      onClick={handleCopyUpi}
-                      className="shrink-0 inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-charcoal/10 hover:bg-charcoal text-charcoal hover:text-ivory text-xs font-medium transition-colors cursor-pointer min-h-[36px]"
-                    >
-                      {copied ? (
-                        <>
-                          <Check size={13} className="text-emerald-600" />
-                          <span>Copied</span>
-                        </>
-                      ) : (
-                        <>
-                          <Copy size={13} />
-                          <span>Copy</span>
-                        </>
-                      )}
-                    </button>
-                  </div>
                 </div>
               )}
 

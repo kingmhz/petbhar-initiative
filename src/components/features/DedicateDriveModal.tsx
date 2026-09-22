@@ -346,7 +346,6 @@ export default function DedicateDriveModal({ isOpen, onClose }: DedicateDriveMod
                       height={180}
                       className="w-full h-auto rounded-lg"
                     />
-                    {upiId && <p className="text-[10px] text-warm-grey mt-2 font-mono">{upiId}</p>}
                   </div>
                 )}
               </div>
