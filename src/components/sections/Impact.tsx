@@ -36,11 +36,12 @@ export default function Impact() {
 
         {/* Live Counters */}
         <ScrollReveal delay={0.2}>
-          <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-4 md:gap-6">
+          <div className="mt-8 grid grid-cols-2 gap-4 md:grid-cols-5 md:gap-6">
             <ImpactCounter value={config.impact.mealsDistributed} label={t('impact_meals_distributed')} />
             <ImpactCounter value={config.impact.familiesSupported} label={t('impact_families_supported')} />
             <ImpactCounter value={config.impact.peopleFed} label={t('impact_people_fed')} />
             <ImpactCounter value={config.impact.communitiesReached} label={locale === 'hi' ? 'वितरण अभियान संपन्न' : 'Community Drives'} />
+            <ImpactCounter value={config.impact.animalsFed ?? 3} label={locale === 'hi' ? 'पशुओं को भोजन' : 'Stray Animals Fed'} />
           </div>
         </ScrollReveal>
 

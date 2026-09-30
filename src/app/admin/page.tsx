@@ -27,7 +27,9 @@ import {
   Sparkles, 
   ArrowUpRight,
   Clock,
-  MapPin
+  MapPin,
+  Upload,
+  Loader2
 } from 'lucide-react';
 import { SiteConfig, Project, Report, MediaItem } from '@/lib/siteConfig';
 
@@ -159,7 +161,8 @@ const normalizeSiteData = (data: unknown): SiteConfig | null => {
       peopleFed: raw.impact?.peopleFed ?? raw.impact?.stats?.peopleFed ?? 0,
       familiesSupported: raw.impact?.familiesSupported ?? raw.impact?.stats?.familiesSupported ?? 0,
       mealsDistributed: raw.impact?.mealsDistributed ?? raw.impact?.stats?.mealsDistributed ?? 0,
-      communitiesReached: raw.impact?.communitiesReached ?? raw.impact?.stats?.communitiesReached ?? 0
+      communitiesReached: raw.impact?.communitiesReached ?? raw.impact?.stats?.communitiesReached ?? 0,
+      animalsFed: raw.impact?.animalsFed ?? raw.impact?.stats?.animalsFed ?? 0
     },
     transparency: {
       contributionsReceived: raw.transparency?.contributionsReceived ?? raw.transparency?.overview?.contributionsReceived ?? 0,
@@ -205,6 +208,44 @@ export default function AdminPage() {
   const [message, setMessage] = useState({ text: '', type: '' });
   const [loginError, setLoginError] = useState('');
   const [lastSavedTime, setLastSavedTime] = useState<string | null>(null);
+  const [uploadingTarget, setUploadingTarget] = useState<string | null>(null);
+  const [uploadProgress, setUploadProgress] = useState<string | null>(null);
+
+  const handleFileUpload = useCallback(async (
+    file: File,
+    type: 'image' | 'video',
+    targetKey: string,
+    onSuccess: (url: string) => void
+  ) => {
+    setUploadingTarget(targetKey);
+    setUploadProgress(`Uploading ${file.name}...`);
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+      formData.append('type', type);
+
+      const res = await fetch('/api/admin/upload', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (res.ok && data.url) {
+        onSuccess(data.url);
+        setHasUnsavedChanges(true);
+        setMessage({ text: data.message || `${type === 'video' ? 'Video' : 'Photo'} uploaded successfully!`, type: 'success' });
+        setTimeout(() => setMessage({ text: '', type: '' }), 4000);
+      } else {
+        setMessage({ text: data.error || 'Upload failed', type: 'error' });
+      }
+    } catch (err) {
+      console.error('Upload error:', err);
+      setMessage({ text: 'Network error during upload', type: 'error' });
+    } finally {
+      setUploadingTarget(null);
+      setUploadProgress(null);
+    }
+  }, []);
 
   const fetchSubmissions = useCallback(async () => {
     try {
@@ -1811,12 +1852,30 @@ export default function AdminPage() {
                     className="w-full bg-white border border-charcoal/15 rounded-xl px-4 py-2.5 text-sm font-semibold focus:border-charcoal outline-none"
                   />
                 </div>
+
+                <div className="p-4 rounded-2xl border-2 border-emerald-500/30 bg-emerald-50/40 md:col-span-2">
+                  <div className="flex items-center justify-between mb-1">
+                    <label className="text-xs font-semibold text-emerald-950 uppercase tracking-wider flex items-center gap-1.5">
+                      <span>🐾</span> Stray Animals Fed (PetBhar Paws)
+                    </label>
+                    <span className="text-[10px] font-bold bg-emerald-100 text-emerald-800 px-2.5 py-0.5 rounded-full">
+                      Paws Ground Drive
+                    </span>
+                  </div>
+                  <p className="text-xs text-charcoal/70 mb-2">Total community street dogs and cats fed fresh meals and water. Displays across Home, Impact, and PetBhar Paws pages.</p>
+                  <input
+                    type="number"
+                    value={siteData.impact?.animalsFed ?? 0}
+                    onChange={(e) => updateNestedState(['impact', 'animalsFed'], parseInt(e.target.value) || 0)}
+                    className="w-full bg-white border border-emerald-300 rounded-xl px-4 py-2.5 text-sm font-semibold focus:border-emerald-600 outline-none text-emerald-950"
+                  />
+                </div>
               </div>
 
               {/* Live Preview Bar */}
               <div className="mt-8 p-6 rounded-2xl bg-charcoal text-ivory">
                 <span className="text-[10px] uppercase tracking-widest text-ivory/60 font-semibold block mb-3">Live Preview on Public Site</span>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-4 text-center">
                   <div>
                     <div className="text-2xl sm:text-3xl font-serif font-bold text-ivory">{siteData.impact?.peopleFed || 0}+</div>
                     <div className="text-xs text-ivory/70 mt-0.5">People Fed</div>
@@ -1832,6 +1891,10 @@ export default function AdminPage() {
                   <div>
                     <div className="text-2xl sm:text-3xl font-serif font-bold text-ivory">{siteData.impact?.communitiesReached || 0}+</div>
                     <div className="text-xs text-ivory/70 mt-0.5">Communities Reached</div>
+                  </div>
+                  <div className="p-2 rounded-xl bg-emerald-500/10 border border-emerald-400/30">
+                    <div className="text-2xl sm:text-3xl font-serif font-bold text-emerald-300">{siteData.impact?.animalsFed || 0}+</div>
+                    <div className="text-xs text-emerald-200/80 mt-0.5">🐾 Animals Fed</div>
                   </div>
                 </div>
               </div>
@@ -1876,15 +1939,39 @@ export default function AdminPage() {
                   </div>
 
                   <div className="md:col-span-2">
-                    <label className="text-xs font-medium text-warm-grey mb-1 block">QR Barcode Image Path</label>
+                    <div className="flex items-center justify-between mb-1">
+                      <label className="text-xs font-medium text-warm-grey block">QR Barcode Image</label>
+                      <label className="cursor-pointer inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 hover:text-emerald-800">
+                        {uploadingTarget === 'upi-qr' ? (
+                          <Loader2 size={12} className="animate-spin text-emerald-700" />
+                        ) : (
+                          <Upload size={12} />
+                        )}
+                        <span>{uploadingTarget === 'upi-qr' ? 'Uploading...' : 'Upload QR Image from PC'}</span>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          className="hidden"
+                          disabled={uploadingTarget !== null}
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (file) {
+                              handleFileUpload(file, 'image', 'upi-qr', (url) => {
+                                updateNestedState(['upi', 'qrImage'], url);
+                              });
+                            }
+                          }}
+                        />
+                      </label>
+                    </div>
                     <input
                       type="text"
                       value={siteData.upi?.qrImage || ''}
                       onChange={(e) => updateNestedState(['upi', 'qrImage'], e.target.value)}
-                      placeholder="/images/petbhar-upi-qr.svg"
+                      placeholder="/images/petbhar-upi-qr.svg or upload from PC"
                       className="w-full bg-white border border-charcoal/15 rounded-xl px-4 py-2.5 text-xs font-mono focus:border-charcoal outline-none"
                     />
-                    <p className="text-[11px] text-warm-grey mt-1">Place your QR file inside public/images/ or enter an image URL.</p>
+                    <p className="text-[11px] text-warm-grey mt-1">Upload your official UPI QR code graphic or enter an image path.</p>
                   </div>
                 </div>
               </div>
@@ -2020,11 +2107,36 @@ export default function AdminPage() {
                       </div>
 
                       <div>
-                        <label className="text-xs font-medium text-warm-grey mb-1 block">Image URL</label>
+                        <div className="flex items-center justify-between mb-1">
+                          <label className="text-xs font-medium text-warm-grey block">Project Image</label>
+                          <label className="cursor-pointer inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 hover:text-emerald-800">
+                            {uploadingTarget === `proj-${index}` ? (
+                              <Loader2 size={12} className="animate-spin text-emerald-700" />
+                            ) : (
+                              <Upload size={12} />
+                            )}
+                            <span>{uploadingTarget === `proj-${index}` ? 'Uploading...' : 'Upload from PC'}</span>
+                            <input
+                              type="file"
+                              accept="image/*"
+                              className="hidden"
+                              disabled={uploadingTarget !== null}
+                              onChange={(e) => {
+                                const file = e.target.files?.[0];
+                                if (file) {
+                                  handleFileUpload(file, 'image', `proj-${index}`, (url) => {
+                                    updateProjectItem(index, 'image', url);
+                                  });
+                                }
+                              }}
+                            />
+                          </label>
+                        </div>
                         <input
                           type="text"
                           value={project.image || ''}
                           onChange={(e) => updateProjectItem(index, 'image', e.target.value)}
+                          placeholder="/images/... or https://..."
                           className="w-full bg-white border border-charcoal/15 rounded-xl px-4 py-2 text-xs font-mono outline-none focus:border-charcoal"
                         />
                       </div>
@@ -2041,13 +2153,18 @@ export default function AdminPage() {
                       </div>
 
                       <div>
-                        <label className="text-xs font-medium text-warm-grey mb-1 block">Beneficiaries Reached</label>
+                        <label className="text-xs font-medium text-warm-grey mb-1 block">
+                          {project.category === 'paws' ? '🐾 Stray Animals Fed' : 'Beneficiaries Reached'}
+                        </label>
                         <input
                           type="number"
                           value={project.beneficiaries || 0}
                           onChange={(e) => updateProjectItem(index, 'beneficiaries', parseInt(e.target.value) || 0)}
                           className="w-full bg-white border border-charcoal/15 rounded-xl px-4 py-2 text-xs outline-none focus:border-charcoal"
                         />
+                        {project.category === 'paws' && (
+                          <span className="text-[11px] text-emerald-700 font-medium mt-1 block">🐾 Displays as Animals Fed on Our Work page</span>
+                        )}
                       </div>
 
                       <div className="flex gap-4">
@@ -2094,16 +2211,51 @@ export default function AdminPage() {
 
               {/* Photos Section */}
               <div className="space-y-4">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-wrap items-center justify-between gap-3">
                   <h3 className="text-sm font-semibold text-charcoal uppercase tracking-wider flex items-center gap-1.5">
                     <ImageIcon size={16} /> Photo Documentation ({siteData.media?.images?.length || 0})
                   </h3>
-                  <button
-                    onClick={addMediaImageItem}
-                    className="flex items-center gap-1.5 bg-charcoal text-ivory px-3 py-1.5 rounded-xl text-xs font-medium hover:bg-black transition-all shadow-xs"
-                  >
-                    <Plus size={13} /> Add Photo
-                  </button>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <label className="cursor-pointer flex items-center gap-1.5 bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-medium hover:bg-emerald-800 transition-all shadow-xs">
+                      {uploadingTarget === 'new-photo-top' ? (
+                        <Loader2 size={13} className="animate-spin text-white" />
+                      ) : (
+                        <Upload size={13} />
+                      )}
+                      <span>{uploadingTarget === 'new-photo-top' ? 'Uploading...' : 'Upload Photo from PC'}</span>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        disabled={uploadingTarget !== null}
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            handleFileUpload(file, 'image', 'new-photo-top', (url) => {
+                              const newImg: MediaItem = {
+                                id: `img-${Date.now()}`,
+                                type: 'image',
+                                url,
+                                caption: file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' '),
+                                date: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+                                category: 'gallery'
+                              };
+                              setSiteData((prev) => prev ? {
+                                ...prev,
+                                media: { ...(prev.media || { images: [], videos: [] }), images: [...(prev.media?.images || []), newImg] }
+                              } : null);
+                            });
+                          }
+                        }}
+                      />
+                    </label>
+                    <button
+                      onClick={addMediaImageItem}
+                      className="flex items-center gap-1.5 bg-charcoal text-ivory px-3 py-1.5 rounded-xl text-xs font-medium hover:bg-black transition-all shadow-xs"
+                    >
+                      <Plus size={13} /> Add Photo via URL
+                    </button>
+                  </div>
                 </div>
 
                 <div className="space-y-3">
@@ -2120,12 +2272,36 @@ export default function AdminPage() {
 
                       <div className="flex-1 grid grid-cols-1 md:grid-cols-2 gap-3 w-full pr-10">
                         <div className="md:col-span-2">
-                          <label className="text-[11px] font-medium text-warm-grey mb-1 block">Image URL</label>
+                          <div className="flex items-center justify-between mb-1">
+                            <label className="text-[11px] font-medium text-warm-grey block">Photo Source</label>
+                            <label className="cursor-pointer inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 hover:text-emerald-800">
+                              {uploadingTarget === `img-${index}` ? (
+                                <Loader2 size={12} className="animate-spin text-emerald-700" />
+                              ) : (
+                                <Upload size={12} />
+                              )}
+                              <span>{uploadingTarget === `img-${index}` ? 'Uploading...' : 'Upload from PC'}</span>
+                              <input
+                                type="file"
+                                accept="image/*"
+                                className="hidden"
+                                disabled={uploadingTarget !== null}
+                                onChange={(e) => {
+                                  const file = e.target.files?.[0];
+                                  if (file) {
+                                    handleFileUpload(file, 'image', `img-${index}`, (url) => {
+                                      updateMediaImageItem(index, 'url', url);
+                                    });
+                                  }
+                                }}
+                              />
+                            </label>
+                          </div>
                           <input
                             type="text"
                             value={image.url || ''}
                             onChange={(e) => updateMediaImageItem(index, 'url', e.target.value)}
-                            placeholder="https://... or /images/..."
+                            placeholder="https://... or /images/... or upload from computer"
                             className="w-full bg-white border border-charcoal/15 rounded-xl px-3.5 py-1.5 text-xs font-mono outline-none focus:border-charcoal"
                           />
                         </div>
@@ -2165,16 +2341,51 @@ export default function AdminPage() {
 
               {/* Videos Section */}
               <div className="space-y-4 pt-6 border-t border-charcoal/10">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-wrap items-center justify-between gap-3">
                   <h3 className="text-sm font-semibold text-charcoal uppercase tracking-wider flex items-center gap-1.5">
                     <Film size={16} /> Ground & Stray Feeding Videos ({siteData.media?.videos?.length || 0})
                   </h3>
-                  <button
-                    onClick={addMediaVideoItem}
-                    className="flex items-center gap-1.5 bg-charcoal text-ivory px-3 py-1.5 rounded-xl text-xs font-medium hover:bg-black transition-all shadow-xs"
-                  >
-                    <Plus size={13} /> Add Video
-                  </button>
+                  <div className="flex flex-wrap items-center gap-2">
+                    <label className="cursor-pointer flex items-center gap-1.5 bg-emerald-700 text-white px-3 py-1.5 rounded-xl text-xs font-medium hover:bg-emerald-800 transition-all shadow-xs">
+                      {uploadingTarget === 'new-video-top' ? (
+                        <Loader2 size={13} className="animate-spin text-white" />
+                      ) : (
+                        <Upload size={13} />
+                      )}
+                      <span>{uploadingTarget === 'new-video-top' ? 'Uploading...' : 'Upload Video File (.mp4)'}</span>
+                      <input
+                        type="file"
+                        accept="video/mp4,video/webm,video/quicktime"
+                        className="hidden"
+                        disabled={uploadingTarget !== null}
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            handleFileUpload(file, 'video', 'new-video-top', (url) => {
+                              const newVid: MediaItem = {
+                                id: `vid-${Date.now()}`,
+                                type: 'video',
+                                url,
+                                caption: file.name.replace(/\.[^/.]+$/, '').replace(/[-_]/g, ' '),
+                                date: new Date().toLocaleDateString('en-US', { month: 'long', year: 'numeric' }),
+                                category: 'paws'
+                              };
+                              setSiteData((prev) => prev ? {
+                                ...prev,
+                                media: { ...(prev.media || { images: [], videos: [] }), videos: [...(prev.media?.videos || []), newVid] }
+                              } : null);
+                            });
+                          }
+                        }}
+                      />
+                    </label>
+                    <button
+                      onClick={addMediaVideoItem}
+                      className="flex items-center gap-1.5 bg-charcoal text-ivory px-3 py-1.5 rounded-xl text-xs font-medium hover:bg-black transition-all shadow-xs"
+                    >
+                      <Plus size={13} /> Add YouTube Link
+                    </button>
+                  </div>
                 </div>
 
                 <div className="space-y-4">
@@ -2191,12 +2402,36 @@ export default function AdminPage() {
 
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 pr-10">
                           <div className="md:col-span-2">
-                            <label className="text-[11px] font-medium text-warm-grey mb-1 block">Video URL (YouTube URL or /videos/filename.mp4)</label>
+                            <div className="flex items-center justify-between mb-1">
+                              <label className="text-[11px] font-medium text-warm-grey block">Video Source (YouTube or Uploaded MP4)</label>
+                              <label className="cursor-pointer inline-flex items-center gap-1 text-[11px] font-semibold text-emerald-700 hover:text-emerald-800">
+                                {uploadingTarget === `vid-${index}` ? (
+                                  <Loader2 size={12} className="animate-spin text-emerald-700" />
+                                ) : (
+                                  <Upload size={12} />
+                                )}
+                                <span>{uploadingTarget === `vid-${index}` ? 'Uploading...' : 'Upload MP4 from PC'}</span>
+                                <input
+                                  type="file"
+                                  accept="video/mp4,video/webm,video/quicktime"
+                                  className="hidden"
+                                  disabled={uploadingTarget !== null}
+                                  onChange={(e) => {
+                                    const file = e.target.files?.[0];
+                                    if (file) {
+                                      handleFileUpload(file, 'video', `vid-${index}`, (url) => {
+                                        updateMediaVideoItem(index, 'url', url);
+                                      });
+                                    }
+                                  }}
+                                />
+                              </label>
+                            </div>
                             <input
                               type="text"
                               value={video.url || ''}
                               onChange={(e) => updateMediaVideoItem(index, 'url', e.target.value)}
-                              placeholder="e.g. /videos/feeding-drive-1.mp4 or https://youtube.com/watch?v=..."
+                              placeholder="e.g. /uploads/videos/... or https://youtube.com/watch?v=..."
                               className="w-full bg-white border border-charcoal/15 rounded-xl px-3.5 py-1.5 text-xs font-mono outline-none focus:border-charcoal"
                             />
                           </div>
