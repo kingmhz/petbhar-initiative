@@ -9,8 +9,12 @@ import { siteConfig } from '@/lib/siteConfig';
 import DedicateDriveModal from '@/components/features/DedicateDriveModal';
 
 interface ImpactSimulatorProps {
+  className?: string;
   onOpenDedication?: (amount: number) => void;
   onOpenQR?: (amount: number) => void;
+  amount?: number;
+  onAmountChange?: (amount: number) => void;
+  hideQrButton?: boolean;
 }
 
 const PRESET_AMOUNTS = [
@@ -22,9 +26,26 @@ const PRESET_AMOUNTS = [
   { amount: 15000, label: '250 Meals Mega Drive' },
 ];
 
-export default function ImpactSimulator({ onOpenDedication, onOpenQR }: ImpactSimulatorProps) {
+export default function ImpactSimulator({
+  className = '',
+  onOpenDedication,
+  onOpenQR,
+  amount: externalAmount,
+  onAmountChange,
+  hideQrButton = false,
+}: ImpactSimulatorProps) {
   const { t } = useLanguage();
-  const [amount, setAmount] = useState<number>(1800);
+  const [internalAmount, setInternalAmount] = useState<number>(1800);
+  const amount = externalAmount !== undefined ? externalAmount : internalAmount;
+
+  const handleAmountChange = (newAmount: number) => {
+    if (onAmountChange) {
+      onAmountChange(newAmount);
+    } else {
+      setInternalAmount(newAmount);
+    }
+  };
+
   const [showQrModal, setShowQrModal] = useState<boolean>(false);
   const [internalDedicateOpen, setInternalDedicateOpen] = useState<boolean>(false);
 
@@ -56,7 +77,7 @@ export default function ImpactSimulator({ onOpenDedication, onOpenQR }: ImpactSi
       meals,
       bowls,
       kits,
-      groceries: `${attaKg} kg Atta • ${riceKg} kg Rice • ${dalKg} kg Dal • ${oilLitre} L Oil`
+      groceries: `${attaKg} kg Atta • ${riceKg} kg Rice • ${dalKg} Dal • ${oilLitre}L Oil`
     };
   }, [amount]);
 
@@ -67,214 +88,226 @@ export default function ImpactSimulator({ onOpenDedication, onOpenQR }: ImpactSi
   }, [amount]);
 
   return (
-    <div className="w-full bg-linear-to-br from-cream/40 to-warm-ivory/20 rounded-3xl border border-charcoal/10 p-6 sm:p-8 shadow-xs">
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <div>
-          <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-terracotta/10 text-terracotta text-xs font-semibold uppercase tracking-wider mb-2">
-            <Sparkles size={13} /> {t('sim_title')}
+    <div
+      className={`relative overflow-hidden rounded-[32px] p-6 sm:p-8 md:p-9 bg-white/70 backdrop-blur-2xl border border-white/80 shadow-[0_20px_50px_rgba(20,20,30,0.06),_inset_0_1px_2px_rgba(255,255,255,0.9)] hover:shadow-[0_25px_60px_rgba(20,20,30,0.09)] transition-all duration-500 flex flex-col justify-between ${className}`}
+    >
+      {/* Liquid Glass Top Refraction Line */}
+      <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white to-transparent pointer-events-none" />
+
+      {/* Top Header */}
+      <div>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
+          <div>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-terracotta/10 text-terracotta text-xs font-semibold uppercase tracking-wider mb-2 border border-terracotta/15">
+              <Sparkles size={13} /> {t('sim_title')}
+            </div>
+            <h3 className="font-serif text-2xl sm:text-3xl font-semibold text-charcoal">
+              {t('sim_title')}
+            </h3>
+            <p className="text-xs sm:text-sm text-warm-grey mt-1">
+              {t('sim_subtitle')}
+            </p>
           </div>
-          <h3 className="font-serif text-2xl sm:text-3xl font-semibold text-charcoal">
-            {t('sim_title')}
-          </h3>
-          <p className="text-xs sm:text-sm text-warm-grey mt-1">
-            {t('sim_subtitle')}
-          </p>
+
+          {/* Selected Amount Pill with Glass Finish */}
+          <div className="text-left sm:text-right bg-white/80 backdrop-blur-md p-3 sm:p-4 rounded-2xl border border-white/90 shadow-xs shrink-0">
+            <span className="text-[10px] font-semibold text-warm-grey uppercase tracking-wider block">
+              {t('sim_custom_amount')}
+            </span>
+            <span className="font-serif text-2xl sm:text-3xl font-bold text-charcoal">
+              ₹{amount.toLocaleString('en-IN')}
+            </span>
+          </div>
         </div>
 
-        {/* Selected Amount Pill */}
-        <div className="text-left sm:text-right bg-white p-3 sm:p-4 rounded-2xl border border-charcoal/10 shadow-xs shrink-0">
-          <span className="text-[11px] font-semibold text-warm-grey uppercase tracking-wider block">
-            {t('sim_custom_amount')}
-          </span>
-          <span className="font-serif text-2xl sm:text-3xl font-bold text-charcoal">
-            ₹{amount.toLocaleString('en-IN')}
-          </span>
+        {/* Preset Amount Chips with Glass Aesthetic */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-2 mb-6">
+          {PRESET_AMOUNTS.map((preset) => (
+            <button
+              key={preset.amount}
+              type="button"
+              onClick={() => handleAmountChange(preset.amount)}
+              className={`py-2 px-3 rounded-xl text-xs font-semibold transition-all border text-left flex flex-col cursor-pointer active:scale-95 ${
+                amount === preset.amount
+                  ? 'bg-charcoal text-ivory border-charcoal shadow-[0_4px_16px_rgba(0,0,0,0.2)]'
+                  : 'bg-white/70 hover:bg-white/95 backdrop-blur-md text-charcoal border-white/80 shadow-xs'
+              }`}
+            >
+              <span className="text-sm font-bold">₹{preset.amount.toLocaleString('en-IN')}</span>
+              <span className={`text-[10px] truncate ${amount === preset.amount ? 'text-cream/80' : 'text-warm-grey'}`}>
+                {preset.label}
+              </span>
+            </button>
+          ))}
+        </div>
+
+        {/* Interactive Range Slider inside Frosted Container */}
+        <div className="space-y-2 mb-6 bg-white/60 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/80 shadow-xs">
+          <div className="flex justify-between text-xs text-warm-grey font-medium">
+            <span>₹120 (2 Meals)</span>
+            <span className="font-semibold text-charcoal font-mono bg-white px-2 py-0.5 rounded-md shadow-2xs border border-charcoal/5">
+              ₹{amount.toLocaleString('en-IN')}
+            </span>
+            <span>₹30,000 (Mega Drive)</span>
+          </div>
+          <input
+            type="range"
+            min={120}
+            max={30000}
+            step={60}
+            value={amount}
+            onChange={(e) => handleAmountChange(Number(e.target.value))}
+            className="w-full h-2.5 bg-charcoal/10 rounded-lg appearance-none cursor-pointer accent-charcoal"
+            aria-label="Donation impact amount slider"
+          />
+        </div>
+
+        {/* Dynamic Impact Output Cards with Liquid Glass UI */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-6">
+          {/* Card 1: Cooked Meals */}
+          <div className="p-4 rounded-2xl bg-white/75 backdrop-blur-md border border-white/90 flex items-start gap-3 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-md transition-shadow">
+            <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-700 flex items-center justify-center shrink-0 border border-amber-500/20">
+              <Utensils size={18} />
+            </div>
+            <div>
+              <div className="font-serif text-2xl font-bold text-charcoal leading-none">
+                {calculated.meals}
+              </div>
+              <span className="text-xs font-semibold text-charcoal block mt-1">
+                {t('sim_fresh_meals')}
+              </span>
+              <span className="text-[11px] text-warm-grey">
+                Piping hot meals (₹60/meal)
+              </span>
+            </div>
+          </div>
+
+          {/* Card 2: PetBhar Paws Bowls */}
+          <div className="p-4 rounded-2xl bg-white/75 backdrop-blur-md border border-white/90 flex items-start gap-3 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-md transition-shadow">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-500/20">
+              <Heart size={18} />
+            </div>
+            <div>
+              <div className="font-serif text-2xl font-bold text-charcoal leading-none">
+                {calculated.bowls}
+              </div>
+              <span className="text-xs font-semibold text-charcoal block mt-1">
+                {t('sim_paws_bowls')}
+              </span>
+              <span className="text-[11px] text-warm-grey">
+                High-protein bowls (₹35/bowl)
+              </span>
+            </div>
+          </div>
+
+          {/* Card 3: Dry Ration Kits */}
+          <div className="p-4 rounded-2xl bg-white/75 backdrop-blur-md border border-white/90 flex items-start gap-3 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-md transition-shadow">
+            <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-700 flex items-center justify-center shrink-0 border border-blue-500/20">
+              <Package size={18} />
+            </div>
+            <div>
+              <div className="font-serif text-2xl font-bold text-charcoal leading-none">
+                {calculated.kits > 0 ? (
+                  <>
+                    {calculated.kits}{' '}
+                    <span className="text-sm font-sans font-medium text-warm-grey">
+                      {calculated.kits === 1 ? 'Kit' : 'Kits'}
+                    </span>
+                  </>
+                ) : (
+                  <>
+                    {Math.round((amount / 1800) * 100)}%{' '}
+                    <span className="text-xs font-sans font-medium text-warm-grey">
+                      of Kit
+                    </span>
+                  </>
+                )}
+              </div>
+              <span className="text-xs font-semibold text-charcoal block mt-1">
+                {t('sim_ration_kits')}
+              </span>
+              <span className="text-[11px] text-warm-grey">
+                Full month family ration (₹1,800)
+              </span>
+            </div>
+          </div>
+        </div>
+
+        {/* Tangible Grocery Breakdown Callout */}
+        <div className="p-3.5 sm:p-4 rounded-2xl bg-white/60 backdrop-blur-md border border-white/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 shadow-xs">
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg bg-charcoal/5 text-charcoal flex items-center justify-center shrink-0">
+              <ShoppingBag size={16} />
+            </div>
+            <div className="text-xs text-charcoal">
+              <span className="font-semibold block">{t('sim_grocery_equiv')}:</span>
+              <span className="text-warm-grey font-mono text-[11px]">{calculated.groceries}</span>
+            </div>
+          </div>
+          <div className="inline-flex items-center gap-1 text-[10px] font-medium text-amber-800 bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/20 self-start sm:self-auto shrink-0">
+            <span>⚖️ Wholesale mandi grain calibrated</span>
+          </div>
         </div>
       </div>
 
-      {/* Preset Amount Chips */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-2 mb-6">
-        {PRESET_AMOUNTS.map((preset) => (
+      {/* Action Buttons & Bottom Info */}
+      <div className="mt-auto pt-2">
+        <div className="flex flex-col sm:flex-row items-center gap-3">
+          {/* Main Sponsor Button -> Opens QR Code Modal */}
           <button
-            key={preset.amount}
             type="button"
-            onClick={() => setAmount(preset.amount)}
-            className={`py-2 px-3 rounded-xl text-xs font-semibold transition-all border text-left flex flex-col ${
-              amount === preset.amount
-                ? 'bg-charcoal text-ivory border-charcoal shadow-sm'
-                : 'bg-white hover:bg-warm-ivory/20 text-charcoal border-charcoal/10'
-            }`}
+            onClick={() => {
+              if (onOpenQR) onOpenQR(amount);
+              setShowQrModal(true);
+            }}
+            className="w-full sm:flex-1 py-3.5 px-6 rounded-2xl bg-charcoal text-ivory text-xs font-semibold hover:bg-black transition-all text-center flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(0,0,0,0.15)] active:scale-98 cursor-pointer"
           >
-            <span className="text-sm font-bold">₹{preset.amount.toLocaleString('en-IN')}</span>
-            <span className={`text-[10px] truncate ${amount === preset.amount ? 'text-cream/80' : 'text-warm-grey'}`}>
-              {preset.label}
-            </span>
+            <QrCode size={15} />
+            <span>{t('sim_sponsor_btn')} (₹{amount.toLocaleString('en-IN')})</span>
+            <ArrowRight size={14} />
           </button>
-        ))}
+
+          {/* Show QR Code Button (Conditional) */}
+          {!hideQrButton && (
+            <button
+              type="button"
+              onClick={() => {
+                if (onOpenQR) onOpenQR(amount);
+                setShowQrModal(true);
+              }}
+              className="w-full sm:w-auto py-3.5 px-5 rounded-2xl bg-white/80 backdrop-blur-md text-charcoal border border-white/90 text-xs font-semibold hover:bg-white transition-all flex items-center justify-center gap-2 active:scale-98 cursor-pointer shadow-xs"
+            >
+              <QrCode size={15} />
+              <span>Show QR Code</span>
+            </button>
+          )}
+
+          {/* Dedicate Drive Button */}
+          <button
+            type="button"
+            onClick={() => {
+              if (onOpenDedication) {
+                onOpenDedication(amount);
+              } else {
+                setInternalDedicateOpen(true);
+              }
+            }}
+            className="w-full sm:w-auto py-3.5 px-5 rounded-2xl bg-white/80 hover:bg-white backdrop-blur-md text-charcoal border border-white/90 text-xs font-semibold transition-all flex items-center justify-center gap-1.5 active:scale-98 cursor-pointer shadow-xs"
+          >
+            <span>Dedicate Drive 🎂</span>
+          </button>
+        </div>
+
+        <p className="text-[11px] text-warm-grey/70 text-center mt-3 flex items-center justify-center gap-1">
+          <Check size={12} className="text-emerald-600" />
+          100% volunteer-run — your contribution directly buys groceries & animal supplies.
+        </p>
       </div>
 
-      {/* Interactive Range Slider */}
-      <div className="space-y-2 mb-8 bg-white p-4 sm:p-5 rounded-2xl border border-charcoal/10 shadow-xs">
-        <div className="flex justify-between text-xs text-warm-grey font-medium">
-          <span>₹120 (2 Meals)</span>
-          <span className="font-semibold text-charcoal font-mono">₹{amount.toLocaleString('en-IN')}</span>
-          <span>₹30,000 (Mega Drive)</span>
-        </div>
-        <input
-          type="range"
-          min={120}
-          max={30000}
-          step={60}
-          value={amount}
-          onChange={(e) => setAmount(Number(e.target.value))}
-          className="w-full h-2.5 bg-warm-ivory/60 rounded-lg appearance-none cursor-pointer accent-charcoal"
-          aria-label="Donation impact amount slider"
-        />
-      </div>
-
-      {/* Dynamic Impact Output Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-6">
-        {/* Card 1: Cooked Meals */}
-        <div className="p-4 rounded-2xl bg-white border border-charcoal/10 flex items-start gap-3 shadow-xs">
-          <div className="w-10 h-10 rounded-xl bg-amber-50 text-amber-700 flex items-center justify-center shrink-0">
-            <Utensils size={18} />
-          </div>
-          <div>
-            <div className="font-serif text-2xl font-bold text-charcoal leading-none">
-              {calculated.meals}
-            </div>
-            <span className="text-xs font-semibold text-charcoal block mt-1">
-              {t('sim_fresh_meals')}
-            </span>
-            <span className="text-[11px] text-warm-grey">
-              Piping hot cooked thalis (₹60/meal)
-            </span>
-          </div>
-        </div>
-
-        {/* Card 2: PetBhar Paws Bowls */}
-        <div className="p-4 rounded-2xl bg-white border border-charcoal/10 flex items-start gap-3 shadow-xs">
-          <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-700 flex items-center justify-center shrink-0">
-            <Heart size={18} />
-          </div>
-          <div>
-            <div className="font-serif text-2xl font-bold text-charcoal leading-none">
-              {calculated.bowls}
-            </div>
-            <span className="text-xs font-semibold text-charcoal block mt-1">
-              {t('sim_paws_bowls')}
-            </span>
-            <span className="text-[11px] text-warm-grey">
-              High-protein stray bowls (₹35/bowl)
-            </span>
-          </div>
-        </div>
-
-        {/* Card 3: Dry Ration Kits */}
-        <div className="p-4 rounded-2xl bg-white border border-charcoal/10 flex items-start gap-3 shadow-xs">
-          <div className="w-10 h-10 rounded-xl bg-blue-50 text-blue-700 flex items-center justify-center shrink-0">
-            <Package size={18} />
-          </div>
-          <div>
-            <div className="font-serif text-2xl font-bold text-charcoal leading-none">
-              {calculated.kits > 0 ? (
-                <>
-                  {calculated.kits}{' '}
-                  <span className="text-sm font-sans font-medium text-warm-grey">
-                    {calculated.kits === 1 ? 'Kit' : 'Kits'}
-                  </span>
-                </>
-              ) : (
-                <>
-                  {Math.round((amount / 1800) * 100)}%{' '}
-                  <span className="text-xs font-sans font-medium text-warm-grey">
-                    of Kit
-                  </span>
-                </>
-              )}
-            </div>
-            <span className="text-xs font-semibold text-charcoal block mt-1">
-              {t('sim_ration_kits')}
-            </span>
-            <span className="text-[11px] text-warm-grey">
-              Full month family ration (₹1,800)
-            </span>
-          </div>
-        </div>
-      </div>
-
-      {/* Tangible Grocery Breakdown Callout with Wholesale Calibration */}
-      <div className="p-4 rounded-2xl bg-warm-ivory/30 border border-charcoal/10 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
-        <div className="flex items-center gap-3">
-          <div className="w-8 h-8 rounded-lg bg-charcoal/5 text-charcoal flex items-center justify-center shrink-0">
-            <ShoppingBag size={16} />
-          </div>
-          <div className="text-xs text-charcoal">
-            <span className="font-semibold block">{t('sim_grocery_equiv')}:</span>
-            <span className="text-warm-grey font-mono text-[11px]">{calculated.groceries}</span>
-          </div>
-        </div>
-        <div className="inline-flex items-center gap-1 text-[10px] font-medium text-amber-800 bg-amber-50 px-2.5 py-1 rounded-full border border-amber-200/60 self-start sm:self-auto shrink-0">
-          <span>⚖️ Calibrated to wholesale mandi grain rates</span>
-        </div>
-      </div>
-
-      {/* Action Buttons */}
-      <div className="flex flex-col sm:flex-row items-center gap-3">
-        {/* Main Sponsor Button -> Opens QR Code Modal on Screen */}
-        <button
-          type="button"
-          onClick={() => {
-            if (onOpenQR) onOpenQR(amount);
-            setShowQrModal(true);
-          }}
-          className="w-full sm:flex-1 py-3.5 px-6 rounded-2xl bg-charcoal text-ivory text-xs font-semibold hover:bg-black transition-all text-center flex items-center justify-center gap-2 shadow-sm active:scale-98 cursor-pointer"
-        >
-          <QrCode size={15} />
-          <span>{t('sim_sponsor_btn')} (₹{amount.toLocaleString('en-IN')})</span>
-          <ArrowRight size={14} />
-        </button>
-
-        {/* Show QR Code Button */}
-        <button
-          type="button"
-          onClick={() => {
-            if (onOpenQR) onOpenQR(amount);
-            setShowQrModal(true);
-          }}
-          className="w-full sm:w-auto py-3.5 px-5 rounded-2xl bg-white text-charcoal border border-charcoal/15 text-xs font-semibold hover:bg-warm-ivory/20 transition-all flex items-center justify-center gap-2 active:scale-98 cursor-pointer"
-        >
-          <QrCode size={15} />
-          <span>Show QR Code</span>
-        </button>
-
-        {/* Dedicate Drive Button */}
-        <button
-          type="button"
-          onClick={() => {
-            if (onOpenDedication) {
-              onOpenDedication(amount);
-            } else {
-              setInternalDedicateOpen(true);
-            }
-          }}
-          className="w-full sm:w-auto py-3.5 px-5 rounded-2xl bg-warm-ivory/40 text-charcoal border border-charcoal/10 text-xs font-semibold hover:bg-warm-ivory/70 transition-all flex items-center justify-center gap-1.5 active:scale-98 cursor-pointer"
-        >
-          <span>Dedicate Drive 🎂</span>
-        </button>
-      </div>
-
-      <p className="text-[11px] text-warm-grey/70 text-center mt-3 flex items-center justify-center gap-1">
-        <Check size={12} className="text-emerald-600" />
-        100% volunteer-run — your contribution goes straight to purchasing groceries and food supplies.
-      </p>
-
-      {/* Interactive QR Code Modal Displayed on Screen */}
+      {/* Interactive QR Code Modal */}
       <AnimatePresence>
         {showQrModal && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
-            {/* Backdrop */}
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -284,7 +317,6 @@ export default function ImpactSimulator({ onOpenDedication, onOpenQR }: ImpactSi
               className="absolute inset-0 bg-black/75 backdrop-blur-sm cursor-pointer"
             />
 
-            {/* Modal Card */}
             <motion.div
               initial={{ opacity: 0, scale: 0.93, y: 16 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -294,7 +326,6 @@ export default function ImpactSimulator({ onOpenDedication, onOpenQR }: ImpactSi
               role="dialog"
               aria-modal="true"
             >
-              {/* Close Button */}
               <button
                 type="button"
                 onClick={() => setShowQrModal(false)}
@@ -304,7 +335,6 @@ export default function ImpactSimulator({ onOpenDedication, onOpenQR }: ImpactSi
                 <X size={20} />
               </button>
 
-              {/* Badge & Amount */}
               <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-[11px] font-semibold tracking-wider uppercase text-emerald-700 mb-2">
                 <Sparkles size={13} /> Direct Impact Sponsorship
               </div>
@@ -317,7 +347,6 @@ export default function ImpactSimulator({ onOpenDedication, onOpenQR }: ImpactSi
                 Provides {calculated.meals} wholesome meals &bull; {calculated.bowls} animal feeding bowls
               </p>
 
-              {/* Centered High-Resolution QR Card */}
               <div className="mx-auto my-4 w-48 h-48 sm:w-56 sm:h-56 bg-white rounded-2xl p-3 shadow-inner border border-charcoal/10 flex items-center justify-center relative">
                 <Image
                   src={siteConfig.upi?.qrImage || '/images/petbhar-upi-qr.png'}
@@ -329,7 +358,6 @@ export default function ImpactSimulator({ onOpenDedication, onOpenQR }: ImpactSi
                 />
               </div>
 
-              {/* Scan Prompt */}
               <div className="space-y-1">
                 <p className="text-xs font-semibold text-charcoal">
                   Scan to pay with any UPI app
@@ -339,7 +367,6 @@ export default function ImpactSimulator({ onOpenDedication, onOpenQR }: ImpactSi
                 </p>
               </div>
 
-              {/* Direct UPI Intent Link if on supported mobile */}
               {siteConfig.upi?.id && (
                 <div className="mt-4 md:hidden">
                   <a
