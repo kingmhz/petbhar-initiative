@@ -87,8 +87,12 @@ export default function WorkPage() {
                       quality={80}
                       className="object-cover transition-transform duration-700 group-hover:scale-105"
                     />
-                    <div className="absolute top-4 left-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium tracking-wide uppercase text-charcoal z-10">
-                      {project.status || 'Active'}
+                    <div className={`absolute top-4 left-4 backdrop-blur-sm px-3 py-1.5 rounded-full text-xs font-medium tracking-wide uppercase z-10 ${
+                      project.status === 'completed'
+                        ? 'bg-emerald-700 text-white shadow-sm'
+                        : 'bg-white/90 text-charcoal'
+                    }`}>
+                      {project.status === 'completed' ? '✓ Completed' : (project.status || 'Active')}
                     </div>
                   </div>
                   
@@ -111,7 +115,12 @@ export default function WorkPage() {
                     {project.beneficiaries && (
                       <div className="flex items-center gap-1.5">
                         <Users className="w-4 h-4" />
-                        <span>{project.beneficiaries} Beneficiaries</span>
+                        <span>
+                          {project.beneficiaries}{' '}
+                          {project.category === 'paws'
+                            ? (project.beneficiaries === 1 ? 'Animal Fed' : 'Animals Fed')
+                            : (project.beneficiaries === 1 ? 'Beneficiary' : 'Beneficiaries')}
+                        </span>
                       </div>
                     )}
                   </div>

@@ -33,17 +33,18 @@
     "branch": ""
   },
   "impact": {
-    "peopleFed": 100,
-    "familiesSupported": 20,
-    "mealsDistributed": 100,
-    "communitiesReached": 2
+    "peopleFed": 0,
+    "familiesSupported": 0,
+    "mealsDistributed": 0,
+    "communitiesReached": 0,
+    "animalsFed": 0
   },
   "transparency": {
     "contributionsReceived": 0,
-    "foodPurchased": 5000,
-    "mealsDistributed": 100,
+    "foodPurchased": 0,
+    "mealsDistributed": 0,
     "groceryKitsDistributed": 0,
-    "familiesSupported": 20
+    "familiesSupported": 0
   },
   "projects": [
     {
@@ -60,13 +61,13 @@
     },
     {
       "id": "paws-feeding-001",
-      "title": "PetBhar Paws — 20+ Animals",
-      "description": "Feeding, water and basic care for stray animals in our community.",
-      "image": "https://images.unsplash.com/photo-1601758228041-f3b2795255f1?w=800&q=80",
-      "date": "",
-      "location": "",
-      "beneficiaries": 20,
-      "status": "planned",
+      "title": "PetBhar Paws • Stray Animal Feeding Drive",
+      "description": "Nutritious fresh meals, clean water bowls, and care provided to 3 community street animals on the ground.",
+      "image": "/images/petbhar_paws_feeding.jpg",
+      "date": "September 2026",
+      "location": "Ground Community Drive",
+      "beneficiaries": 3,
+      "status": "completed",
       "expenses": 0,
       "category": "paws"
     }

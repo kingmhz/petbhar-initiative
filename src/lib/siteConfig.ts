@@ -66,6 +66,7 @@ export interface SiteConfig {
     familiesSupported: number;
     mealsDistributed: number;
     communitiesReached: number;
+    animalsFed?: number;
   };
   transparency: {
     contributionsReceived: number;
