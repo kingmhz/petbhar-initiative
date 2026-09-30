@@ -94,7 +94,7 @@ export default function ImpactSimulator({ onOpenDedication, onOpenQR }: ImpactSi
       </div>
 
       {/* Preset Amount Chips */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-2 mb-6">
+      <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-2 mb-6">
         {PRESET_AMOUNTS.map((preset) => (
           <button
             key={preset.amount}

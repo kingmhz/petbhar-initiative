@@ -13,7 +13,7 @@ export default function Impact() {
   const { t, locale } = useLanguage();
 
   return (
-    <section className="relative overflow-hidden bg-charcoal py-14 sm:py-16 md:py-20 text-ivory">
+    <section id="impact" className="relative overflow-hidden bg-charcoal py-14 sm:py-16 md:py-20 text-ivory">
       <Image
         src="https://images.unsplash.com/photo-1469571486292-0ba58a3f068b?w=1920&q=60"
         alt="Impact background"

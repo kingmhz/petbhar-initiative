@@ -51,10 +51,10 @@ export default function Hero() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const scrollToAbout = () => {
-    const aboutSection = document.getElementById('about');
-    if (aboutSection) {
-      aboutSection.scrollIntoView({ behavior: 'smooth' });
+  const scrollToNext = () => {
+    const nextSection = document.getElementById('impact') || document.getElementById('calculator');
+    if (nextSection) {
+      nextSection.scrollIntoView({ behavior: 'smooth' });
     }
   };
 
@@ -199,12 +199,12 @@ export default function Hero() {
       {/* Interactive Scroll Down Indicator */}
       <motion.button
         type="button"
-        onClick={scrollToAbout}
+        onClick={scrollToNext}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 1, delay: 1.4 }}
         className="absolute bottom-6 sm:bottom-8 left-1/2 -translate-x-1/2 p-3 text-ivory/70 hover:text-ivory transition-colors z-20 cursor-pointer"
-        aria-label="Scroll to About section"
+        aria-label="Scroll to next section"
       >
         <motion.div
           animate={{ y: [0, 8, 0] }}
