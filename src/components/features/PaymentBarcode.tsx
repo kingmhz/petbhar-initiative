@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
-import { Copy, Check, ArrowUpRight, ShieldCheck, QrCode, Sparkles } from 'lucide-react';
+import { Copy, Check, ArrowUpRight, ShieldCheck, QrCode } from 'lucide-react';
 import { GooglePayIcon } from '@/components/ui/SocialIcons';
 import { getUpiPaymentUrls } from '@/lib/upi';
 import { siteConfig } from '@/lib/siteConfig';
@@ -37,14 +37,11 @@ export default function PaymentBarcode({ className = '', amount }: PaymentBarcod
 
   return (
     <div
-      className={`relative overflow-hidden rounded-[32px] p-6 sm:p-8 md:p-9 bg-white/70 backdrop-blur-2xl border border-white/80 shadow-[0_20px_50px_rgba(20,20,30,0.06),_inset_0_1px_2px_rgba(255,255,255,0.9)] hover:shadow-[0_25px_60px_rgba(20,20,30,0.09)] transition-all duration-500 flex flex-col justify-between text-center ${className}`}
+      className={`rounded-3xl p-6 sm:p-8 md:p-9 bg-white border border-charcoal/8 shadow-[0_4px_24px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.05)] transition-all duration-300 flex flex-col justify-between text-center ${className}`}
     >
-      {/* Liquid Glass Top Refraction Line */}
-      <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white to-transparent pointer-events-none" />
-
       {/* Top Header */}
       <div>
-        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-500/10 text-[11px] font-semibold tracking-wider uppercase text-emerald-700 mb-3 border border-emerald-500/20">
+        <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-[11px] font-semibold tracking-wider uppercase text-emerald-700 mb-3 border border-emerald-100">
           <QrCode size={13} />
           <span>{locale === 'hi' ? 'सीधा यूपीआई भुगतान' : 'Instant UPI Payment'}</span>
         </div>
@@ -62,44 +59,44 @@ export default function PaymentBarcode({ className = '', amount }: PaymentBarcod
         </p>
       </div>
 
-      {/* Centered QR Barcode with Floating Glass Pedestal */}
+      {/* Centered QR Barcode Container */}
       <div className="my-auto py-5 flex flex-col items-center justify-center">
-        <div className="relative aspect-square w-full max-w-[240px] sm:max-w-[260px] rounded-3xl p-4 bg-white/95 backdrop-blur-md border border-white shadow-[0_16px_40px_rgba(0,0,0,0.07),_inset_0_1px_1px_rgba(255,255,255,1)] flex items-center justify-center group">
+        <div className="relative aspect-square w-full max-w-[240px] sm:max-w-[260px] rounded-3xl p-5 bg-[#FAF8F5] border border-charcoal/6 flex items-center justify-center group transition-all">
           <Image
             src={qrImage}
             alt="PetBhar UPI Payment Barcode"
             width={240}
             height={240}
-            className="w-full h-full object-contain transition-transform duration-500 group-hover:scale-[1.02]"
+            className="w-full h-full object-contain transition-transform duration-300 group-hover:scale-[1.02]"
             priority
           />
         </div>
 
-        {/* Supported Apps List */}
+        {/* Supported Apps Badges */}
         <div className="mt-4 text-center">
           <p className="text-[11px] font-semibold text-charcoal/80">
             {locale === 'hi' ? 'सभी यूपीआई ऐप्स समर्थित हैं' : 'Scan with any UPI App'}
           </p>
-          <div className="flex flex-wrap items-center justify-center gap-1.5 mt-1 text-[10px] text-warm-grey font-medium">
-            <span className="bg-white/70 px-2 py-0.5 rounded-full border border-charcoal/5">Google Pay</span>
-            <span className="bg-white/70 px-2 py-0.5 rounded-full border border-charcoal/5">PhonePe</span>
-            <span className="bg-white/70 px-2 py-0.5 rounded-full border border-charcoal/5">Paytm</span>
-            <span className="bg-white/70 px-2 py-0.5 rounded-full border border-charcoal/5">BHIM</span>
-            <span className="bg-white/70 px-2 py-0.5 rounded-full border border-charcoal/5">CRED</span>
+          <div className="flex flex-wrap items-center justify-center gap-1.5 mt-1.5 text-[10px] text-warm-grey font-medium">
+            <span className="bg-[#FAF8F5] px-2.5 py-0.5 rounded-full border border-charcoal/6">Google Pay</span>
+            <span className="bg-[#FAF8F5] px-2.5 py-0.5 rounded-full border border-charcoal/6">PhonePe</span>
+            <span className="bg-[#FAF8F5] px-2.5 py-0.5 rounded-full border border-charcoal/6">Paytm</span>
+            <span className="bg-[#FAF8F5] px-2.5 py-0.5 rounded-full border border-charcoal/6">BHIM</span>
+            <span className="bg-[#FAF8F5] px-2.5 py-0.5 rounded-full border border-charcoal/6">CRED</span>
           </div>
         </div>
       </div>
 
-      {/* Bottom Area: UPI ID Copy + Mobile Links + Trust Badge */}
+      {/* Bottom Area: Copy UPI ID + Mobile Links + Trust Badge */}
       <div className="mt-auto pt-2 space-y-3">
         {/* Copy UPI ID Button (if available) */}
         {upiId && (
-          <div className="w-full flex items-center justify-between gap-2 px-3.5 py-2 rounded-2xl bg-white/70 backdrop-blur-md border border-white/90 text-xs shadow-2xs">
+          <div className="w-full flex items-center justify-between gap-2 px-3.5 py-2.5 rounded-2xl bg-[#FAF8F5] border border-charcoal/6 text-xs">
             <span className="font-mono text-charcoal truncate">{upiId}</span>
             <button
               type="button"
               onClick={handleCopy}
-              className="shrink-0 flex items-center gap-1 text-[11px] font-semibold text-charcoal hover:text-black transition-colors cursor-pointer px-2 py-1 rounded-lg hover:bg-black/5"
+              className="shrink-0 flex items-center gap-1 text-[11px] font-semibold text-charcoal hover:text-black transition-colors cursor-pointer px-2 py-0.5 rounded-md hover:bg-black/5"
             >
               {copied ? (
                 <>
@@ -120,7 +117,7 @@ export default function PaymentBarcode({ className = '', amount }: PaymentBarcod
         <div className="space-y-2 md:hidden">
           <a
             href={gpayUrl}
-            className="w-full py-3.5 px-4 rounded-2xl bg-charcoal text-ivory text-xs font-semibold hover:bg-black transition-colors flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(0,0,0,0.15)] active:scale-98"
+            className="w-full py-3.5 px-4 rounded-2xl bg-charcoal text-ivory text-xs font-semibold hover:bg-black transition-colors flex items-center justify-center gap-2 shadow-xs active:scale-98"
           >
             <GooglePayIcon size={16} />
             <span>Pay with Google Pay</span>

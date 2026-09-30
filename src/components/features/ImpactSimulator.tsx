@@ -89,16 +89,13 @@ export default function ImpactSimulator({
 
   return (
     <div
-      className={`relative overflow-hidden rounded-[32px] p-6 sm:p-8 md:p-9 bg-white/70 backdrop-blur-2xl border border-white/80 shadow-[0_20px_50px_rgba(20,20,30,0.06),_inset_0_1px_2px_rgba(255,255,255,0.9)] hover:shadow-[0_25px_60px_rgba(20,20,30,0.09)] transition-all duration-500 flex flex-col justify-between ${className}`}
+      className={`rounded-3xl p-6 sm:p-8 md:p-9 bg-white border border-charcoal/8 shadow-[0_4px_24px_rgba(0,0,0,0.03)] hover:shadow-[0_8px_32px_rgba(0,0,0,0.05)] transition-all duration-300 flex flex-col justify-between ${className}`}
     >
-      {/* Liquid Glass Top Refraction Line */}
-      <div className="absolute inset-x-0 top-0 h-px bg-linear-to-r from-transparent via-white to-transparent pointer-events-none" />
-
       {/* Top Header */}
       <div>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-terracotta/10 text-terracotta text-xs font-semibold uppercase tracking-wider mb-2 border border-terracotta/15">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-terracotta/8 text-terracotta text-xs font-semibold uppercase tracking-wider mb-2 border border-terracotta/15">
               <Sparkles size={13} /> {t('sim_title')}
             </div>
             <h3 className="font-serif text-2xl sm:text-3xl font-semibold text-charcoal">
@@ -109,8 +106,8 @@ export default function ImpactSimulator({
             </p>
           </div>
 
-          {/* Selected Amount Pill with Glass Finish */}
-          <div className="text-left sm:text-right bg-white/80 backdrop-blur-md p-3 sm:p-4 rounded-2xl border border-white/90 shadow-xs shrink-0">
+          {/* Selected Amount Display */}
+          <div className="text-left sm:text-right bg-[#FAF8F5] px-4 py-3 rounded-2xl border border-charcoal/6 shrink-0">
             <span className="text-[10px] font-semibold text-warm-grey uppercase tracking-wider block">
               {t('sim_custom_amount')}
             </span>
@@ -120,7 +117,7 @@ export default function ImpactSimulator({
           </div>
         </div>
 
-        {/* Preset Amount Chips with Glass Aesthetic */}
+        {/* Preset Amount Chips with Smooth Hover and Soft Background */}
         <div className="grid grid-cols-2 sm:grid-cols-3 xl:grid-cols-6 gap-2 mb-6">
           {PRESET_AMOUNTS.map((preset) => (
             <button
@@ -129,8 +126,8 @@ export default function ImpactSimulator({
               onClick={() => handleAmountChange(preset.amount)}
               className={`py-2 px-3 rounded-xl text-xs font-semibold transition-all border text-left flex flex-col cursor-pointer active:scale-95 ${
                 amount === preset.amount
-                  ? 'bg-charcoal text-ivory border-charcoal shadow-[0_4px_16px_rgba(0,0,0,0.2)]'
-                  : 'bg-white/70 hover:bg-white/95 backdrop-blur-md text-charcoal border-white/80 shadow-xs'
+                  ? 'bg-charcoal text-ivory border-charcoal shadow-xs'
+                  : 'bg-[#FAF8F5] hover:bg-[#F2EFE9] text-charcoal border-charcoal/6 hover:border-charcoal/15'
               }`}
             >
               <span className="text-sm font-bold">₹{preset.amount.toLocaleString('en-IN')}</span>
@@ -141,11 +138,11 @@ export default function ImpactSimulator({
           ))}
         </div>
 
-        {/* Interactive Range Slider inside Frosted Container */}
-        <div className="space-y-2 mb-6 bg-white/60 backdrop-blur-md p-4 sm:p-5 rounded-2xl border border-white/80 shadow-xs">
+        {/* Interactive Range Slider inside Light Container */}
+        <div className="space-y-2 mb-6 bg-[#FAF8F5] p-4 sm:p-5 rounded-2xl border border-charcoal/6">
           <div className="flex justify-between text-xs text-warm-grey font-medium">
             <span>₹120 (2 Meals)</span>
-            <span className="font-semibold text-charcoal font-mono bg-white px-2 py-0.5 rounded-md shadow-2xs border border-charcoal/5">
+            <span className="font-semibold text-charcoal font-mono bg-white px-2.5 py-0.5 rounded-md shadow-2xs border border-charcoal/8">
               ₹{amount.toLocaleString('en-IN')}
             </span>
             <span>₹30,000 (Mega Drive)</span>
@@ -157,16 +154,16 @@ export default function ImpactSimulator({
             step={60}
             value={amount}
             onChange={(e) => handleAmountChange(Number(e.target.value))}
-            className="w-full h-2.5 bg-charcoal/10 rounded-lg appearance-none cursor-pointer accent-charcoal"
+            className="w-full h-2 bg-[#EAE6DF] rounded-lg appearance-none cursor-pointer accent-charcoal"
             aria-label="Donation impact amount slider"
           />
         </div>
 
-        {/* Dynamic Impact Output Cards with Liquid Glass UI */}
+        {/* Dynamic Impact Output Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-6">
           {/* Card 1: Cooked Meals */}
-          <div className="p-4 rounded-2xl bg-white/75 backdrop-blur-md border border-white/90 flex items-start gap-3 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-700 flex items-center justify-center shrink-0 border border-amber-500/20">
+          <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-charcoal/6 flex items-start gap-3 hover:bg-white hover:border-charcoal/12 hover:shadow-xs transition-all">
+            <div className="w-10 h-10 rounded-xl bg-amber-500/10 text-amber-700 flex items-center justify-center shrink-0 border border-amber-500/15">
               <Utensils size={18} />
             </div>
             <div>
@@ -183,8 +180,8 @@ export default function ImpactSimulator({
           </div>
 
           {/* Card 2: PetBhar Paws Bowls */}
-          <div className="p-4 rounded-2xl bg-white/75 backdrop-blur-md border border-white/90 flex items-start gap-3 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-500/20">
+          <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-charcoal/6 flex items-start gap-3 hover:bg-white hover:border-charcoal/12 hover:shadow-xs transition-all">
+            <div className="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-700 flex items-center justify-center shrink-0 border border-emerald-500/15">
               <Heart size={18} />
             </div>
             <div>
@@ -201,8 +198,8 @@ export default function ImpactSimulator({
           </div>
 
           {/* Card 3: Dry Ration Kits */}
-          <div className="p-4 rounded-2xl bg-white/75 backdrop-blur-md border border-white/90 flex items-start gap-3 shadow-[0_4px_20px_rgba(0,0,0,0.03)] hover:shadow-md transition-shadow">
-            <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-700 flex items-center justify-center shrink-0 border border-blue-500/20">
+          <div className="p-4 rounded-2xl bg-[#FAF8F5] border border-charcoal/6 flex items-start gap-3 hover:bg-white hover:border-charcoal/12 hover:shadow-xs transition-all">
+            <div className="w-10 h-10 rounded-xl bg-blue-500/10 text-blue-700 flex items-center justify-center shrink-0 border border-blue-500/15">
               <Package size={18} />
             </div>
             <div>
@@ -234,7 +231,7 @@ export default function ImpactSimulator({
         </div>
 
         {/* Tangible Grocery Breakdown Callout */}
-        <div className="p-3.5 sm:p-4 rounded-2xl bg-white/60 backdrop-blur-md border border-white/80 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6 shadow-xs">
+        <div className="p-3.5 sm:p-4 rounded-2xl bg-[#FAF8F5] border border-charcoal/6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-6">
           <div className="flex items-center gap-3">
             <div className="w-8 h-8 rounded-lg bg-charcoal/5 text-charcoal flex items-center justify-center shrink-0">
               <ShoppingBag size={16} />
@@ -244,7 +241,7 @@ export default function ImpactSimulator({
               <span className="text-warm-grey font-mono text-[11px]">{calculated.groceries}</span>
             </div>
           </div>
-          <div className="inline-flex items-center gap-1 text-[10px] font-medium text-amber-800 bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/20 self-start sm:self-auto shrink-0">
+          <div className="inline-flex items-center gap-1 text-[10px] font-medium text-amber-800 bg-amber-500/10 px-2.5 py-1 rounded-full border border-amber-500/15 self-start sm:self-auto shrink-0">
             <span>⚖️ Wholesale mandi grain calibrated</span>
           </div>
         </div>
@@ -253,14 +250,14 @@ export default function ImpactSimulator({
       {/* Action Buttons & Bottom Info */}
       <div className="mt-auto pt-2">
         <div className="flex flex-col sm:flex-row items-center gap-3">
-          {/* Main Sponsor Button -> Opens QR Code Modal */}
+          {/* Main Sponsor Button */}
           <button
             type="button"
             onClick={() => {
               if (onOpenQR) onOpenQR(amount);
               setShowQrModal(true);
             }}
-            className="w-full sm:flex-1 py-3.5 px-6 rounded-2xl bg-charcoal text-ivory text-xs font-semibold hover:bg-black transition-all text-center flex items-center justify-center gap-2 shadow-[0_4px_16px_rgba(0,0,0,0.15)] active:scale-98 cursor-pointer"
+            className="w-full sm:flex-1 py-3.5 px-6 rounded-2xl bg-charcoal text-ivory text-xs font-semibold hover:bg-black transition-all text-center flex items-center justify-center gap-2 shadow-xs active:scale-98 cursor-pointer"
           >
             <QrCode size={15} />
             <span>{t('sim_sponsor_btn')} (₹{amount.toLocaleString('en-IN')})</span>
@@ -275,7 +272,7 @@ export default function ImpactSimulator({
                 if (onOpenQR) onOpenQR(amount);
                 setShowQrModal(true);
               }}
-              className="w-full sm:w-auto py-3.5 px-5 rounded-2xl bg-white/80 backdrop-blur-md text-charcoal border border-white/90 text-xs font-semibold hover:bg-white transition-all flex items-center justify-center gap-2 active:scale-98 cursor-pointer shadow-xs"
+              className="w-full sm:w-auto py-3.5 px-5 rounded-2xl bg-[#FAF8F5] hover:bg-[#F2EFE9] text-charcoal border border-charcoal/10 text-xs font-semibold transition-all flex items-center justify-center gap-2 active:scale-98 cursor-pointer shadow-2xs"
             >
               <QrCode size={15} />
               <span>Show QR Code</span>
@@ -292,7 +289,7 @@ export default function ImpactSimulator({
                 setInternalDedicateOpen(true);
               }
             }}
-            className="w-full sm:w-auto py-3.5 px-5 rounded-2xl bg-white/80 hover:bg-white backdrop-blur-md text-charcoal border border-white/90 text-xs font-semibold transition-all flex items-center justify-center gap-1.5 active:scale-98 cursor-pointer shadow-xs"
+            className="w-full sm:w-auto py-3.5 px-5 rounded-2xl bg-[#FAF8F5] hover:bg-[#F2EFE9] text-charcoal border border-charcoal/10 text-xs font-semibold transition-all flex items-center justify-center gap-1.5 active:scale-98 cursor-pointer shadow-2xs"
           >
             <span>Dedicate Drive 🎂</span>
           </button>
