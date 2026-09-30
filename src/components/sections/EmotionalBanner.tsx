@@ -20,9 +20,8 @@ export default function EmotionalBanner() {
           <h2 className="font-serif text-4xl font-light md:text-5xl lg:text-6xl">
             Together, we can end<br />hunger in our community.
           </h2>
-          <div className="mt-8 flex flex-wrap justify-center gap-4">
+          <div className="mt-8 flex justify-center">
             <Button variant="secondary" href="/get-involved">Support Us</Button>
-            <Button variant="outline" href="/get-involved">Get Involved</Button>
           </div>
           <p className="mt-12 font-serif text-lg italic text-ivory/60">
             Small acts. Big impact.
