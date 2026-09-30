@@ -4,6 +4,7 @@ import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { SectionLabel } from '@/components/ui/SectionLabel';
 import { DonationMethods } from '@/components/sections/DonationMethods';
+import ImpactSimulator from '@/components/features/ImpactSimulator';
 import DedicateDriveModal from '@/components/features/DedicateDriveModal';
 import ImpactCardGeneratorModal from '@/components/features/ImpactCardGeneratorModal';
 import FaqAccordion from '@/components/features/FaqAccordion';
@@ -142,6 +143,11 @@ export default function GetInvolvedPage() {
             </p>
           </motion.div>
         </div>
+
+        <div className="max-w-4xl mx-auto px-6 mb-12 sm:mb-16">
+          <ImpactSimulator />
+        </div>
+
         <div className="max-w-7xl mx-auto px-6">
           <DonationMethods />
         </div>

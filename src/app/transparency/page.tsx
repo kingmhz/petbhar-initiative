@@ -6,6 +6,7 @@ import { siteConfig } from '@/lib/siteConfig';
 import Link from 'next/link';
 import WallOfKindness from '@/components/features/WallOfKindness';
 import FaqAccordion from '@/components/features/FaqAccordion';
+import GroundEconomics from '@/components/sections/GroundEconomics';
 
 export default function TransparencyPage() {
   const fadeIn = {
@@ -94,6 +95,9 @@ export default function TransparencyPage() {
           </div>
         </div>
       </section>
+
+      {/* Detailed Ground Economics & Unit Cost Breakdown */}
+      <GroundEconomics />
 
       {/* Frequently Asked Questions Accordion */}
       <section className="py-16 sm:py-20 px-6 bg-warm-ivory/20 border-t border-charcoal/5">
