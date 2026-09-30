@@ -1,5 +1,4 @@
 import Hero from "@/components/sections/Hero";
-import Impact from "@/components/sections/Impact";
 import ImpactSimulator from "@/components/features/ImpactSimulator";
 import PaymentBarcode from "@/components/features/PaymentBarcode";
 import HomePillars from "@/components/sections/HomePillars";
@@ -9,7 +8,6 @@ export default function Home() {
   return (
     <main>
       <Hero />
-      <Impact />
 
       {/* Interactive Impact Calculator & Direct Payment Barcode */}
       <section className="py-14 sm:py-18 md:py-22 bg-warm-ivory/20 border-b border-charcoal/5" id="calculator">

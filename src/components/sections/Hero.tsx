@@ -52,7 +52,7 @@ export default function Hero() {
   }, []);
 
   const scrollToNext = () => {
-    const nextSection = document.getElementById('impact') || document.getElementById('calculator');
+    const nextSection = document.getElementById('calculator');
     if (nextSection) {
       nextSection.scrollIntoView({ behavior: 'smooth' });
     }
