@@ -67,5 +67,14 @@ Access the administration dashboard at `/admin` to:
 - Review & approve Wall of Kindness messages
 - Monitor citizen SOS beacons & volunteer applications
 - Update transparency numbers and site data
+- Primary master password: `petbhar2026`
 - Emergency fallback PIN: `1234`
+
+---
+
+## 📚 Detailed Documentation & Architecture Guides
+- 📖 **[System & Architecture Guide](SYSTEM_GUIDE.md)**: In-depth technical guide on Frontend, Backend, TypeScript, React 19, Next.js 16, API route handlers, and security design.
+- 🔑 **[Credentials & Logins Reference](CREDENTIALS_AND_LOGINS.md)**: Master admin password, emergency PINs, environment variables, UPI IDs, and password reset instructions.
+- 🚀 **[Deployment Manual](DEPLOYMENT.md)**: Zero-cost deployment to Vercel and Docker containerization guide.
+
 
