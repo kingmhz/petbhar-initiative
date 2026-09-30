@@ -1,7 +1,6 @@
 import Hero from "@/components/sections/Hero";
 import ImpactSimulator from "@/components/features/ImpactSimulator";
 import PaymentBarcode from "@/components/features/PaymentBarcode";
-import HomePillars from "@/components/sections/HomePillars";
 import EmotionalBanner from "@/components/sections/EmotionalBanner";
 
 export default function Home() {
@@ -35,7 +34,6 @@ export default function Home() {
         </div>
       </section>
 
-      <HomePillars />
       <EmotionalBanner />
     </main>
   );
