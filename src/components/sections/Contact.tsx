@@ -46,8 +46,6 @@ export function Contact() {
     }
   };
 
-  const gmailWebUrl = `https://mail.google.com/mail/?view=cm&fs=1&to=${encodeURIComponent(config.contact.email)}`;
-
   return (
     <section className="bg-ivory py-10 md:py-12">
       <div className="mx-auto max-w-7xl px-6">
@@ -60,41 +58,19 @@ export function Contact() {
               </SectionHeading>
               
               <div className="mt-6 space-y-3.5">
-                <div className="flex flex-col sm:flex-row sm:items-center gap-2 sm:gap-3">
-                  <button 
-                    type="button"
-                    onClick={() => setEmailModalOpen(true)}
-                    className="group flex items-center gap-3 text-warm-grey hover:text-charcoal transition-all duration-300 text-left cursor-pointer min-w-0"
-                    title="Click for email options (Gmail, default mail app, copy address)"
-                  >
-                    <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-white shadow-xs border border-charcoal/10 group-hover:border-[#EA4335]/35 group-hover:shadow-[0_2px_12px_rgba(234,67,53,0.18)] transition-all shrink-0">
-                      <GmailIcon size={18} />
-                    </span>
-                    <span className="group-hover:text-charcoal transition-colors font-medium truncate sm:overflow-visible">
-                      {config.contact.email}
-                    </span>
-                  </button>
-
-                  <div className="flex items-center gap-1.5 text-[11px] pl-12 sm:pl-0">
-                    <a
-                      href={gmailWebUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="px-2.5 py-1 sm:py-0.5 rounded-lg bg-white border border-charcoal/10 hover:border-[#EA4335] text-warm-grey hover:text-[#EA4335] active:scale-95 transition-all flex items-center gap-1.5 shadow-2xs font-medium min-h-[30px] sm:min-h-0"
-                      title="Compose directly in Gmail"
-                    >
-                      <GmailIcon size={13} />
-                      <span>Gmail ↗</span>
-                    </a>
-                    <a
-                      href={`mailto:${config.contact.email}`}
-                      className="px-2.5 py-1 sm:py-0.5 rounded-lg bg-white border border-charcoal/10 hover:border-charcoal/30 text-warm-grey hover:text-charcoal active:scale-95 transition-all flex items-center gap-1.5 shadow-2xs font-medium min-h-[30px] sm:min-h-0"
-                      title="Open default system mail app"
-                    >
-                      <span>Mail ↗</span>
-                    </a>
-                  </div>
-                </div>
+                <button 
+                  type="button"
+                  onClick={() => setEmailModalOpen(true)}
+                  className="group flex items-center gap-3 text-warm-grey hover:text-charcoal transition-all duration-300 text-left cursor-pointer min-w-0"
+                  title="Click to send email"
+                >
+                  <span className="flex items-center justify-center w-9 h-9 rounded-xl bg-white shadow-xs border border-charcoal/10 group-hover:border-[#EA4335]/35 group-hover:shadow-[0_2px_12px_rgba(234,67,53,0.18)] transition-all shrink-0">
+                    <GmailIcon size={18} />
+                  </span>
+                  <span className="group-hover:text-charcoal transition-colors font-medium truncate sm:overflow-visible">
+                    {config.contact.email}
+                  </span>
+                </button>
                 {config.contact.instagram && (
                   <a 
                     href={config.socials.instagram || `https://instagram.com/${config.contact.instagram}`} 
